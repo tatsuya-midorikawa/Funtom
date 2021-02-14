@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Version>0.0.1</Version>
+    <Authors>midoliy</Authors>
+    <Company>tech leaves</Company>
+    <Description>.NET wrapper library for F#</Description>
+    <Copyright>© 2021 Tatsuya Midorikawa. All rights rserved</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/tatsuya-midorikawa/Phantom</PackageProjectUrl>
+    <PackageIcon>phantom.png</PackageIcon>
+    <RepositoryUrl>https://github.com/tatsuya-midorikawa/Phantom</RepositoryUrl>
+    <PackageTags>.net,fsharp</PackageTags>
+    <NeutralLanguage>ja</NeutralLanguage>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="D:\git\fsharp\Funtom\assets\phantom.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
