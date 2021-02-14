@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.0;netstandard2.1;</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>0.0.1</Version>
+    <Version>0.0.1.1</Version>
     <Authors>midoliy</Authors>
     <Company>tech leaves</Company>
     <Description>.NET wrapper library for F#</Description>
@@ -12,7 +12,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/tatsuya-midorikawa/Phantom</PackageProjectUrl>
     <PackageIcon>phantom.png</PackageIcon>
-    <RepositoryUrl>https://github.com/tatsuya-midorikawa/Phantom</RepositoryUrl>
+    <RepositoryUrl>https://github.com/tatsuya-midorikawa/Funtom</RepositoryUrl>
     <PackageTags>.net,fsharp</PackageTags>
     <NeutralLanguage>ja</NeutralLanguage>
   </PropertyGroup>
