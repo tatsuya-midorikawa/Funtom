@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Version>0.0.1</Version>
@@ -17,11 +17,18 @@
     <NeutralLanguage>ja</NeutralLanguage>
   </PropertyGroup>
 
+  <ItemGroup />
+
   <ItemGroup>
+    <Compile Include="Threading\Tasks\Task.fs" />
     <None Include="D:\git\fsharp\Funtom\assets\phantom.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\" />
   </ItemGroup>
 
 </Project>
