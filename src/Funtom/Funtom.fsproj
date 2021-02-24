@@ -17,18 +17,14 @@
     <NeutralLanguage>ja</NeutralLanguage>
   </PropertyGroup>
 
-  <ItemGroup />
-
   <ItemGroup>
+    <Compile Include="Numerics\BitOperations.fs" />
+    <Compile Include="Core\HashCode.fs" />
     <Compile Include="Threading\Tasks\Task.fs" />
     <None Include="D:\git\fsharp\Funtom\assets\phantom.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Core\" />
   </ItemGroup>
 
 </Project>
