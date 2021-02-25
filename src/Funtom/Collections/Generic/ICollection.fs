@@ -2,7 +2,7 @@
 
 type ICollection<'T> =
   inherit System.Collections.Generic.ICollection<'T>
-  inherit IEnumerable<'T>
+  inherit Funtom.Collections.Generic.IEnumerable<'T>
   abstract member count : int with get
   abstract member isReadonly : bool with get
   abstract member add : 'T -> unit

@@ -7,7 +7,7 @@ open FSharp.NativeInterop
 open Funtom.Text
 
 #nowarn "9"
-module rec KeyValuePair =
+module KeyValuePair =
   let public toString(key:obj, value:obj) =
     let sb = new ValueStringBuilder(System.Span<char>(NativePtr.stackalloc<char>(64)|> NativePtr.toVoidPtr, 64))
     sb.append('[')

@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;</TargetFrameworks>
+    <TargetFrameworks>net5.0;netcoreapp3.1;netstandard2.1;</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Version>0.0.1.2</Version>
@@ -18,8 +19,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Basis\IDisposable.fs" />
+    <Compile Include="Basis\RuntimeType.fs" />
+    <Compile Include="Basis\Activator.fs" />
     <Compile Include="Numerics\BitOperations.fs" />
     <Compile Include="Core\HashCode.fs" />
+    <Compile Include="Text\ValueStringBuilder.fs" />
+    <Compile Include="Collections\Generic\KeyValuePair.fs" />
+    <Compile Include="Collections\Generic\IEnumerator.fs" />
+    <Compile Include="Collections\Generic\IEnumerable.fs" />
+    <Compile Include="Collections\Generic\ICollection.fs" />
+    <Compile Include="Collections\Generic\IDictionary.fs" />
+    <Compile Include="Collections\Generic\Dictionary.fs" />
+    <Compile Include="Reflection\Assembly.fs" />
     <Compile Include="Threading\Tasks\Task.fs" />
     <None Include="D:\git\fsharp\Funtom\assets\phantom.png">
       <Pack>True</Pack>
