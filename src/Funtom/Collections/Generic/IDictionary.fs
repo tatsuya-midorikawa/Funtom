@@ -10,4 +10,3 @@ type IDictionary<'Key, 'Value> =
   abstract member add : ('Key * 'Value) -> unit
   abstract member remove : 'Key -> bool
   abstract member tryGetValue : 'Key -> 'Value option
-  abstract member version : int with get

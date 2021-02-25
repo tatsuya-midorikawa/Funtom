@@ -5,16 +5,21 @@ type internal InsertionBehavior =
   | overwriteExisting = 1uy
   | throwOnExisting = 2uy
 
-module rec Dictionary =
+module Dictionary =
   [<Struct;>]
   type Entry<'Key, 'Value> =
-    val mutable hashCode : uint
-    val mutable next : int
-    val mutable key : 'Key
-    val mutable value : 'Value
+    val mutable internal hashCode : uint
+    val mutable internal next : int
+    val mutable internal key : 'Key
+    val mutable internal value : 'Value
     new(hashCode', next', key', value') =
       { hashCode = hashCode'; next = next'; key = key'; value = value'; }
 
+  module Enumerator = 
+    [<Literal>]
+    let DictionaryEntry = 1
+    [<Literal>]
+    let KeyValuePair = 2
 
 [<System.Serializable; Sealed;>]
 type Dictionary<'Key, 'Value when 'Key: equality>() =
@@ -46,22 +51,35 @@ and KeyCollection<'Key, 'Value when 'Key: equality>(dictionary': Dictionary<'Key
 
 
 and [<Struct;>] Enumerator<'Key, 'Value when 'Key: equality> =
-  val mutable private dictionary : Dictionary<'Key, 'Value>
+
+
+  val private dictionary : Dictionary<'Key, 'Value>
+  val private version : int
   val mutable private index : int
-  val mutable private version : int
-  val mutable private current : 'Value option
+  val mutable private current : KeyValuePair<'Key, 'Value>
+  val private getEnumeratorRetType : int
 
-  new (dictionary': Dictionary<'Key, 'Value>) =
-    { dictionary = dictionary'; index = 0; version = dictionary'.version; current = Option<'Value>.None }
+  new (dictionary': Dictionary<'Key, 'Value>, getEnumeratorRetType') =
+    { dictionary = dictionary'
+      index = 0
+      version = dictionary'.version
+      current = Unchecked.defaultof<KeyValuePair<'Key, 'Value>>
+      getEnumeratorRetType = getEnumeratorRetType' }
 
-  member __.dispose() = ()
   member __.moveNext() =
     if __.version <> __.dictionary.version then
       System.InvalidOperationException("") |> raise
     
-    while __.index < __.dictionary.count do
-      for entry in __.entries do
-        
+    let mutable break' = false
+    while __.index < __.dictionary.count && not break' do
+      let entry = ref __.dictionary.entries.[__.index]
+      __.index <- __.index + 1
+      if -1 <= (!entry).next then
+        __.current <- KeyValuePair<'Key, 'Value>((!entry).key, (!entry).value)
+        break' <- true
+
     __.index <- __.dictionary.count + 1
-    __.current <- Option<'Value>.None
+    __.current <- Unchecked.defaultof<KeyValuePair<'Key, 'Value>>
     false
+    
+  member __.dispose() = ()
