@@ -172,5 +172,6 @@ type ValueStringBuilder =
           ArrayPool<char>.Shared.Return(__.pool)
       __.disposed <- true
       
-  interface IDisposable with
+  interface Funtom.IDisposable with
+    member __.dispose() = __.dispose(true)
     member __.Dispose() = __.dispose(true)
