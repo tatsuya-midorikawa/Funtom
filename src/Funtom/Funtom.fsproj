@@ -19,12 +19,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Basis\Syntax.fs" />
     <Compile Include="Basis\IDisposable.fs" />
     <Compile Include="Basis\RuntimeType.fs" />
     <Compile Include="Basis\Activator.fs" />
     <Compile Include="Numerics\BitOperations.fs" />
     <Compile Include="Core\HashCode.fs" />
     <Compile Include="Text\ValueStringBuilder.fs" />
+    <Compile Include="Collections\DictionaryEntry.fs" />
+    <Compile Include="Collections\IEnumerator.fs" />
+    <Compile Include="Collections\IEnumerable.fs" />
+    <Compile Include="Collections\ICollection.fs" />
+    <Compile Include="Collections\IDictionaryEnumerator.fs" />
+    <Compile Include="Collections\IDictionary.fs" />
     <Compile Include="Collections\Generic\KeyValuePair.fs" />
     <Compile Include="Collections\Generic\IEnumerator.fs" />
     <Compile Include="Collections\Generic\IEnumerable.fs" />

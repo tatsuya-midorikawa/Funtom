@@ -24,8 +24,8 @@ module KeyValuePair =
 type KeyValuePair<'Key, 'Value>(key': 'Key, value': 'Value) =
   static member public create(key, value) = KeyValuePair(key, value)
   
-  member public __.Key = key'
-  member public __.Value  = value'
+  member public __.key = key'
+  member public __.value  = value'
   
   [<EditorBrowsable(EditorBrowsableState.Never)>]
   member public __.deconstruct(key: outref<'Key>, value: outref<'Value>) =
@@ -33,4 +33,4 @@ type KeyValuePair<'Key, 'Value>(key': 'Key, value': 'Value) =
     value <- value'
 
   override __.ToString() =
-    KeyValuePair.toString(__.Key, __.Value)  
+    KeyValuePair.toString(__.key, __.value)  
