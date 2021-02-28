@@ -5,9 +5,9 @@ open Funtom
 open Funtom.Collections
 
 type internal InsertionBehavior =
-  | none = 0uy
-  | overwriteExisting = 1uy
-  | throwOnExisting = 2uy
+  | None = 0uy
+  | OverwriteExisting = 1uy
+  | ThrowOnExisting = 2uy
 
 module Dictionary =
   [<Literal>] 
