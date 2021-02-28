@@ -10,6 +10,15 @@ type internal InsertionBehavior =
   | throwOnExisting = 2uy
 
 module Dictionary =
+  [<Literal>] 
+  let internal VersionName = "Version"
+  [<Literal>] 
+  let internal HashSizeName = "HashSize"
+  [<Literal>] 
+  let internal KeyValuPairName = "KeyValuePairs"
+  [<Literal>] 
+  let internal ComparerName = "Comparer"
+
   [<Struct;>]
   type Entry<'Key, 'Value> =
     val mutable internal hashCode : uint
@@ -31,41 +40,35 @@ module Dictionary =
 ///
 /// </summary>
 [<System.Serializable; Sealed;>]
-type Dictionary<'Key, 'Value when 'Key: equality and 'Value: equality> =
-  [<Literal>] 
-  let VersionName = "Version"
-  [<Literal>] 
-  let HashSizeName = "HashSize"
-  [<Literal>] 
-  let KeyValuPairName = "KeyValuePairs"
-  [<Literal>] 
-  let ComparerName = "Comparer"
-
-  let mutable backets : int[] = defaultof<int[]>
+type Dictionary<'Key, 'Value when 'Key: equality and 'Value: equality>(comparer': System.Collections.Generic.IEqualityComparer<'Key>) =
   #if BIT64
   let mutable fastModMultiplier : uint64 = 0UL
   #endif
-  let mutable freeList : int = 0
-  let mutable freeCount : int = 0
-  val mutable comparer : System.Collections.Generic.IEqualityComparer<'Key>
-  let mutable keys : KeyCollection<'Key, 'Value> = defaultof<KeyCollection<'Key, 'Value>>
-  let mutable values : ValueCollection<'Key, 'Value> = defaultof<ValueCollection<'Key, 'Value>>
+  let comparer : System.Collections.Generic.IEqualityComparer<'Key> = comparer'
   
   member val internal count : int = 0 with get, set
   member val internal entries : Dictionary.Entry<'Key, 'Value>[] = defaultof<Dictionary.Entry<'Key, 'Value>[]> with get, set
-  member val internal version : int = 0
+  member val internal version : int = 0 with get, set
+
+  member val private backets : int[] = defaultof<int[]> with get, set
+  member val private freeList : int = 0 with get, set
+  member val private freeCount : int = 0 with get, set
+  member val private keys : KeyCollection<'Key, 'Value> = defaultof<KeyCollection<'Key, 'Value>> with get, set
+  member val private values : ValueCollection<'Key, 'Value> = defaultof<ValueCollection<'Key, 'Value>> with get, set
+
+  new() = 
+    Dictionary<'Key, 'Value>(null)
 
   new(capacity': int, comparer': System.Collections.Generic.IEqualityComparer<'Key>) =
     if capacity' < 0 then
       System.ArgumentOutOfRangeException("") |> raise
-
     
     if comparer' <> defaultof<System.Collections.Generic.IEqualityComparer<'Key>> then
-      { comparer = comparer' }
+      Dictionary<'Key, 'Value>(comparer')
     else if typeof<'Key> = typeof<string> then
-      { comparer = System.Collections.Generic.NonRandomizedStringEqualityComparer }
+      Dictionary<'Key, 'Value>(System.Collections.Generic.NonRandomizedStringEqualityComparer)
     else
-      { comparer = null }
+      Dictionary<'Key, 'Value>(null)
 
 
 
