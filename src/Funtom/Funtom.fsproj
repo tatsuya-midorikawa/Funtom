@@ -35,6 +35,7 @@
     <Compile Include="Collections\Generic\KeyValuePair.fs" />
     <Compile Include="Collections\Generic\IEnumerator.fs" />
     <Compile Include="Collections\Generic\IEnumerable.fs" />
+    <Compile Include="Collections\Generic\IReadOnlyCollection.fs" />
     <Compile Include="Collections\Generic\ICollection.fs" />
     <Compile Include="Collections\Generic\IDictionary.fs" />
     <Compile Include="Collections\Generic\Dictionary.fs" />

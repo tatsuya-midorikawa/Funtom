@@ -5,7 +5,7 @@ open System.Buffers
 open System.Diagnostics
 open System.Runtime.CompilerServices
 open System.Runtime.InteropServices
-
+open System.ComponentModel
 
 [<Struct; IsByRefLike>]
 type ValueStringBuilder =
@@ -18,11 +18,9 @@ type ValueStringBuilder =
     let pool' = ArrayPool<char>.Shared.Rent(capacity')
     { pool = pool'; chars = pool'.AsSpan(); pos = 0; disposed = false; }
     
-  new(buffer') =
+  new(buffer': Span<char>) =
     { pool = ArrayPool<char>.Shared.Rent(0); chars = buffer'; pos = 0; disposed = false; }
     
-  static member inline (!>) (x:^a) : ^b = ((^a or ^b) : (static member op_Implicit : ^a -> ^b) x) 
-
   member public __.length
     with get() = __.pos
     and set(value) =
@@ -62,15 +60,14 @@ type ValueStringBuilder =
     
   member public __.rawChars = __.chars
 
-  member inline public __.asSpan(terminate) : ReadOnlySpan<char> =
+  member public __.asSpan(terminate) : ReadOnlySpan<char> =
     if terminate then
       __.ensureCapacity(__.length + 1)
       __.chars.[__.length] <- '\000'
     Span<char>.op_Implicit(__.chars.Slice(0, __.pos))
-
-  member inline public __.asSpan() : ReadOnlySpan<char> =  Span<char>.op_Implicit(__.chars.Slice(0, __.pos))
-  member inline public __.asSpan(start) : ReadOnlySpan<char> =  Span<char>.op_Implicit(__.chars.Slice(start, __.pos - start))
-  member inline public __.asSpan(start, length) : ReadOnlySpan<char> =  Span<char>.op_Implicit(__.chars.Slice(start, length))
+  member public __.asSpan() : ReadOnlySpan<char> =  Span<char>.op_Implicit(__.chars.Slice(0, __.pos))
+  member public __.asSpan(start) : ReadOnlySpan<char> =  Span<char>.op_Implicit(__.chars.Slice(start, __.pos - start))
+  member public __.asSpan(start, length) : ReadOnlySpan<char> =  Span<char>.op_Implicit(__.chars.Slice(start, length))
   
   member public __.tryCopyTo(destination:Span<char>, written:outref<int>) =
     if __.chars.Slice(0, __.pos).TryCopyTo(destination) then
@@ -103,7 +100,7 @@ type ValueStringBuilder =
       str.AsSpan().CopyTo(__.chars.Slice(index))
       __.pos <- __.pos + count
 
-  member inline public __.append(c) =
+  member public __.append(c) =
     let pos = __.pos
     if pos < __.chars.Length then
       __.chars.[pos] <- c
@@ -111,7 +108,7 @@ type ValueStringBuilder =
     else
       __.growAndAppend(c)
       
-  member inline public __.append(str:string) =
+  member public __.append(str:string) =
     if str = null then
       ()
     else
@@ -137,7 +134,7 @@ type ValueStringBuilder =
     value.CopyTo(__.chars.Slice(__.pos))
     __.pos <- __.pos + value.Length
 
-  member inline public __.appendSpan(length) =
+  member public __.appendSpan(length) =
     let pos = __.pos
     if __.chars.Length - length < pos then
       __.grow(length)
@@ -152,18 +149,18 @@ type ValueStringBuilder =
     str.AsSpan().CopyTo(__.chars.Slice(pos))
     __.pos <- __.pos + str.Length
 
-  member inline private __.growAndAppend(c) =
+  member private __.growAndAppend(c) =
     __.grow(1)
     __.append(c)
 
-  member inline __.toString() =
+  member public __.toString() =
     let str = __.chars.Slice(0, __.pos).ToString()
     __.dispose(true)
     str
 
   override __.ToString() = __.toString()
 
-  member inline __.dispose(disposing:bool) =
+  member public __.dispose(disposing:bool) =
     if __.disposed then
       ()
     else
@@ -172,6 +169,5 @@ type ValueStringBuilder =
           ArrayPool<char>.Shared.Return(__.pool)
       __.disposed <- true
       
-  interface Funtom.IDisposable with
-    member __.dispose() = __.dispose(true)
+  interface System.IDisposable with
     member __.Dispose() = __.dispose(true)
