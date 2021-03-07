@@ -19,8 +19,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Basis\Syntax.fs" />
+    <Compile Include="Basis\IEquatable.fs" />
     <Compile Include="Basis\IDisposable.fs" />
+    <Compile Include="Basis\Syntax.fs" />
     <Compile Include="Basis\RuntimeType.fs" />
     <Compile Include="Basis\Activator.fs" />
     <Compile Include="Runtime\Serialization\ISerializable.fs" />
