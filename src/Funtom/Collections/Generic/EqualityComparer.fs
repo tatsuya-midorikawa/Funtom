@@ -200,3 +200,39 @@ type ByteEqualityComparer() =
   [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
   override __.GetHashCode() = __.GetType().GetHashCode()
 
+  
+[<Sealed;System.Serializable;>]
+[<TypeForwardedFrom("mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")>]
+type EnumEqualityComparer<'T when 'T : struct and 'T : equality and 'T : null and 'T :> System.IEquatable<'T>> internal () =
+  inherit EqualityComparer<'T>()
+
+  // This is used by the serialization engine.
+  new (information: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) = EnumEqualityComparer()
+
+  [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
+  override __.getHashCode(obj: 'T) = obj.GetHashCode()
+  
+  [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
+  member __.getHashCode() = __.GetHashCode()
+  
+  [<Browsable(false); EditorBrowsable(EditorBrowsableState.Never);>]
+  [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
+  override __.GetHashCode() = __.GetType().GetHashCode()
+  
+  [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
+  override __.equals(x, y) = x = y
+  
+  [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
+  member __.equals(obj: obj) = 
+    obj <> null && __.GetType() = obj.GetType()
+  
+  [<Browsable(false); EditorBrowsable(EditorBrowsableState.Never);>]
+  [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
+  override __.Equals(obj: obj) = __.equals(obj)
+
+  interface System.Runtime.Serialization.ISerializable with
+    override __.GetObjectData(information: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) =
+      if System.Type.GetTypeCode(System.Enum.GetUnderlyingType(typeof<'T>)) <> System.TypeCode.Int32 then
+        information.SetType(typeof<ObjectEqualityComparer<'T>>)
+      else
+        ()
