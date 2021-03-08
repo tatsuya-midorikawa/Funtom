@@ -40,19 +40,23 @@ type EqualityComparer<'T>() =
 [<TypeForwardedFrom("mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")>]
 type GenericEqualityComparer<'T when 'T :> System.IEquatable<'T> and 'T : null and 'T : equality>() =
   inherit EqualityComparer<'T>()
-
+  
+  [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
   member __.equals(obj: obj) =
     if obj = null then false
     else obj.GetType() = typeof<GenericEqualityComparer<'T>>
     
+  [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
   override __.Equals(obj: obj) = __.equals(obj)
-
+  
+  [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
   override __.equals(x, y) = 
     if x <> null then
       if y <> null then x.Equals(y) else false
     else
       if y <> null then false else true
-
+  
+  [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
   override __.getHashCode(obj) =
     if obj <> null then obj.GetHashCode()
     else 0
@@ -65,4 +69,34 @@ type GenericEqualityComparer<'T when 'T :> System.IEquatable<'T> and 'T : null a
     override __.Equals(other) = __.equals(other)
 
   interface Funtom.IEquatable<'T> with
+    override __.equals(other) = __.equals(other)
+    
+    
+[<Sealed;System.Serializable;>]
+[<TypeForwardedFrom("mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")>]
+
+type NullableEqualityComparer<'T when 'T : struct and 'T :> System.ValueType and 'T : (new : unit -> 'T) and 'T : equality>() =
+  inherit EqualityComparer<System.Nullable<'T>>()
+  
+  [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
+  member private __.equals(obj: obj) =
+    if obj = null then false
+    else obj.GetType() = typeof<EqualityComparer<'T>>
+
+  [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
+  override __.equals(x, y) = 
+    if x.HasValue then
+      if y.HasValue then x.Value.Equals(y.Value) else false
+    else
+      if y.HasValue then false else true
+  
+  [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
+  override __.getHashCode(obj) = obj.GetHashCode()
+  
+  interface System.IEquatable<'T> with
+    [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
+    override __.Equals(other) = __.equals(other)
+
+  interface Funtom.IEquatable<'T> with
+    [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
     override __.equals(other) = __.equals(other)
