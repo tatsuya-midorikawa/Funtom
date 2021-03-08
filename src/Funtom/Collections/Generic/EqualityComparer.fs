@@ -1,6 +1,7 @@
 ﻿namespace Funtom.Collections.Generic
 
 open System.Runtime.CompilerServices
+open System.ComponentModel
 
 [<AbstractClass>]
 type EqualityComparer<'T>() =
@@ -37,5 +38,31 @@ type EqualityComparer<'T>() =
 
 [<Sealed;System.Serializable;>]
 [<TypeForwardedFrom("mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")>]
-type GenericEqualityComparer<'T>() =
+type GenericEqualityComparer<'T when 'T :> System.IEquatable<'T> and 'T : null and 'T : equality>() =
   inherit EqualityComparer<'T>()
+
+  member __.equals(obj: obj) =
+    if obj = null then false
+    else obj.GetType() = typeof<GenericEqualityComparer<'T>>
+    
+  override __.Equals(obj: obj) = __.equals(obj)
+
+  override __.equals(x, y) = 
+    if x <> null then
+      if y <> null then x.Equals(y) else false
+    else
+      if y <> null then false else true
+
+  override __.getHashCode(obj) =
+    if obj <> null then obj.GetHashCode()
+    else 0
+    
+  [<Browsable(false); EditorBrowsable(EditorBrowsableState.Never);>]
+  override __.GetHashCode() =
+    typeof<GenericEqualityComparer<'T>>.GetHashCode()
+    
+  interface System.IEquatable<'T> with
+    override __.Equals(other) = __.equals(other)
+
+  interface Funtom.IEquatable<'T> with
+    override __.equals(other) = __.equals(other)
