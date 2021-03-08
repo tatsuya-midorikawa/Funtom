@@ -173,3 +173,30 @@ type ObjectEqualityComparer<'T when 'T :> System.IEquatable<'T> and 'T : null an
     [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
     override __.equals(other) = __.equals(other)
 
+
+[<Sealed;System.Serializable;>]
+[<TypeForwardedFrom("mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")>]
+type ByteEqualityComparer() =
+  inherit EqualityComparer<byte>()
+  
+  [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
+  member __.equals(obj: obj) = 
+    obj <> null && __.GetType() = obj.GetType()
+  
+  [<Browsable(false); EditorBrowsable(EditorBrowsableState.Never);>]
+  [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
+  override __.Equals(obj: obj) = __.equals(obj)
+
+  [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
+  override __.equals(x, y) = x = y
+  
+  [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
+  override __.getHashCode(b) = b.GetHashCode()
+  
+  [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
+  member __.getHashCode() = __.GetHashCode()
+  
+  [<Browsable(false); EditorBrowsable(EditorBrowsableState.Never);>]
+  [<MethodImpl(MethodImplOptions.AggressiveInlining)>]
+  override __.GetHashCode() = __.GetType().GetHashCode()
+
