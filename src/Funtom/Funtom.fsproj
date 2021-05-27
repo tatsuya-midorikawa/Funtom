@@ -18,7 +18,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Core\Type.fs" />
     <Compile Include="Numerics\BitOperations.fs" />
+    <Compile Include="Core\Object.fs" />
     <Compile Include="Core\HashCode.fs" />
     <Compile Include="Threading\Tasks\Task.fs" />
     <None Include="D:\git\fsharp\Funtom\assets\phantom.png">
