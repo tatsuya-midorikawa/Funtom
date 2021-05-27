@@ -48,17 +48,34 @@ type Type(t: System.Type) as __ =
   member _.getEvents(bindingAttr: BindingFlags) : EventInfo[] = t.GetEvents(bindingAttr)
   member _.getField(name: string) : FieldInfo = t.GetField(name)
   member _.getField(name: string, bindingAttr: BindingFlags) : FieldInfo = t.GetField(name, bindingAttr)
-  member _.GetFields() : FieldInfo[] = t.GetFields()
-  member _.GetFields(bindingAttr: BindingFlags) : FieldInfo[] = t.GetFields(bindingAttr)
-  member _.GetGenericArguments() : Type[] = t.GetGenericArguments() |> Array.map Type
-  member _.GetGenericParameterConstraints() : Type[] = t.GetGenericParameterConstraints() |> Array.map Type
-  member _.GetGenericTypeDefinition() : Type = t.GetGenericTypeDefinition() |> Type
+  member _.getFields() : FieldInfo[] = t.GetFields()
+  member _.getFields(bindingAttr: BindingFlags) : FieldInfo[] = t.GetFields(bindingAttr)
+  member _.getGenericArguments() : Type[] = t.GetGenericArguments() |> Array.map Type
+  member _.getGenericParameterConstraints() : Type[] = t.GetGenericParameterConstraints() |> Array.map Type
+  member _.getGenericTypeDefinition() : Type = t.GetGenericTypeDefinition() |> Type
   member _.getHashCode() : int = t.GetHashCode()
   member _.getInterface(name: string) : Type = t.GetInterface(name) |> Type
   member _.getInterface(name: string, ignoreCase: bool) : Type = t.GetInterface(name, ignoreCase) |> Type
   member _.getInterfaceMap(interfaceType: System.Type) : InterfaceMapping = t.GetInterfaceMap(interfaceType)
   member _.getInterfaceMap(interfaceType: Type) : InterfaceMapping = t.GetInterfaceMap(interfaceType.raw)
   member _.getInterfaces() : Type[] = t.GetInterfaces() |> Array.map Type
+  member _.getMember(name: string) : MemberInfo[] = t.GetMember(name)
+  member _.getMember(name: string, bindingAttr: BindingFlags) : MemberInfo[] = t.GetMember(name, bindingAttr)
+  member _.getMember(name: string, type': MemberTypes, bindingAttr: BindingFlags) : MemberInfo[] = t.GetMember(name, type', bindingAttr)
+  member _.getMembers() : MemberInfo[] = t.GetMembers()
+  member _.getMembers(bindingAttr: BindingFlags) : MemberInfo[] = t.GetMembers(bindingAttr)
+  member _.getMethod(name: string) : MethodInfo = t.GetMethod(name)
+  member _.getMethod(name: string, bindingAttr: BindingFlags) : MethodInfo = t.GetMethod(name, bindingAttr)
+  member _.getMethod(name: string, types: System.Type[]) : MethodInfo = t.GetMethod(name, types)
+  member _.getMethod(name: string, types: Type[]) : MethodInfo = t.GetMethod(name, types |> Array.map (fun t -> t.raw))
+  member _.getMethod(name: string, types: System.Type[], modifiers: ParameterModifier[]) : MethodInfo = t.GetMethod(name, types, modifiers)
+  member _.getMethod(name: string, types: Type[], modifiers: ParameterModifier[]) : MethodInfo = t.GetMethod(name, types |> Array.map (fun t -> t.raw), modifiers)
+  member _.getMethod(name: string, bindingAttr: BindingFlags, binder: Binder, types: System.Type[], modifiers: ParameterModifier[]) : MethodInfo = 
+    t.GetMethod(name, bindingAttr, binder, types, modifiers)
+  member _.getMethod(name: string, bindingAttr: BindingFlags, binder: Binder, types: Type[], modifiers: ParameterModifier[]) : MethodInfo = 
+    t.GetMethod(name, bindingAttr, binder, types |> Array.map (fun t -> t.raw), modifiers)
+  member _.getMethods() : MethodInfo[] = t.GetMethods()
+  member _.getMethods(bindingAttr: BindingFlags) : MethodInfo[] = t.GetMethods(bindingAttr)
 
 
 
