@@ -47,6 +47,50 @@ module Array =
               i <- i + 1
             max
   
+  
+  let inline max_v2<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType>
+    (src: array<^T>) =
+      use p = fixed &src[0]
+      let mutable best = vec256.Load p
+      let mutable last = vec256.Load(NativePtr.add p (src.Length - vec256<^T>.Count))
+      for i = 1 to src.Length / vec256<^T>.Count - 1 do
+        best <- vec256.Max<^T>(best, NativePtr.add p (i * vec256<^T>.Count) |> vec256.Load)
+      best <- vec256.Max<^T>(best, last)
+      let mutable max = best[0]
+      let mutable i = 1
+      while i < vec256<^T>.Count do
+        if max < best[i] then max <- best[i]
+        i <- i + 1
+      max
+
+  // WIP
+  let max_v3<'T when 'T: unmanaged and 'T: struct and 'T: comparison and 'T: (new: unit -> 'T) and 'T:> System.ValueType>
+  //let inline max_v3<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType>
+    (src: array<^T>) =
+      use p = fixed &src[0]
+      let q = NativePtr.toNativeInt p
+      let count = vec256<^T>.Count |> int64
+
+      let mutable best = vec256.Load p
+      let t = q + (nativeint (src.LongLength - count)) |> NativePtr.ofNativeInt<^T>
+      let mutable last = vec256.Load t
+      let mutable last' = vec256.Load(NativePtr.add p (src.Length - vec256<^T>.Count))
+
+      let mutable i = 1L
+      while i < src.LongLength / count do
+        let t = q + (nativeint (i * count)) |> NativePtr.ofNativeInt<^T>
+        best <- vec256.Max<^T>(best, vec256.Load t)
+        i <- i + 1L
+
+      best <- vec256.Max<^T>(best, last)
+      let mutable max = best[0]
+      let mutable i = 1
+      while i < vec256<^T>.Count do
+        if max < best[i] then max <- best[i]
+        i <- i + 1
+      max
+
+
   let inline min<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType>
     (src: array<^T>) =
       if src = defaultof<_> || src.Length = 0

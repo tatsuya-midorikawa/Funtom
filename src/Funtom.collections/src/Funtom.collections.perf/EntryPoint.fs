@@ -43,17 +43,21 @@ let main args =
   |> Funtom.collections.Array.max
   |> printfn "Funtom Array.max= %d"
   xs
-  |> Funtom.collections.Array.max_v2
+  |> Funtom.collections.Array.max
   |> printfn "Funtom Array.max_v2= %d"
   
   0
 #else
 #nowarn "9"
-type X = { mutable v: int }
+open Microsoft.FSharp.NativeInterop
+type Unsafe = System.Runtime.CompilerServices.Unsafe
 [<EntryPoint>]
 let main args =
   let xs = [| for _ in 1..100_000_000 do fake.Random.Int(System.Int32.MinValue, System.Int32.MaxValue) |]
   
+  //sizeof<nativeint>
+  //|> printfn "%d"
+
   xs.Max()
   |> printfn "System.Linq.Max= %d"
   xs
@@ -62,15 +66,21 @@ let main args =
   xs
   |> Funtom.collections.Array.max
   |> printfn "Funtom Array.max= %d"
+  xs
+  |> Funtom.collections.Array.max_v2
+  |> printfn "Funtom Array.max_v2= %d"
+  xs
+  |> Funtom.collections.Array.max_v3
+  |> printfn "Funtom Array.max_v3= %d"
   
-  xs.Min()
-  |> printfn "System.Linq.Min= %d"
-  xs
-  |> Array.min
-  |> printfn "FSharp Array.min= %d"
-  xs
-  |> Funtom.collections.Array.min
-  |> printfn "Funtom Array.min= %d"
+  //xs.Min()
+  //|> printfn "System.Linq.Min= %d"
+  //xs
+  //|> Array.min
+  //|> printfn "FSharp Array.min= %d"
+  //xs
+  //|> Funtom.collections.Array.min
+  //|> printfn "Funtom Array.min= %d"
 
   0
 #endif
