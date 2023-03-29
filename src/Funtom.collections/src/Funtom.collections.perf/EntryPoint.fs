@@ -23,6 +23,8 @@ type Benchmark () =
   [<Benchmark>]
   member __.Funtom_Array_max() = Funtom.collections.Array.max xs
 
+  // ---------------------------------
+
   [<Benchmark>]
   member __.Linq_min() = xs.Min()
 
