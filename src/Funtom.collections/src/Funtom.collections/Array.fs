@@ -5,7 +5,7 @@
 module Array =
   open Microsoft.FSharp.NativeInterop
   open Funtom.collections.internals.core
-
+  
   let inline max<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType>
     (src: array<^T>) =
       if src = defaultof<_> || src.Length = 0
@@ -21,10 +21,18 @@ module Array =
           // SIMD : 128bit
           then
             use p = fixed &src[0]
+            let mutable current = NativePtr.toNativeInt p
+            let padding = nativeint (vec128<^T>.Count * sizeof<^T>)
+
             let mutable best = vec128.Load p
-            let mutable last = vec128.Load(NativePtr.add p (src.Length - vec128<^T>.Count))
-            for i = 1 to src.Length / vec128<^T>.Count - 1 do
-              best <- vec128.Max<^T>(best, NativePtr.add p (i * vec128<^T>.Count) |> vec128.Load)
+            let mutable last = vec128.Load (current + nativeint ((src.Length - vec128<^T>.Count) * sizeof<^T>)|> NativePtr.ofNativeInt<^T>)
+
+            let mutable i = 1
+            while i < src.Length / vec128<^T>.Count do
+              current <- current + padding
+              best <- vec128.Max<^T>(best, vec128.Load (current |> NativePtr.ofNativeInt<^T>))
+              i <- i + 1
+
             best <- vec128.Max<^T>(best, last)
             let mutable max = best[0]
             let mutable i = 1
@@ -35,10 +43,18 @@ module Array =
           // SIMD : 256bit
           else
             use p = fixed &src[0]
+            let mutable current = NativePtr.toNativeInt p
+            let padding = nativeint (vec256<^T>.Count * sizeof<^T>)
+
             let mutable best = vec256.Load p
-            let mutable last = vec256.Load(NativePtr.add p (src.Length - vec256<^T>.Count))
-            for i = 1 to src.Length / vec256<^T>.Count - 1 do
-              best <- vec256.Max<^T>(best, NativePtr.add p (i * vec256<^T>.Count) |> vec256.Load)
+            let mutable last = vec256.Load (current + nativeint ((src.Length - vec256<^T>.Count) * sizeof<^T>) |> NativePtr.ofNativeInt<^T>)
+
+            let mutable i = 1
+            while i < src.Length / vec256<^T>.Count do
+              current <- current + padding
+              best <- vec256.Max<^T>(best, vec256.Load (current |> NativePtr.ofNativeInt<^T>))
+              i <- i + 1
+
             best <- vec256.Max<^T>(best, last)
             let mutable max = best[0]
             let mutable i = 1
@@ -46,50 +62,6 @@ module Array =
               if max < best[i] then max <- best[i]
               i <- i + 1
             max
-  
-  
-  let inline max_v2<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType>
-    (src: array<^T>) =
-      use p = fixed &src[0]
-      let mutable best = vec256.Load p
-      let mutable last = vec256.Load(NativePtr.add p (src.Length - vec256<^T>.Count))
-      for i = 1 to src.Length / vec256<^T>.Count - 1 do
-        best <- vec256.Max<^T>(best, NativePtr.add p (i * vec256<^T>.Count) |> vec256.Load)
-      best <- vec256.Max<^T>(best, last)
-      let mutable max = best[0]
-      let mutable i = 1
-      while i < vec256<^T>.Count do
-        if max < best[i] then max <- best[i]
-        i <- i + 1
-      max
-
-  // WIP
-  let max_v3<'T when 'T: unmanaged and 'T: struct and 'T: comparison and 'T: (new: unit -> 'T) and 'T:> System.ValueType>
-  //let inline max_v3<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType>
-    (src: array<^T>) =
-      use p = fixed &src[0]
-      let q = NativePtr.toNativeInt p
-      let count = vec256<^T>.Count |> int64
-
-      let mutable best = vec256.Load p
-      let t = q + (nativeint (src.LongLength - count)) |> NativePtr.ofNativeInt<^T>
-      let mutable last = vec256.Load t
-      let mutable last' = vec256.Load(NativePtr.add p (src.Length - vec256<^T>.Count))
-
-      let mutable i = 1L
-      while i < src.LongLength / count do
-        let t = q + (nativeint (i * count)) |> NativePtr.ofNativeInt<^T>
-        best <- vec256.Max<^T>(best, vec256.Load t)
-        i <- i + 1L
-
-      best <- vec256.Max<^T>(best, last)
-      let mutable max = best[0]
-      let mutable i = 1
-      while i < vec256<^T>.Count do
-        if max < best[i] then max <- best[i]
-        i <- i + 1
-      max
-
 
   let inline min<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType>
     (src: array<^T>) =
@@ -106,10 +78,18 @@ module Array =
           // SIMD : 128bit
           then
             use p = fixed &src[0]
+            let mutable current = NativePtr.toNativeInt p
+            let padding = nativeint (vec128<^T>.Count * sizeof<^T>)
+
             let mutable worst = vec128.Load p
-            let mutable last = vec128.Load(NativePtr.add p (src.Length - vec128<^T>.Count))
-            for i = 1 to src.Length / vec128<^T>.Count - 1 do
-              worst <- vec128.Min<^T>(worst, NativePtr.add p (i * vec128<^T>.Count) |> vec128.Load)
+            let mutable last = vec128.Load (current + nativeint ((src.Length - vec128<^T>.Count) * sizeof<^T>) |> NativePtr.ofNativeInt<^T>)
+
+            let mutable i = 1
+            while i < src.Length / vec128<^T>.Count do
+              current <- current + padding
+              worst <- vec128.Min<^T>(worst, vec128.Load (current |> NativePtr.ofNativeInt<^T>))
+              i <- i + 1
+
             worst <- vec128.Min<^T>(worst, last)
             let mutable min' = worst[0]
             let mutable i = 1
@@ -120,10 +100,18 @@ module Array =
           // SIMD : 256bit
           else
             use p = fixed &src[0]
+            let mutable current = NativePtr.toNativeInt p
+            let padding = nativeint (vec256<^T>.Count * sizeof<^T>)
+
             let mutable worst = vec256.Load p
-            let mutable last = vec256.Load(NativePtr.add p (src.Length - vec256<^T>.Count))
-            for i = 1 to src.Length / vec256<^T>.Count - 1 do
-              worst <- vec256.Min<^T>(worst, NativePtr.add p (i * vec256<^T>.Count) |> vec256.Load)
+            let mutable last = vec256.Load (current + nativeint ((src.Length - vec256<^T>.Count) * sizeof<^T>) |> NativePtr.ofNativeInt<^T>)
+
+            let mutable i = 1
+            while i < src.Length / vec256<^T>.Count do
+              current <- current + padding
+              worst <- vec256.Min<^T>(worst, vec256.Load (current |> NativePtr.ofNativeInt<^T>))
+              i <- i + 1
+
             worst <- vec256.Min<^T>(worst, last)
             let mutable min' = worst[0]
             let mutable i = 1
