@@ -96,7 +96,7 @@ let main args =
   ys
   |> Funtom.collections.Array.max
   |> printfn "Funtom Array.max   = %f"
-  
+
   printfn "----------"
 
   xs.Min()
