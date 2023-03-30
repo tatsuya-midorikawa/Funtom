@@ -2,6 +2,7 @@
 open BenchmarkDotNet.Running
 open Bogus
 open System.Linq
+open System.Runtime.Intrinsics
 
 let fake = Faker()
 
