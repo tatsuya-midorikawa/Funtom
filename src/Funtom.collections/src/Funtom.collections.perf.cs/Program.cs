@@ -1,10 +1,12 @@
 ﻿namespace Funtom.collections.perf.cs;
 
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Running;
 using Bogus;
 using System.Linq;
 
+//[DisassemblyDiagnoser(maxDepth: 9, syntax: DisassemblySyntax.Intel, printSource: true, printInstructionAddresses: true, exportGithubMarkdown: true, exportHtml: true, exportCombinedDisassemblyReport: true, exportDiff: true)]
 public class Benchmark {
   private int[] xs = new int[100_000_000];
 

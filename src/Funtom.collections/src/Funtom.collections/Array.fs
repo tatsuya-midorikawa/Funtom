@@ -9,7 +9,6 @@ module Array =
 
   let inline max<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType>
     (src: array<^T>) =
-
       if src = defaultof<_> || src.Length = 0
         then throw_empty()
 
