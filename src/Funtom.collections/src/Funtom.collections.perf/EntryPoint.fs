@@ -11,13 +11,6 @@ open System.Runtime.Intrinsics
 
 let fake = Faker()
 
-//type DDConfig() as __ =
-//  inherit ManualConfig()
-//  do
-//    __.Add(DisassemblyDiagnoser.Create(DisassemblyDiagnoserConfig(printAsm: true, recursiveDepth: 1))
-//    ()
-
-
 //[<PlainExporter; MemoryDiagnoser;>]
 //[<DisassemblyDiagnoser(maxDepth= 9, syntax= DisassemblySyntax.Intel, printSource= true, printInstructionAddresses= true, exportGithubMarkdown= true, exportHtml= true, exportCombinedDisassemblyReport= true, exportDiff= true)>]
 type Benchmark () =
