@@ -142,12 +142,12 @@ module Array =
               vsum <- vsum + Vector128.Load(current |> NativePtr.ofNativeInt<^T>)
               current <- current + 16n
              
+            let size = nativeint sizeof<^T>
             let mutable sum = 'T.Zero
             while current < endp do
-              let c = current |> NativePtr.ofNativeInt<^T>
-              let v = NativePtr.get<^T> c 0
+              let v = current |> (NativePtr.ofNativeInt<^T> >> NativePtr.read<^T>)
               sum <- Microsoft.FSharp.Core.Operators.(+) sum v
-              current <- current + (nativeint sizeof<^T>)
+              current <- current + size
             sum + Vector128.Sum vsum
           // SIMD : 256bit
           else
@@ -162,10 +162,11 @@ module Array =
             vsum <- vsum + Vector256.Load(current |> NativePtr.ofNativeInt<^T>)
             current <- current + 32n
   
+          let size = nativeint sizeof<^T>
           let mutable sum = 'T.Zero
           while current < endp do
-            let c = current |> NativePtr.ofNativeInt<^T>
-            let v = NativePtr.get<^T> c 0
-            sum <- Microsoft.FSharp.Core.Operators.(+) sum v
-            current <- current + (nativeint sizeof<^T>)
+            //let v = current |> (NativePtr.ofNativeInt<^T> >> NativePtr.read<^T>)
+            sum <- sum + (current |> (NativePtr.ofNativeInt<^T> >> NativePtr.read<^T>))
+            //sum <- Microsoft.FSharp.Core.Operators.(+) sum v
+            current <- current + size
           sum + Vector256.Sum vsum

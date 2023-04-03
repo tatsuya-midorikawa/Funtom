@@ -92,6 +92,8 @@ let main args =
   let xs' = [| for _ in 1..100 do fake.Random.Int(0, 100) |]
   let ys' = [| for _ in 1..100 do fake.Random.Double(0.0, 100.) |]
   
+  let xs'' = [| for _ in 1..1_000_000 do fake.Random.Int(0, System.Int32.MaxValue) |]
+
   //let size = sizeof<int>
   //size |> printfn "size<int>= %d"
   //let count = System.Runtime.Intrinsics.Vector256<int>.Count
@@ -165,7 +167,17 @@ let main args =
   ys'
   |> Funtom.collections.Array.sum
   |> printfn "Funtom Array.sum= %f"
-
+  
+  printfn "----------"
+  
+  //xs''.Sum()
+  //|> printfn "System.Linq.Sum= %d"
+  xs''
+  |> Array.sum
+  |> printfn "FSharp Array.sum= %d"
+  xs''
+  |> Funtom.collections.Array.sum
+  |> printfn "Funtom Array.sum= %d"
   0
 
 #endif
