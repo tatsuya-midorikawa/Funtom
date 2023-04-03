@@ -23,25 +23,25 @@ type Benchmark () =
     xs <- [| for _ in 1..100_000_000 do fake.Random.Int(System.Int32.MinValue, System.Int32.MaxValue) |]
     ys <- [| for _ in 1..100_000_000 do fake.Random.Int(-20, 20) |]
 
-  //[<Benchmark>]
-  //member __.Linq_max() = xs.Max()
+  [<Benchmark>]
+  member __.Linq_max() = xs.Max()
 
-  //[<Benchmark>]
-  //member __.Array_max() = Array.max xs
+  [<Benchmark>]
+  member __.Fsharp_Array_max() = Array.max xs
     
-  //[<Benchmark>]
-  //member __.Funtom_Array_max() = Funtom.collections.Array.max xs
+  [<Benchmark>]
+  member __.Funtom_Array_max() = Funtom.collections.Array.max xs
 
-  //// ---------------------------------
+  // ---------------------------------
 
-  //[<Benchmark>]
-  //member __.Linq_min() = xs.Min()
+  [<Benchmark>]
+  member __.Linq_min() = xs.Min()
 
-  //[<Benchmark>]
-  //member __.Array_min() = Array.min xs
+  [<Benchmark>]
+  member __.Fsharp_Array_min() = Array.min xs
     
-  //[<Benchmark>]
-  //member __.Funtom_Array_min() = Funtom.collections.Array.min xs
+  [<Benchmark>]
+  member __.Funtom_Array_min() = Funtom.collections.Array.min xs
   
   // ---------------------------------
 
@@ -49,7 +49,7 @@ type Benchmark () =
   member __.Linq_sum() = ys.Max()
 
   [<Benchmark>]
-  member __.Array_sum() = Array.max ys
+  member __.Fsharp_Array_sum() = Array.max ys
     
   [<Benchmark>]
   member __.Funtom_Array_sum() = Funtom.collections.Array.max ys

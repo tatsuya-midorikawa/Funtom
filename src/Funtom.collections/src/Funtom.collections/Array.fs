@@ -145,8 +145,7 @@ module Array =
             let size = nativeint sizeof<^T>
             let mutable sum = 'T.Zero
             while current < endp do
-              let v = current |> (NativePtr.ofNativeInt<^T> >> NativePtr.read<^T>)
-              sum <- Microsoft.FSharp.Core.Operators.(+) sum v
+              sum <- sum + (current |> (NativePtr.ofNativeInt<^T> >> NativePtr.read<^T>))
               current <- current + size
             sum + Vector128.Sum vsum
           // SIMD : 256bit
@@ -165,8 +164,6 @@ module Array =
           let size = nativeint sizeof<^T>
           let mutable sum = 'T.Zero
           while current < endp do
-            //let v = current |> (NativePtr.ofNativeInt<^T> >> NativePtr.read<^T>)
             sum <- sum + (current |> (NativePtr.ofNativeInt<^T> >> NativePtr.read<^T>))
-            //sum <- Microsoft.FSharp.Core.Operators.(+) sum v
             current <- current + size
           sum + Vector256.Sum vsum
