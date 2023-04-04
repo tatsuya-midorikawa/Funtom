@@ -167,3 +167,6 @@ module Array =
             sum <- sum + (current |> (NativePtr.ofNativeInt<^T> >> NativePtr.read<^T>))
             current <- current + size
           sum + Vector256.Sum vsum
+
+  let inline average<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType and ^T:> System.Numerics.INumber<^T>>
+    (src: array<^T>) = 'T.CreateChecked(sum src) / 'T.CreateChecked(src.Length)

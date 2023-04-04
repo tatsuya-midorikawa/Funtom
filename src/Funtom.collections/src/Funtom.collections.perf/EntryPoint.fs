@@ -17,42 +17,55 @@ type Benchmark () =
 
   let mutable xs = Array.empty
   let mutable ys = Array.empty
+  let mutable zs = Array.empty
 
   [<GlobalSetup>]
   member __.Setup() =
     xs <- [| for _ in 1..100_000_000 do fake.Random.Int(System.Int32.MinValue, System.Int32.MaxValue) |]
     ys <- [| for _ in 1..100_000_000 do fake.Random.Int(-20, 20) |]
+    zs <- [| for _ in 1..100_000_000 do fake.Random.Double(-20, 20) |]
 
-  [<Benchmark>]
-  member __.Linq_max() = xs.Max()
+  //[<Benchmark>]
+  //member __.Linq_max() = xs.Max()
 
-  [<Benchmark>]
-  member __.Fsharp_Array_max() = Array.max xs
+  //[<Benchmark>]
+  //member __.Fsharp_Array_max() = Array.max xs
     
-  [<Benchmark>]
-  member __.Funtom_Array_max() = Funtom.collections.Array.max xs
+  //[<Benchmark>]
+  //member __.Funtom_Array_max() = Funtom.collections.Array.max xs
 
-  // ---------------------------------
+  //// ---------------------------------
 
-  [<Benchmark>]
-  member __.Linq_min() = xs.Min()
+  //[<Benchmark>]
+  //member __.Linq_min() = xs.Min()
 
-  [<Benchmark>]
-  member __.Fsharp_Array_min() = Array.min xs
+  //[<Benchmark>]
+  //member __.Fsharp_Array_min() = Array.min xs
     
-  [<Benchmark>]
-  member __.Funtom_Array_min() = Funtom.collections.Array.min xs
+  //[<Benchmark>]
+  //member __.Funtom_Array_min() = Funtom.collections.Array.min xs
+  
+  //// ---------------------------------
+
+  //[<Benchmark>]
+  //member __.Linq_sum() = ys.Max()
+
+  //[<Benchmark>]
+  //member __.Fsharp_Array_sum() = Array.max ys
+    
+  //[<Benchmark>]
+  //member __.Funtom_Array_sum() = Funtom.collections.Array.max ys
   
   // ---------------------------------
 
   [<Benchmark>]
-  member __.Linq_sum() = ys.Max()
+  member __.Linq_average() = zs.Average()
 
   [<Benchmark>]
-  member __.Fsharp_Array_sum() = Array.max ys
+  member __.Fsharp_Array_average() = Array.average zs
     
   [<Benchmark>]
-  member __.Funtom_Array_sum() = Funtom.collections.Array.max ys
+  member __.Funtom_Array_average() = Funtom.collections.Array.average zs
 
 #if BENCHMARK
 [<EntryPoint>]
@@ -168,16 +181,28 @@ let main args =
   |> Funtom.collections.Array.sum
   |> printfn "Funtom Array.sum= %f"
   
+  //printfn "----------"
+  
+  ////xs''.Sum()
+  ////|> printfn "System.Linq.Sum= %d"
+  //xs''
+  //|> Array.sum
+  //|> printfn "FSharp Array.sum= %d"
+  //xs''
+  //|> Funtom.collections.Array.sum
+  //|> printfn "Funtom Array.sum= %d"
+  
   printfn "----------"
   
-  //xs''.Sum()
-  //|> printfn "System.Linq.Sum= %d"
-  xs''
-  |> Array.sum
-  |> printfn "FSharp Array.sum= %d"
-  xs''
-  |> Funtom.collections.Array.sum
-  |> printfn "Funtom Array.sum= %d"
+  ys'.Average()
+  |> printfn "System.Linq.Average= %f"
+  ys'
+  |> Array.average
+  |> printfn "FSharp Array.average= %f"
+  ys'
+  |> Funtom.collections.Array.average
+  |> printfn "Funtom Array.average= %f"
+
   0
 
 #endif

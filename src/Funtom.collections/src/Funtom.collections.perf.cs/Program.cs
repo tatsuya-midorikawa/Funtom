@@ -10,6 +10,7 @@ using System.Linq;
 public class Benchmark {
   private int[] xs = new int[100_000_000];
   private int[] ys = new int[100_000_000];
+  private double[] zs = new double[100_000_000];
 
   [GlobalSetup]
   public void Setup() {
@@ -17,30 +18,37 @@ public class Benchmark {
     for (int i = 0; i < 100_000_000; i++) {
       xs[i] = fake.Random.Int(int.MinValue, int.MaxValue);
       ys[i] = fake.Random.Int(-20, 20);
+      zs[i] = fake.Random.Double(-20, 20);
     }
   }
 
-  [Benchmark]
-  public int Linq_max() => xs.Max();
-  [Benchmark]
-  public int SimdLinq_max() => SimdLinq.SimdLinqExtensions.Max(xs);
-  [Benchmark]
-  public int Funtom_Array_max() => Funtom.collections.Array.max(xs);
+  //[Benchmark]
+  //public int Linq_max() => xs.Max();
+  //[Benchmark]
+  //public int SimdLinq_max() => SimdLinq.SimdLinqExtensions.Max(xs);
+  //[Benchmark]
+  //public int Funtom_Array_max() => Funtom.collections.Array.max(xs);
 
+  //[Benchmark]
+  //public int Linq_min() => xs.Min();
+  //[Benchmark]
+  //public int SimdLinq_min() => SimdLinq.SimdLinqExtensions.Min(xs);
+  //[Benchmark]
+  //public int Funtom_Array_min() => Funtom.collections.Array.min(xs);
+
+  //[Benchmark]
+  //public int Linq_sum() => ys.Sum();
+  //[Benchmark]
+  //public int SimdLinq_sum() => SimdLinq.SimdLinqExtensions.Sum(ys);
+  //[Benchmark]
+  //public int Funtom_Array_sum() => Funtom.collections.Array.sum(ys);
 
   [Benchmark]
-  public int Linq_min() => xs.Min();
+  public double Linq_average() => zs.Average();
   [Benchmark]
-  public int SimdLinq_min() => SimdLinq.SimdLinqExtensions.Min(xs);
+  public double SimdLinq_suaverage() => SimdLinq.SimdLinqExtensions.Average(zs);
   [Benchmark]
-  public int Funtom_Array_min() => Funtom.collections.Array.min(xs);
-
-  [Benchmark]
-  public int Linq_sum() => ys.Sum();
-  [Benchmark]
-  public int SimdLinq_sum() => SimdLinq.SimdLinqExtensions.Sum(ys);
-  [Benchmark]
-  public int Funtom_Array_sum() => Funtom.collections.Array.sum(ys);
+  public double Funtom_Array_average() => Funtom.collections.Array.average(zs);
 }
 
 internal class Program {
