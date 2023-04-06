@@ -46,7 +46,7 @@ public class Benchmark {
   [Benchmark]
   public double Linq_average_double() => zs.Average();
   [Benchmark]
-  public double SimdLinq_average() => SimdLinq.SimdLinqExtensions.Average(zs);
+  public double SimdLinq_average_double() => SimdLinq.SimdLinqExtensions.Average(zs);
   [Benchmark]
   public double Funtom_Array_average_double() => Funtom.collections.Array.average(zs);
 
