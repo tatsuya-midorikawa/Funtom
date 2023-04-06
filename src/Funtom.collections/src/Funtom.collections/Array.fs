@@ -170,3 +170,11 @@ module Array =
 
   let inline average<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType and ^T:> System.Numerics.INumber<^T>>
     (src: array<^T>) = 'T.CreateChecked(sum src) / 'T.CreateChecked(src.Length)
+
+type Array() =
+  static member average (src: array<int>) : double = (double (Array.sum src)) / (double src.Length)
+  static member average (src: array<int8>) : double = (double (Array.sum src)) / (double src.Length)
+  static member average (src: array<int16>) : double = (double (Array.sum src)) / (double src.Length)
+  static member average (src: array<int64>) : double = (double (Array.sum src)) / (double src.Length)
+  static member average (src: array<float32>) : double = (double (Array.sum src)) / (double src.Length)
+  static member average (src: array<double>) : double = (Array.sum src) / (double src.Length)

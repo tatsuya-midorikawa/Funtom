@@ -44,11 +44,18 @@ public class Benchmark {
   //public int Funtom_Array_sum() => Funtom.collections.Array.sum(ys);
 
   [Benchmark]
-  public double Linq_average() => zs.Average();
+  public double Linq_average_double() => zs.Average();
   [Benchmark]
-  public double SimdLinq_suaverage() => SimdLinq.SimdLinqExtensions.Average(zs);
+  public double SimdLinq_average() => SimdLinq.SimdLinqExtensions.Average(zs);
   [Benchmark]
-  public double Funtom_Array_average() => Funtom.collections.Array.average(zs);
+  public double Funtom_Array_average_double() => Funtom.collections.Array.average(zs);
+
+  [Benchmark]
+  public double Linq_average_int() => ys.Average();
+  [Benchmark]
+  public double SimdLinq_average_int() => SimdLinq.SimdLinqExtensions.Average(ys);
+  [Benchmark]
+  public double Funtom_Array_average_int() => Funtom.collections.Array.average(ys);
 }
 
 internal class Program {
