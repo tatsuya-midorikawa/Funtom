@@ -25,47 +25,47 @@ type Benchmark () =
     ys <- [| for _ in 1..100_000_000 do fake.Random.Int(-20, 20) |]
     zs <- [| for _ in 1..100_000_000 do fake.Random.Double(-20, 20) |]
 
-  //[<Benchmark>]
-  //member __.Linq_max() = xs.Max()
+  [<Benchmark>]
+  member __.Linq_max() = xs.Max()
 
-  //[<Benchmark>]
-  //member __.Fsharp_Array_max() = Array.max xs
+  [<Benchmark>]
+  member __.Fsharp_Array_max() = Array.max xs
     
-  //[<Benchmark>]
-  //member __.Funtom_Array_max() = Funtom.collections.Array.max xs
+  [<Benchmark>]
+  member __.Funtom_Array_max() = Funtom.collections.Array.max xs
 
-  //// ---------------------------------
+  // ---------------------------------
 
-  //[<Benchmark>]
-  //member __.Linq_min() = xs.Min()
+  [<Benchmark>]
+  member __.Linq_min() = xs.Min()
 
-  //[<Benchmark>]
-  //member __.Fsharp_Array_min() = Array.min xs
+  [<Benchmark>]
+  member __.Fsharp_Array_min() = Array.min xs
     
-  //[<Benchmark>]
-  //member __.Funtom_Array_min() = Funtom.collections.Array.min xs
+  [<Benchmark>]
+  member __.Funtom_Array_min() = Funtom.collections.Array.min xs
   
-  //// ---------------------------------
+  // ---------------------------------
 
-  //[<Benchmark>]
-  //member __.Linq_sum() = ys.Max()
+  [<Benchmark>]
+  member __.Linq_sum() = ys.Max()
 
-  //[<Benchmark>]
-  //member __.Fsharp_Array_sum() = Array.max ys
+  [<Benchmark>]
+  member __.Fsharp_Array_sum() = Array.max ys
     
-  //[<Benchmark>]
-  //member __.Funtom_Array_sum() = Funtom.collections.Array.max ys
+  [<Benchmark>]
+  member __.Funtom_Array_sum() = Funtom.collections.Array.max ys
   
-  //// ---------------------------------
+  // ---------------------------------
 
-  //[<Benchmark>]
-  //member __.Linq_average() = zs.Average()
+  [<Benchmark>]
+  member __.Linq_average() = zs.Average()
 
-  //[<Benchmark>]
-  //member __.Fsharp_Array_average() = Array.average zs
+  [<Benchmark>]
+  member __.Fsharp_Array_average() = Array.average zs
     
-  //[<Benchmark>]
-  //member __.Funtom_Array_average() = Funtom.collections.Array.average zs
+  [<Benchmark>]
+  member __.Funtom_Array_average() = Funtom.collections.Array.average zs
 
   // ---------------------------------
 
