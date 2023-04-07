@@ -43,19 +43,26 @@ public class Benchmark {
   //[Benchmark]
   //public int Funtom_Array_sum() => Funtom.collections.Array.sum(ys);
 
-  [Benchmark]
-  public double Linq_average_double() => zs.Average();
-  [Benchmark]
-  public double SimdLinq_average_double() => SimdLinq.SimdLinqExtensions.Average(zs);
-  [Benchmark]
-  public double Funtom_Array_average_double() => Funtom.collections.Array.average(zs);
+  //[Benchmark]
+  //public double Linq_average_double() => zs.Average();
+  //[Benchmark]
+  //public double SimdLinq_average_double() => SimdLinq.SimdLinqExtensions.Average(zs);
+  //[Benchmark]
+  //public double Funtom_Array_average_double() => Funtom.collections.Array.average(zs);
+
+  //[Benchmark]
+  //public double Linq_average_int() => ys.Average();
+  //[Benchmark]
+  //public double SimdLinq_average_int() => SimdLinq.SimdLinqExtensions.Average(ys);
+  //[Benchmark]
+  //public double Funtom_Array_average_int() => Funtom.collections.Array.average(ys);
 
   [Benchmark]
-  public double Linq_average_int() => ys.Average();
+  public bool Linq_contains() => xs.Contains(255);
   [Benchmark]
-  public double SimdLinq_average_int() => SimdLinq.SimdLinqExtensions.Average(ys);
+  public bool SimdLinq_contains() => SimdLinq.SimdLinqExtensions.Contains(xs, 255);
   [Benchmark]
-  public double Funtom_Array_average_int() => Funtom.collections.Array.average(ys);
+  public bool Funtom_Array_contains() => Funtom.collections.ArrayExtensions.Contains(xs, 255);
 }
 
 internal class Program {

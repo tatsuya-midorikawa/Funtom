@@ -7,7 +7,7 @@ module Array =
   open Microsoft.FSharp.NativeInterop
   open Funtom.collections.internals.core
 
-  let inline max<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType>
+  let inline public max<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType>
     (src: array<^T>) =
       if src = defaultof<_> || src.Length = 0
         then throw_empty()
@@ -61,7 +61,7 @@ module Array =
               if max < best[i] then max <- best[i]
             max
 
-  let inline min<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType>
+  let inline public min<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType>
     (src: array<^T>) =
       if src = defaultof<_> || src.Length = 0
         then throw_empty()
@@ -115,7 +115,7 @@ module Array =
               if worst[i] < min then min <- worst[i]
             min
 
-  let inline sum<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType and ^T:> System.Numerics.INumber<^T>>
+  let inline public sum<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType and ^T:> System.Numerics.INumber<^T>>
     (src: array<^T>) =
       if src = defaultof<_>
         then throw_empty()
@@ -167,10 +167,10 @@ module Array =
             current <- current + size
           sum + Vector256.Sum vsum
 
-  let inline average<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType and ^T:> System.Numerics.INumber<^T>>
+  let inline public average<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType and ^T:> System.Numerics.INumber<^T>>
     (src: array<^T>) = 'T.CreateChecked(sum src) / 'T.CreateChecked(src.Length)
     
-  let inline contains<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType and ^T:> System.Numerics.INumber<^T>>
+  let inline public contains<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType and ^T:> System.Numerics.INumber<^T>>
     (value: ^T) (src: array<^T>) =
       if src = defaultof<_>
         then throw_empty()
@@ -220,13 +220,30 @@ module Array =
             loop ()
             
 type Array() =
-  static member average (src: array<int>) : double = (double (Array.sum src)) / (double src.Length)
-  static member average (src: array<int8>) : double = (double (Array.sum src)) / (double src.Length)
-  static member average (src: array<int16>) : double = (double (Array.sum src)) / (double src.Length)
-  static member average (src: array<int64>) : double = (double (Array.sum src)) / (double src.Length)
-  static member average (src: array<uint>) : double = (double (Array.sum src)) / (double src.Length)
-  static member average (src: array<uint8>) : double = (double (Array.sum src)) / (double src.Length)
-  static member average (src: array<uint16>) : double = (double (Array.sum src)) / (double src.Length)
-  static member average (src: array<uint64>) : double = (double (Array.sum src)) / (double src.Length)
-  static member average (src: array<float32>) : double = (double (Array.sum src)) / (double src.Length)
-  static member average (src: array<double>) : double = (Array.sum src) / (double src.Length)
+  static member inline average (src: array<int>) : double = (double (Array.sum src)) / (double src.Length)
+  static member inline average (src: array<int8>) : double = (double (Array.sum src)) / (double src.Length)
+  static member inline average (src: array<int16>) : double = (double (Array.sum src)) / (double src.Length)
+  static member inline average (src: array<int64>) : double = (double (Array.sum src)) / (double src.Length)
+  static member inline average (src: array<uint>) : double = (double (Array.sum src)) / (double src.Length)
+  static member inline average (src: array<uint8>) : double = (double (Array.sum src)) / (double src.Length)
+  static member inline average (src: array<uint16>) : double = (double (Array.sum src)) / (double src.Length)
+  static member inline average (src: array<uint64>) : double = (double (Array.sum src)) / (double src.Length)
+  static member inline average (src: array<float32>) : double = (double (Array.sum src)) / (double src.Length)
+  static member inline average (src: array<double>) : double = (Array.sum src) / (double src.Length)
+
+[<System.Runtime.CompilerServices.Extension>]
+type ArrayExtensions() =
+  static member inline Max src = Array.max src
+  static member inline Min src = Array.min src
+  static member inline Sum src = Array.sum src
+  static member inline Average (src: array<int>) : double = (double (Array.sum src)) / (double src.Length)
+  static member inline Average (src: array<int8>) : double = (double (Array.sum src)) / (double src.Length)
+  static member inline Average (src: array<int16>) : double = (double (Array.sum src)) / (double src.Length)
+  static member inline Average (src: array<int64>) : double = (double (Array.sum src)) / (double src.Length)
+  static member inline Average (src: array<uint>) : double = (double (Array.sum src)) / (double src.Length)
+  static member inline Average (src: array<uint8>) : double = (double (Array.sum src)) / (double src.Length)
+  static member inline Average (src: array<uint16>) : double = (double (Array.sum src)) / (double src.Length)
+  static member inline Average (src: array<uint64>) : double = (double (Array.sum src)) / (double src.Length)
+  static member inline Average (src: array<float32>) : double = (double (Array.sum src)) / (double src.Length)
+  static member inline Average (src: array<double>) : double = (Array.sum src) / (double src.Length)
+  static member inline Contains (src, value) = Array.contains value src
