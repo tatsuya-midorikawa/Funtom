@@ -116,7 +116,6 @@ module Array =
             min
 
   let inline sum<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType and ^T:> System.Numerics.INumber<^T>>
-  //let sum<'T when 'T: unmanaged and 'T: struct and 'T: comparison and 'T: (new: unit -> 'T) and 'T:> System.ValueType and 'T:> System.Numerics.INumber<'T>>
     (src: array<^T>) =
       if src = defaultof<_>
         then throw_empty()
@@ -170,11 +169,64 @@ module Array =
 
   let inline average<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType and ^T:> System.Numerics.INumber<^T>>
     (src: array<^T>) = 'T.CreateChecked(sum src) / 'T.CreateChecked(src.Length)
+    
+  let inline contains<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType and ^T:> System.Numerics.INumber<^T>>
+    (value: ^T) (src: array<^T>) =
+      if src = defaultof<_>
+        then throw_empty()
+        
+      if not vec128.IsHardwareAccelerated || src.Length < vec128<^T>.Count
+        // Not SIMD
+        then
+          let rec search i =
+            if i < src.Length
+              then if src[i] = value then true else search (i + 1)
+              else false
+          search 0
+        elif not vec256.IsHardwareAccelerated || src.Length < vec256<^T>.Count
+          // SIMD : 128bit
+          then
+            let p = fixed &src[0]
 
+            let mutable current = NativePtr.toNativeInt p
+            let lastp = current + nativeint ((src.Length - Vector128<^T>.Count) * sizeof<^T>) 
+            let v = Vector128.Create value
+
+            let rec loop () =
+              if current < lastp
+                then 
+                  if Vector128.EqualsAny(Vector128.Load (NativePtr.ofNativeInt<^T> current), v)
+                    then true
+                    else current <- current + 16n; loop ()
+                else 
+                  Vector128.EqualsAny(Vector128.Load (NativePtr.ofNativeInt<^T> lastp), v)
+            loop ()
+          // SIMD : 256bit
+          else
+            let p = fixed &src[0]
+
+            let mutable current = NativePtr.toNativeInt p
+            let lastp = current + nativeint ((src.Length - Vector256<^T>.Count) * sizeof<^T>) 
+            let v = Vector256.Create value
+
+            let rec loop () =
+              if current < lastp
+                then 
+                  if Vector256.EqualsAny(Vector256.Load (NativePtr.ofNativeInt<^T> current), v)
+                    then true
+                    else current <- current + 32n; loop ()
+                else 
+                  Vector256.EqualsAny(Vector256.Load (NativePtr.ofNativeInt<^T> lastp), v)
+            loop ()
+            
 type Array() =
   static member average (src: array<int>) : double = (double (Array.sum src)) / (double src.Length)
   static member average (src: array<int8>) : double = (double (Array.sum src)) / (double src.Length)
   static member average (src: array<int16>) : double = (double (Array.sum src)) / (double src.Length)
   static member average (src: array<int64>) : double = (double (Array.sum src)) / (double src.Length)
+  static member average (src: array<uint>) : double = (double (Array.sum src)) / (double src.Length)
+  static member average (src: array<uint8>) : double = (double (Array.sum src)) / (double src.Length)
+  static member average (src: array<uint16>) : double = (double (Array.sum src)) / (double src.Length)
+  static member average (src: array<uint64>) : double = (double (Array.sum src)) / (double src.Length)
   static member average (src: array<float32>) : double = (double (Array.sum src)) / (double src.Length)
   static member average (src: array<double>) : double = (Array.sum src) / (double src.Length)

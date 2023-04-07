@@ -56,17 +56,28 @@ type Benchmark () =
   //[<Benchmark>]
   //member __.Funtom_Array_sum() = Funtom.collections.Array.max ys
   
+  //// ---------------------------------
+
+  //[<Benchmark>]
+  //member __.Linq_average() = zs.Average()
+
+  //[<Benchmark>]
+  //member __.Fsharp_Array_average() = Array.average zs
+    
+  //[<Benchmark>]
+  //member __.Funtom_Array_average() = Funtom.collections.Array.average zs
+
   // ---------------------------------
 
   [<Benchmark>]
-  member __.Linq_average() = zs.Average()
+  member __.Linq_contains() = xs.Contains(255)
 
   [<Benchmark>]
-  member __.Fsharp_Array_average() = Array.average zs
-    
+  member __.Fsharp_Array_contains() = xs |> Array.contains 255
+  
   [<Benchmark>]
-  member __.Funtom_Array_average() = Funtom.collections.Array.average zs
-
+  member __.Funtom_Array_contains() = xs |> Funtom.collections.Array.contains 255
+  
 #if BENCHMARK
 [<EntryPoint>]
 let main args =
@@ -161,25 +172,25 @@ let main args =
   
   //printfn "----------"
   
-  xs'.Sum()
-  |> printfn "System.Linq.Sum= %d"
-  xs'
-  |> Array.sum
-  |> printfn "FSharp Array.sum= %d"
-  xs'
-  |> Funtom.collections.Array.sum
-  |> printfn "Funtom Array.sum= %d"
+  //xs'.Sum()
+  //|> printfn "System.Linq.Sum= %d"
+  //xs'
+  //|> Array.sum
+  //|> printfn "FSharp Array.sum= %d"
+  //xs'
+  //|> Funtom.collections.Array.sum
+  //|> printfn "Funtom Array.sum= %d"
   
-  printfn "----------"
+  //printfn "----------"
 
-  ys'.Sum()
-  |> printfn "System.Linq.Sum= %f"
-  ys'
-  |> Array.sum
-  |> printfn "FSharp Array.sum= %f"
-  ys'
-  |> Funtom.collections.Array.sum
-  |> printfn "Funtom Array.sum= %f"
+  //ys'.Sum()
+  //|> printfn "System.Linq.Sum= %f"
+  //ys'
+  //|> Array.sum
+  //|> printfn "FSharp Array.sum= %f"
+  //ys'
+  //|> Funtom.collections.Array.sum
+  //|> printfn "Funtom Array.sum= %f"
   
   //printfn "----------"
   
@@ -192,27 +203,48 @@ let main args =
   //|> Funtom.collections.Array.sum
   //|> printfn "Funtom Array.sum= %d"
   
-  printfn "----------"
+  //printfn "----------"
   
-  xs'.Average()
-  |> printfn "System.Linq.Average= %f"
+  //xs'.Average()
+  //|> printfn "System.Linq.Average= %f"
+  ////xs'
+  ////|> Array.average
+  ////|> printfn "FSharp Array.sum= %f"
   //xs'
+  //|> Funtom.collections.Array.average
+  //|> printfn "Funtom Array.average= %f"
+  
+  //printfn "----------"
+
+  //ys'.Average()
+  //|> printfn "System.Linq.Average= %f"
+  //ys'
   //|> Array.average
-  //|> printfn "FSharp Array.sum= %f"
-  xs'
-  |> Funtom.collections.Array.average
-  |> printfn "Funtom Array.average= %f"
+  //|> printfn "FSharp Array.average= %f"
+  //ys'
+  //|> Funtom.collections.Array.average
+  //|> printfn "Funtom Array.average= %f"
+  
+  //printfn "----------"
+
+  [| 0..101 |].Contains(102) |> printfn "System.Linq.Contains= %b"
+  [| 0..101 |] |> Array.contains(102) |> printfn "FSharp Array.contains= %b"
+  [| 0..101 |] |> Funtom.collections.Array.contains(102) |> printfn "Funtom Array.contains= %b"
+
+  printfn "----------"
+
+  [| 0.0..0.2..100 |] 
+  |> Array.iter (printf "%f, ")
   
   printfn "----------"
 
-  ys'.Average()
-  |> printfn "System.Linq.Average= %f"
-  ys'
-  |> Array.average
-  |> printfn "FSharp Array.average= %f"
-  ys'
-  |> Funtom.collections.Array.average
-  |> printfn "Funtom Array.average= %f"
+  [| 0.0..0.2..100.0 |].Contains(99.800000) |> printfn "System.Linq.Contains (99.800000)= %b"
+  [| 0.0..0.2..100.0 |] |> Array.contains(99.800000) |> printfn "FSharp Array.contains (99.800000)= %b"
+  [| 0.0..0.2..100.0 |] |> Funtom.collections.Array.contains(99.800000) |> printfn "Funtom Array.contains (99.800000)= %b"
+
+  [| 0.0..0.2..100.0 |].Contains(100) |> printfn "System.Linq.Contains (100)= %b"
+  [| 0.0..0.2..100.0 |] |> Array.contains(100) |> printfn "FSharp Array.contains (100)= %b"
+  [| 0.0..0.2..100.0 |] |> Funtom.collections.Array.contains(100) |> printfn "Funtom Array.contains (100)= %b"
 
   0
 
