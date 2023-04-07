@@ -194,6 +194,17 @@ let main args =
   
   printfn "----------"
   
+  xs'.Average()
+  |> printfn "System.Linq.Average= %f"
+  //xs'
+  //|> Array.average
+  //|> printfn "FSharp Array.sum= %f"
+  xs'
+  |> Funtom.collections.Array.average
+  |> printfn "Funtom Array.average= %f"
+  
+  printfn "----------"
+
   ys'.Average()
   |> printfn "System.Linq.Average= %f"
   ys'
