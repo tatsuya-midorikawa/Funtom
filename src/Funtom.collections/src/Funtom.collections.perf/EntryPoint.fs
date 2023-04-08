@@ -6,6 +6,7 @@ open BenchmarkDotNet.Configs
 open BenchmarkDotNet.Attributes
 open BenchmarkDotNet.Running
 open Bogus
+open System
 open System.Linq
 open System.Runtime.Intrinsics
 
@@ -227,24 +228,31 @@ let main args =
   
   //printfn "----------"
 
-  [| 0..101 |].Contains(102) |> printfn "System.Linq.Contains= %b"
-  [| 0..101 |] |> Array.contains(102) |> printfn "FSharp Array.contains= %b"
-  [| 0..101 |] |> Funtom.collections.Array.contains(102) |> printfn "Funtom Array.contains= %b"
+  //[| 0..101 |].Contains(102) |> printfn "System.Linq.Contains= %b"
+  //[| 0..101 |] |> Array.contains(102) |> printfn "FSharp Array.contains= %b"
+  //[| 0..101 |] |> Funtom.collections.Array.contains(102) |> printfn "Funtom Array.contains= %b"
 
-  printfn "----------"
+  //printfn "----------"
 
-  [| 0.0..0.2..100 |] 
-  |> Array.iter (printf "%f, ")
+  //[| 0.0..0.2..100 |] 
+  //|> Array.iter (printf "%f, ")
   
-  printfn "----------"
+  //printfn "----------"
 
-  [| 0.0..0.2..100.0 |].Contains(99.800000) |> printfn "System.Linq.Contains (99.800000)= %b"
-  [| 0.0..0.2..100.0 |] |> Array.contains(99.800000) |> printfn "FSharp Array.contains (99.800000)= %b"
-  [| 0.0..0.2..100.0 |] |> Funtom.collections.Array.contains(99.800000) |> printfn "Funtom Array.contains (99.800000)= %b"
+  //[| 0.0..0.2..100.0 |].Contains(99.800000) |> printfn "System.Linq.Contains (99.800000)= %b"
+  //[| 0.0..0.2..100.0 |] |> Array.contains(99.800000) |> printfn "FSharp Array.contains (99.800000)= %b"
+  //[| 0.0..0.2..100.0 |] |> Funtom.collections.Array.contains(99.800000) |> printfn "Funtom Array.contains (99.800000)= %b"
 
-  [| 0.0..0.2..100.0 |].Contains(100) |> printfn "System.Linq.Contains (100)= %b"
-  [| 0.0..0.2..100.0 |] |> Array.contains(100) |> printfn "FSharp Array.contains (100)= %b"
-  [| 0.0..0.2..100.0 |] |> Funtom.collections.Array.contains(100) |> printfn "Funtom Array.contains (100)= %b"
+  //[| 0.0..0.2..100.0 |].Contains(100) |> printfn "System.Linq.Contains (100)= %b"
+  //[| 0.0..0.2..100.0 |] |> Array.contains(100) |> printfn "FSharp Array.contains (100)= %b"
+  //[| 0.0..0.2..100.0 |] |> Funtom.collections.Array.contains(100) |> printfn "Funtom Array.contains (100)= %b"
+  
+  //printfn "----------"
+
+  //let ls = ResizeArray [| 0..10 |]
+  //let ls' = Unsafe.As<Funtom.collections.ResizeArray.ResizeArrayInternal<_>>(ls).items.AsSpan(5, 3)
+  //for l in ls' do printfn "%d" l
+  
 
   0
 
