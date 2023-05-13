@@ -249,9 +249,11 @@ let main args =
   
   //printfn "----------"
 
-  //let ls = ResizeArray [| 0..10 |]
-  //let ls' = Unsafe.As<Funtom.collections.ResizeArray.ResizeArrayInternal<_>>(ls).items.AsSpan(5, 3)
-  //for l in ls' do printfn "%d" l
+  let ls = ResizeArray [| 0..10 |]
+  ls.Add(11)
+  let ms = Unsafe.As<Funtom.collections.ResizeArray.ResizeArrayInternal<_>>(ls).items
+  let ls' = Unsafe.As<Funtom.collections.ResizeArray.ResizeArrayInternal<_>>(ls).items.AsSpan(0, ls.Count)
+  for l in ls' do printfn "%d" l
   
 
   0

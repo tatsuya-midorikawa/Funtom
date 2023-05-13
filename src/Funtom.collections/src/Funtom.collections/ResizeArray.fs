@@ -15,7 +15,7 @@ module ResizeArray =
     (src: ResizeArray<^T>) =
       if src = defaultof<_> || src.Count = 0
         then throw_empty()
-        
+      
       let src = System.Runtime.CompilerServices.Unsafe.As<ResizeArrayInternal<_>>(src).items
       if not vec128.IsHardwareAccelerated || src.Length < vec128<^T>.Count
         // Not SIMD
