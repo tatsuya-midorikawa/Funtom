@@ -92,7 +92,7 @@ type Benchmark () =
   //   buf[0]
 
   [<Benchmark>]
-  member __.filestream_read__128() =
+  member __.filestream_read__128_stack() =
     use fs = File.OpenRead csv
     let p = NativePtr.stackalloc<byte> 128 |> NativePtr.toVoidPtr
     let mutable buf = Span<byte>(p, 128)
@@ -101,7 +101,7 @@ type Benchmark () =
     buf[0]
 
   [<Benchmark>]
-  member __.filestream_read__256() =
+  member __.filestream_read__256_stack() =
     use fs = File.OpenRead csv
     let p = NativePtr.stackalloc<byte> 256 |> NativePtr.toVoidPtr
     let mutable buf = Span<byte>(p, 256)
@@ -110,7 +110,7 @@ type Benchmark () =
     buf[0]
 
   [<Benchmark>]
-  member __.filestream_read__512() =
+  member __.filestream_read__512_stack() =
     use fs = File.OpenRead csv
     let p = NativePtr.stackalloc<byte> 512 |> NativePtr.toVoidPtr
     let mutable buf = Span<byte>(p, 512)
@@ -119,10 +119,42 @@ type Benchmark () =
     buf[0]
 
   [<Benchmark>]
-  member __.filestream_read_1024() =
+  member __.filestream_read_1024_stack() =
     use fs = File.OpenRead csv
     let p = NativePtr.stackalloc<byte> 1024 |> NativePtr.toVoidPtr
     let mutable buf = Span<byte>(p, 1024)
+    while 0 < fs.Read(buf) do
+      ()
+    buf[0]
+
+  [<Benchmark>]
+  member __.filestream_read__128_array() =
+    use fs = File.OpenRead csv
+    let buf = Array.zeroCreate<byte> 128
+    while 0 < fs.Read(buf) do
+      ()
+    buf[0]
+
+  [<Benchmark>]
+  member __.filestream_read__256_array() =
+    use fs = File.OpenRead csv
+    let buf = Array.zeroCreate<byte> 256
+    while 0 < fs.Read(buf) do
+      ()
+    buf[0]
+
+  [<Benchmark>]
+  member __.filestream_read__512_array() =
+    use fs = File.OpenRead csv
+    let buf = Array.zeroCreate<byte> 512
+    while 0 < fs.Read(buf) do
+      ()
+    buf[0]
+
+  [<Benchmark>]
+  member __.filestream_read_1024_array() =
+    use fs = File.OpenRead csv
+    let buf = Array.zeroCreate<byte> 1024
     while 0 < fs.Read(buf) do
       ()
     buf[0]
@@ -142,7 +174,17 @@ type Benchmark () =
   //   let mutable c = ' 'B
   //   for i in 0L..accessor.Length - 1L do
   //     c <- accessor.ReadByte() |> byte
-  //   c
+  //   c 
+
+  // [<Benchmark>]
+  // member __.mmf_accsessor_read__128_stack() =
+  //   let fi = FileInfo csv
+  //   use mmf = MemoryMappedFile.CreateFromFile(csv, FileMode.Open)
+  //   use accessor = mmf.CreateViewAccessor()
+  //   let mutable buf = 0uy
+  //   for i in 0L .. (fi.Length - 1L) do
+  //     accessor.Read(i, &buf)
+  //   buf
 
   [<Benchmark>]
   member __.mmf_streamread__128_stack() =
@@ -222,7 +264,7 @@ type Benchmark () =
 
 [<EntryPoint>]
 let main args =
-  // BenchmarkRunner.Run<Benchmark>() |> ignore
+  BenchmarkRunner.Run<Benchmark>() |> ignore
   
   // let csv = "./sample.csv" |> System.IO.Path.GetFullPath
   // use fs = File.OpenRead csv
@@ -259,8 +301,8 @@ let main args =
   // while 0 < accessor.Read(buf) do
   //   ()
 
-  '\n' |> Convert.ToByte |> printfn "%A"
-  '\r' |> Convert.ToByte |> printfn "%A"
-  'a' |> Convert.ToByte |> printfn "%A"
+  // '\n' |> Convert.ToByte |> printfn "%A"
+  // '\r' |> Convert.ToByte |> printfn "%A"
+  // 'a' |> Convert.ToByte |> printfn "%A"
 
   0
