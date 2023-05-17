@@ -1,7 +1,11 @@
 ﻿namespace Funtom.text
 
+#nowarn "9"
+
+open System
 open System.IO
 open System.Text
+open FSharp.NativeInterop
 
 module Csv =
 
@@ -22,13 +26,25 @@ module Csv =
   [<Literal>]
   let Backslash = 0x5Cuy
 
-  let inline public read (path: string, enc: Encoding) = 
-    use stream = File.OpenRead(path)
-    use reader = new StreamReader(stream, enc)
+  let public read (csv: string, enc: Encoding) =
+    use fs = File.OpenRead csv
+    let p = NativePtr.stackalloc<byte> 512 |> NativePtr.toVoidPtr
+    let buf = Array.zeroCreate<byte> 512
     seq {
-      while 0 <= reader.Peek() do
-        let line = reader.ReadLine()
-        line
-    }
+      let mutable length = fs.Read(buf)
+      while 0 < length do
+        let view = buf.AsSpan().Slice(0, length)
+        ""
+    } |> ignore
+    
+    buf[0]
+
+    //use stream = File.OpenRead(path)
+    //use reader = new StreamReader(stream, enc)
+    //seq {
+    //  while 0 <= reader.Peek() do
+    //    let line = reader.ReadLine()
+    //    line
+    //}
     
 
