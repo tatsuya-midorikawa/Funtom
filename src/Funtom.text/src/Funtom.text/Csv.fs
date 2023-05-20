@@ -32,12 +32,14 @@ module Csv =
     let buf = Array.zeroCreate<byte> 512
     seq {
       let mutable length = fs.Read(buf)
+      let mutable i = 0
       while 0 < length do
         let view = buf.AsSpan().Slice(0, length)
-        ""
-    } |> ignore
+        yield i
+        i <- i + 1
+        length <- fs.Read(buf)
+    }
     
-    buf[0]
 
     //use stream = File.OpenRead(path)
     //use reader = new StreamReader(stream, enc)
