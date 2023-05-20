@@ -27,10 +27,10 @@ module Csv =
   let Backslash = 0x5Cuy
 
   let public read (csv: string, enc: Encoding) =
-    use fs = File.OpenRead csv
-    let p = NativePtr.stackalloc<byte> 512 |> NativePtr.toVoidPtr
-    let buf = Array.zeroCreate<byte> 512
-    seq {
+    //let buf = Array.zeroCreate<byte> 512    
+    let buf = Array.zeroCreate<byte> 16
+    seq {    
+      use fs = File.OpenRead csv
       let mutable length = fs.Read(buf)
       let mutable i = 0
       while 0 < length do
