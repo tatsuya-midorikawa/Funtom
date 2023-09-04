@@ -2,16 +2,21 @@
 
 #nowarn "9"
 
-module Array =
+module ResizeArray =
+  open System
   open System.Runtime.Intrinsics
   open Microsoft.FSharp.NativeInterop
   open Funtom.collections.internals.core
 
-  let inline public max<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType>
-    (src: array<^T>) =
-      if src = defaultof<_> || src.Length = 0
-        then throw_empty()
+  type ResizeArrayInternal<'T>() =
+    [<DefaultValue>] val mutable items: 'T[]
 
+  let inline public max<^T when ^T: unmanaged and ^T: struct and ^T: comparison and ^T: (new: unit -> ^T) and ^T:> System.ValueType>
+    (src: ResizeArray<^T>) =
+      if src = defaultof<_> || src.Count = 0
+        then throw_empty()
+      
+      let src = System.Runtime.CompilerServices.Unsafe.As<ResizeArrayInternal<_>>(src).items
       if not vec128.IsHardwareAccelerated || src.Length < vec128<^T>.Count
         // Not SIMD
         then
@@ -20,7 +25,7 @@ module Array =
           max
         elif not vec256.IsHardwareAccelerated || src.Length < vec256<^T>.Count
           // SIMD : 128bit
-          then            
+          then
             use p = fixed &src[0]
             let mutable current = NativePtr.toNativeInt p
             // let padding = 16n
@@ -219,7 +224,7 @@ module Array =
                   Vector256.EqualsAny(Vector256.Load (NativePtr.ofNativeInt<^T> lastp), v)
             loop ()
             
-type Array() =
+type ResizeArray() =
   static member inline average (src: array<int>) : double = (double (Array.sum src)) / (double src.Length)
   static member inline average (src: array<int8>) : double = (double (Array.sum src)) / (double src.Length)
   static member inline average (src: array<int16>) : double = (double (Array.sum src)) / (double src.Length)
@@ -232,7 +237,7 @@ type Array() =
   static member inline average (src: array<double>) : double = (Array.sum src) / (double src.Length)
 
 [<System.Runtime.CompilerServices.Extension>]
-type ArrayExtensions() =
+type ResizeArrayExtensions() =
   static member inline Max src = Array.max src
   static member inline Min src = Array.min src
   static member inline Sum src = Array.sum src
