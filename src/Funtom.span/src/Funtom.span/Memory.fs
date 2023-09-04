@@ -10,6 +10,7 @@ open FSharp.NativeInterop
 module Memory =
   let mutable threshold = 128
 
+  [<NoDynamicInvocation>]
   let inline stackalloc<'a when 'a: unmanaged> (size: int) : nativeptr<'a> =
     NativePtr.stackalloc<'a> size
 
