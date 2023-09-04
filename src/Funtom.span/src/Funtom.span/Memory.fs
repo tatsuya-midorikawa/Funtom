@@ -11,20 +11,23 @@ module Memory =
   let mutable threshold = 128
 
   [<NoDynamicInvocation>]
-  let inline stackalloc<'a when 'a: unmanaged> (size: int) : nativeptr<'a> =
-    NativePtr.stackalloc<'a> size
+  let inline stackalloc<^a when ^a: unmanaged> (size: int) : nativeptr<^a> =
+    NativePtr.stackalloc<^a> size
 
-  let inline stackalloca<'a when 'a: unmanaged> (size: int) : Span<'a> =
-    let p = NativePtr.stackalloc<'a> (int size) |> NativePtr.toVoidPtr
-    Span<'a>(p, size)
+  [<NoDynamicInvocation>]
+  let inline stackalloca<^a when ^a: unmanaged> (size: int) : Span<^a> =
+    let p = NativePtr.stackalloc<^a> (int size) |> NativePtr.toVoidPtr
+    Span<^a>(p, size)
 
-  let inline alloc<'a when 'a: unmanaged> (size: int) = 
-    if size <= threshold then stackalloca size else Array.zeroCreate<'a>(size).AsSpan()
+  [<NoDynamicInvocation>]
+  let inline alloc<^a when ^a: unmanaged> (size: int) = 
+    if size <= threshold then stackalloca size else Array.zeroCreate<^a>(size).AsSpan()
     
-  let inline rent<'a when 'a: unmanaged> (size: int) =
-    ArrayPool<'a>.Shared.Rent size
+  let inline rent<^a when ^a: unmanaged> (size: int) =
+    ArrayPool<^a>.Shared.Rent size
     
-  let inline returns<'a when 'a: unmanaged> (ary: array<'a>) =
-    ArrayPool<'a>.Shared.Return ary
+  let inline returns<^a when ^a: unmanaged> (ary: array<^a>) =
+    ArrayPool<^a>.Shared.Return ary
 
-  let inline ref (span: Span<'a>) = &(MemoryMarshal.GetReference span)
+  [<NoDynamicInvocation>]
+  let inline ref (span: Span<^a>) = &(MemoryMarshal.GetReference span)
