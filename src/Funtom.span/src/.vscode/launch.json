@@ -1,0 +1,34 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": ".NET Core Launch (Debug)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "debug-build",
+      "program": "${workspaceFolder}/Funtom.span.console/bin/Debug/net7.0/Funtom.span.console.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopAtEntry": false,
+      "internalConsoleOptions": "openOnSessionStart",
+      "externalConsole": true
+  },
+  {
+      "name": ".NET Core Launch (Relase)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "release-build",
+      "program": "${workspaceFolder}/Funtom.span.console/bin/Debug/net7.0/Funtom.span.console.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopAtEntry": false,
+      "internalConsoleOptions": "openOnSessionStart",
+      "externalConsole": true
+  }
+  ]
+}
