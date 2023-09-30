@@ -1,3 +1,1 @@
-open Funtom.experiment
-
-Say.hello "F# あ"
+printfn "Hello F#"
