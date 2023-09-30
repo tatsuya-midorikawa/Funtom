@@ -1,0 +1,8 @@
+# All files
+[*]
+indent_style = space
+# Code files
+[*.{fs,fsx,fsi}]
+indent_size = 2
+insert_final_newline = true
+charset = utf-8
