@@ -1,2 +1,8 @@
-﻿// For more information see https://aka.ms/fsharp-console-apps
-printfn "Hello from F#"
+﻿open Funtom.winforms
+
+form [|
+  size { width= 300; height= 200 }
+  text "Hello F#!!"
+|]
+|> show_dialog
+|> ignore

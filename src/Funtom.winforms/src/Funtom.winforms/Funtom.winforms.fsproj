@@ -22,9 +22,8 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
-	<ItemGroup />
-
 	<ItemGroup>
+		<Compile Include="Control.fs" />
 		<Compile Include="Form.fs" />
 		<None Include="..\..\assets\phantom.png">
 			<Pack>True</Pack>
