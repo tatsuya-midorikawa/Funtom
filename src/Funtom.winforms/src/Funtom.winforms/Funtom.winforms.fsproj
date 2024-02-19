@@ -23,8 +23,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Compile Include="Control.fs" />
+		<Compile Include="Utilities.fs" />
+		<Compile Include="Message.fs" />
+		<Compile Include="Component.fs" />
+		<Compile Include="Controls.fs" />
 		<Compile Include="Form.fs" />
+		<Compile Include="impl\Command.fs" />
 		<None Include="..\..\assets\phantom.png">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
