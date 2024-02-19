@@ -8,10 +8,11 @@
 		<!--<PublishSingleFile>true</PublishSingleFile>
 		<SelfContained>true</SelfContained>-->
 		<Version>0.0.1</Version>
+		<PackageVersion>0.0.1-alpha</PackageVersion>
 		<Authors>midoliy</Authors>
 		<Company>midoliy</Company>
 		<Copyright>©2024 Tatsuya Midorikawa. All rights rserved</Copyright>
-		<PackageLicenseExpression>Apache-2.0 license</PackageLicenseExpression>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		<PackageTags>midoliy,WinForms,fsharp, Funtom</PackageTags>
 		<PackageProjectUrl>https://github.com/tatsuya-midorikawa/Funtom</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/tatsuya-midorikawa/Funtom</RepositoryUrl>
