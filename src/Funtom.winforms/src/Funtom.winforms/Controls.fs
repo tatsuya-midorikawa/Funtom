@@ -4,9 +4,13 @@ module controls =
   module private Button =
     let apply (btn: System.Windows.Forms.Button) p =
       match p with
-      | Anchor _ | Size _ | Location _ | Text _ | Name _ | Control _ | Controls _ -> Ctrl.apply btn p
+      #if NET8_0_OR_GREATER
       | Command cmd -> btn.Command <- cmd
-      | _ -> exn $"This property is not supported: %A{p}" |> raise
+      #endif
+      #if NET48_OR_GREATER
+      | Command cmd -> btn.Click.Add cmd
+      #endif
+      | _ -> Ctrl.apply btn p
 
   let button (properties: Property array) =
     let btn = new System.Windows.Forms.Button()

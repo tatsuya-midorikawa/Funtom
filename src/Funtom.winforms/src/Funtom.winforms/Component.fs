@@ -33,7 +33,12 @@ type Property =
   | Name of string
   | Control of System.Windows.Forms.Control
   | Controls of System.Windows.Forms.Control array
+  #if NET8_0_OR_GREATER
   | Command of System.Windows.Input.ICommand
+  #endif
+  #if NET48_OR_GREATER
+  | Command of (obj -> unit)
+  #endif
 
 [<AutoOpen>]
 module Property =
@@ -44,6 +49,9 @@ module Property =
  let inline key (name: string) = Name name
  let inline name (name: string) = Name name
  let inline ctrl (c: System.Windows.Forms.Control) = Control c
+ #if NET48_OR_GREATER
+ let inline cmd (c: obj -> unit) = Command c
+ #endif
 
 module Ctrl =
   let apply (ctrl: System.Windows.Forms.Control) p =
