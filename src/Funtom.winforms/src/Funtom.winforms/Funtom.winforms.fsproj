@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0-windows;net481</TargetFrameworks>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<!--<TargetFramework>net481</TargetFramework>-->
+		<!--<TargetFrameworks>net8.0-windows;net481</TargetFrameworks>-->
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<UseWindowsForms>true</UseWindowsForms>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>

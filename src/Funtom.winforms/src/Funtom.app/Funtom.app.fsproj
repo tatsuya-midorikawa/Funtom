@@ -5,6 +5,7 @@
 		<TargetFrameworks>net8.0-windows;</TargetFrameworks>
 		<UseWindowsForms>true</UseWindowsForms>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<Configurations>Debug;Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

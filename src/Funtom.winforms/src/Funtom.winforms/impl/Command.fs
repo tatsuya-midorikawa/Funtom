@@ -3,7 +3,7 @@
 open System
 open System.Windows.Input
 
-#if NET8_0_OR_GREATER
+#if NET8_0
 type cmd (exec: (cmd * obj option) -> unit, ?can_exec: obj option -> bool) =
   let event = Event<EventHandler, EventArgs>()
   let can_exec = match can_exec with Some e -> e | None -> fun _ -> true

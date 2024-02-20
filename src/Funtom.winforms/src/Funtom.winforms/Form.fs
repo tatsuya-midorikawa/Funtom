@@ -4,7 +4,7 @@ module forms =
   let form (properties: Property array) =    
     let f = new System.Windows.Forms.Form()
     properties |> Array.iter (Ctrl.apply f)
-    Control f
+    Form f
 
   let show (property: Property) =
     match property with Form f -> f.Show(); property | _ -> exn $"This property is not supported: {property}" |> raise

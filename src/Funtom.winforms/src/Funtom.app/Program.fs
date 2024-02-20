@@ -20,8 +20,9 @@ form [|
     location { top= 10<px>; left= 10<px>; }
     cmd (
       exec= 
-        (fun (self, _) -> 
+        (fun (self, _) ->
           flag <- false
+          msg.show("test") |> ignore
           task {
             debug "### start"
             do! Task.Delay 5000
@@ -38,7 +39,6 @@ form [|
 |]
 |> show_dialog
 |> ignore
-
 
 let btn = button [|
   text "click"
@@ -61,5 +61,5 @@ let btn = button [|
 |]
 
 btn
-|> document.add_event_listner (evt.click (fun _ -> msg.show "" |> ignore))
+|> document.add_event_listner (evt.click (fun _ -> msg.show "test" |> ignore))
 |> ignore
