@@ -5,7 +5,7 @@ open Funtom.winforms.controls
 form [|
   size { width= 300<px>; height= 200<px> }
   text "Hello F#!!"
-  key "Main form"
+  id "Main form"
   button [|
     text "click"
     size { width= 100<px>; height= 30<px> }

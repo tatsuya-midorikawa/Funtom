@@ -13,16 +13,14 @@ module private Anchors =
 
 [<Struct; System.Runtime.CompilerServices.IsReadOnly>]
 type Size = { width: int<px>; height: int<px>; }
-
-module private Size =
-  let convert (size: inref<Size>) =
+with
+  static member convert (size: inref<Size>) =
     System.Drawing.Size(width = int size.width, height= int size.height)
 
 [<Struct; System.Runtime.CompilerServices.IsReadOnly>]
 type Location = { top: int<px>; left: int<px>; }
-
-module private Location =
-  let convert (location: inref<Location>) =
+with
+  static member convert (location: inref<Location>) =
     System.Drawing.Point(X= int location.left, Y= int location.top)
 
 type Property =
@@ -31,6 +29,7 @@ type Property =
   | Location of Location
   | Text of string
   | Name of string
+  | Form of System.Windows.Forms.Form
   | Control of System.Windows.Forms.Control
   | Controls of System.Windows.Forms.Control array
   #if NET8_0_OR_GREATER
@@ -46,7 +45,7 @@ module Property =
  let inline size (size: Size) = Size size
  let inline location (location: Location) = Location location
  let inline text (text: string) = Text text
- let inline key (name: string) = Name name
+ let inline id (name: string) = Name name   // id 関数をシャドウイングしてしまうので微妙...
  let inline name (name: string) = Name name
  let inline ctrl (c: System.Windows.Forms.Control) = Control c
  #if NET48_OR_GREATER
@@ -61,10 +60,10 @@ module Ctrl =
     | Location location -> ctrl.Location <- Location.convert &location
     | Text text -> ctrl.Text <- text
     | Name name -> ctrl.Name <- name
+    | Form form -> ctrl.Controls.Add form
     | Control c -> ctrl.Controls.Add c
     | Controls cs -> ctrl.Controls.AddRange cs
     | _ -> exn $"This property is not supported: %A{p}" |> raise
 
-  let inline get_elem_by_key (ctrl: System.Windows.Forms.Control) (key: string) =
-    ctrl.Controls[key]
+
     

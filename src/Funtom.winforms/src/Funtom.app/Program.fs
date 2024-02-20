@@ -13,7 +13,7 @@ let mutable flag = true
 form [|
   size { width= 300<px>; height= 200<px> }
   text "Hello F#!!"
-  key "Main form"
+  id "Main form"
   button [|
     text "click"
     size { width= 100<px>; height= 30<px> }
@@ -37,4 +37,29 @@ form [|
   |]
 |]
 |> show_dialog
+|> ignore
+
+
+let btn = button [|
+  text "click"
+  size { width= 100<px>; height= 30<px> }
+  location { top= 10<px>; left= 10<px>; }
+  cmd (
+    exec= 
+      (fun (self, _) -> 
+        flag <- false
+        task {
+          debug "### start"
+          do! Task.Delay 5000
+          flag <- true
+          debug "### end"
+          self.notify()
+        }
+        |> ignore), 
+    can_exec=
+      (fun _ -> flag))
+|]
+
+btn
+|> document.add_event_listner (evt.click (fun _ -> msg.show "" |> ignore))
 |> ignore

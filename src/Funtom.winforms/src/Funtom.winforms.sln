@@ -7,7 +7,7 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Funtom.winforms", "Funtom.w
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Funtom.app", "Funtom.app\Funtom.app.fsproj", "{1D5B97BC-D1BF-4D6C-B919-3D5465C9BE3A}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Funtom.app.net481", "Funtom.app.net481\Funtom.app.net481.fsproj", "{6D436537-039A-4FB9-9973-03F42E67B038}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Funtom.app.net481", "Funtom.app.net481\Funtom.app.net481.fsproj", "{6D436537-039A-4FB9-9973-03F42E67B038}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
