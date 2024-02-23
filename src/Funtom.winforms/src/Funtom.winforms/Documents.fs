@@ -1,7 +1,5 @@
 ﻿namespace Funtom.winforms
 
-open System.Linq
-
 [<RequireQualifiedAccess>]
 type evt =
   | click of (System.EventArgs -> unit)

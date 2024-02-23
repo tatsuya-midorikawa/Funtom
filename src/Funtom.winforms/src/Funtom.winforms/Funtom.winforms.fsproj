@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<!--<TargetFramework>net8.0-windows</TargetFramework>-->
+		<TargetFramework>net8.0-windows</TargetFramework>
 		<!--<TargetFramework>net481</TargetFramework>-->
-		<TargetFrameworks>net8.0-windows;net481</TargetFrameworks>
+		<!--<TargetFrameworks>net8.0-windows;net481</TargetFrameworks>-->
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<UseWindowsForms>true</UseWindowsForms>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
@@ -28,12 +28,11 @@
 
 	<ItemGroup>
 		<Compile Include="Utilities.fs" />
-		<Compile Include="Message.fs" />
-		<Compile Include="Property.fs" />
+		<Compile Include="Messages.fs" />
+		<Compile Include="Properties.fs" />
 		<Compile Include="Controls.fs" />
-		<Compile Include="Layouts.fs" />
-		<Compile Include="Form.fs" />
-		<Compile Include="Document.fs" />
+		<Compile Include="Forms.fs" />
+		<Compile Include="Documents.fs" />
 		<Compile Include="impl\Command.fs" />
 		<None Include="..\..\assets\phantom.png">
 			<Pack>True</Pack>

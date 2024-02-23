@@ -27,7 +27,6 @@ type MessageIcon =
   | asterisk = 64
   | information = 64
 
-
 module private MessageIcon =
   let convert (icon: MessageIcon) =
     icon |> (int >> enum<System.Windows.Forms.MessageBoxIcon>)

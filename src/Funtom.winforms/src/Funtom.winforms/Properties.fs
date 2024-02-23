@@ -67,7 +67,7 @@ module private Direction =
 
 
 (* ----------------------------------------
-* Direction
+* Dock
 * ---------------------------------------- *)
 type Dock =
  | none   = 0
@@ -80,6 +80,7 @@ type Dock =
 module private Dock =
   let convert (dock: inref<Dock>) =
     dock |> (int >> enum<System.Windows.Forms.DockStyle>)
+
 
 
 (* ----------------------------------------
@@ -105,6 +106,8 @@ type Property =
   | Command of (obj -> unit)
   #endif
 
+
+
 [<AutoOpen>]
 module Property =
   let inline anchor (anchors: Anchors) = Anchor anchors
@@ -121,33 +124,3 @@ module Property =
   #if NET48_OR_GREATER
   let inline cmd (c: obj -> unit) = Command c
   #endif
-
-
-
-(* ----------------------------------------
- * Ctrl
- * ---------------------------------------- *)
-module Ctrl =
-  let apply (ctrl: System.Windows.Forms.Control) p =
-    match p with
-    | Anchor anchor -> ctrl.Anchor <- Anchors.convert &anchor
-    | Dock dock -> ctrl.Dock <- Dock.convert &dock
-    | Size size -> ctrl.Size <- Size.convert &size
-    | AutoSize auto_size -> ctrl.AutoSize <- auto_size
-    | Position location -> ctrl.Location <- Position.convert &location
-    | Location location -> ctrl.Location <- Location.to_point &location; ctrl.Size <- Location.to_size &location
-    | Text text -> ctrl.Text <- text
-    | Name name -> ctrl.Name <- name
-    | Form form -> ctrl.Controls.Add form
-    | Control c -> ctrl.Controls.Add c
-    | Controls cs -> ctrl.Controls.AddRange (cs |> List.toArray)
-    //#if NET8_0
-    //| Command cmd -> ctrl.Click.Add cmd.Execute
-    //#endif
-    #if NET481
-    | Command cmd -> ctrl.Click.Add cmd
-    #endif
-    | _ -> exn $"This property is not supported: %A{p}" |> raise
-
-
-    
