@@ -36,12 +36,16 @@ let form =
     flow [| 
       dock Dock.fill; direction Direction.left_to_right
       label [| text "Click ->"; anchor Anchors.none; auto_size true |]
-      button [| id "btn1"; text "Click me!"; anchor Anchors.none |] |]
+      button [| id "btn1"; text "Click me!"; anchor Anchors.none |]
+      input [| id "input1"; text ""; anchor Anchors.none |]
+    |]
   |]
+
+let textbox = form |> document.get_elem_by_id "input1"
 
 form
 |> document.get_elem_by_id "btn1"
-|> document.add_event_listener (evt.click (fun _ -> msg.show "test" |> ignore))
+|> document.add_event_listener (evt.click (fun _ -> msg.show $"{textbox.text}" |> ignore))
 |> ignore
 
 form |> (show_dialog >> ignore)

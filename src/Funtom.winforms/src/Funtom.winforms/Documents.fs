@@ -24,16 +24,16 @@ module document =
       | Form form -> get_elem_by_id' id form.Controls
       | Control ctrl -> get_elem_by_id' id ctrl.Controls
       | _ -> exn $"This property is not supported: {property}" |> raise
+    |> (fun p -> if p.IsSome then p.Value else exn $"Element with id '{id}' not found." |> raise)
 
-  let inline add_event_listener (evt: evt) (property: Property option) =
+  let inline add_event_listener (evt: evt) (property: Property) =
     let apply (c: System.Windows.Forms.Control) =
       match evt with
       | evt.click action -> c.Click.Add(action)
 
     match property with
-      | Some (Control ctrl) -> apply ctrl
-      | Some (Form form) -> apply form
-      | None -> ()
+      | Control ctrl -> apply ctrl
+      | Form form -> apply form
       | _ -> exn $"This property is not supported: {property}" |> raise
     
     property

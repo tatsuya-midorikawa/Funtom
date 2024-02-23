@@ -73,3 +73,18 @@ module controls =
     let lbl = new System.Windows.Forms.Label()
     properties |> Array.iter (Label.apply lbl)
     Control lbl
+
+
+
+  (* ----------------------------------------
+   * TextBox
+   * ---------------------------------------- *)
+  module private TextBox =
+    let apply (txt: System.Windows.Forms.TextBox) p =
+      match p with
+      | _ -> internals.apply txt p
+
+  let input (properties: Property array) =
+    let txt = new System.Windows.Forms.TextBox()
+    properties |> Array.iter (TextBox.apply txt)
+    Control txt

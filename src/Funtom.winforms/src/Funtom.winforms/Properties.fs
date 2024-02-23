@@ -105,7 +105,20 @@ type Property =
   #if NET48_OR_GREATER
   | Command of (obj -> unit)
   #endif
-
+with
+  member __.text =
+    match __ with
+    | Anchor anchor -> $"{anchor}"
+    | Dock dock -> $"{dock}"
+    | Size size -> $"{size}"
+    | AutoSize auto_size -> $"{auto_size}"
+    | Position position -> $"{position}"
+    | Location location -> $"{location}"
+    | Text text -> text
+    | Name name -> name
+    | Form form -> form.Text
+    | Control c -> c.Text
+    | _ -> exn $"This property is not supported." |> raise
 
 
 [<AutoOpen>]
