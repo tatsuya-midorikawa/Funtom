@@ -35,18 +35,29 @@ let form =
     id "Main form"; text "Hello F#!!"; size { width= 300<px>; height= 200<px> }
     flow [| 
       dock Dock.fill; direction Direction.left_to_right
-      label [| text "Click ->"; anchor Anchors.none; auto_size true |]
+      label  [| text "Click ->"; anchor Anchors.none; auto_size true |]
       button [| id "btn1"; text "Click me!"; anchor Anchors.none |]
-      input [| id "input1"; text ""; anchor Anchors.none |]
+      input  [| id "input1"; text ""; anchor Anchors.none |]
     |]
   |]
 
-let textbox = form |> document.get_elem_by_id "input1"
+let textbox =
+  form |> document.get_elem_by_id "input1"
 
-form
-|> document.get_elem_by_id "btn1"
-|> document.add_event_listener (evt.click (fun _ -> msg.show $"{textbox.text}" |> ignore))
-|> ignore
+let on_btn1_click _ =
+  msg.show $"{textbox.text}" |> ignore
+
+let btn1 =
+  form
+  |> document.get_elem_by_id "btn1"
+  |> document.add_event_listener (evt.click on_btn1_click)
 
 form |> (show_dialog >> ignore)
+
+
+
+
+
+
+
 
