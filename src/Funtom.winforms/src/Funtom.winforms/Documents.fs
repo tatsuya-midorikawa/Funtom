@@ -1,9 +1,5 @@
 ﻿namespace Funtom.winforms
 
-[<RequireQualifiedAccess>]
-type evt =
-  | click of (System.EventArgs -> unit)
-
 module document =
 
   let rec private get_elem_by_id' (id: string) (ctrl: System.Windows.Forms.Control.ControlCollection) =

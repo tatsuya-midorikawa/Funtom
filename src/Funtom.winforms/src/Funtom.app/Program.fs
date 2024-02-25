@@ -31,15 +31,15 @@ let mutable flag = true
 //|]
 
 let form =
-  form [|
-    id "Main form"; text "Hello F#!!"; size { width= 300<px>; height= 200<px> }
-    flow [| 
-      dock Dock.fill; direction Direction.left_to_right
-      label  [| text "Click ->"; anchor Anchors.none; auto_size true |]
-      button [| id "btn1"; text "Click me!"; anchor Anchors.none |]
-      input  [| id "input1"; text ""; anchor Anchors.none |]
-    |]
-  |]
+  form [
+    style [id "Main form"; text "Hello F#!!"; size { width= 300<px>; height= 200<px> } ]
+    flow [
+      style [ dock Dock.fill; direction Direction.left_to_right ]
+      label  [ style [ text "Click ->"; anchor Anchors.none; auto_size true] ]
+      button [ style [ id "btn1"; text "Click me!"; anchor Anchors.none ] ]
+      input  [ style [ id "input1"; text ""; anchor Anchors.none] ]
+    ]
+  ]
 
 let textbox =
   form |> document.get_elem_by_id "input1"

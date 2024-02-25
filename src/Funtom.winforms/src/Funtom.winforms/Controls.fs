@@ -5,14 +5,20 @@ module controls =
   module internals =
     let apply (ctrl: System.Windows.Forms.Control) p =
       match p with
-      | Anchor anchor -> ctrl.Anchor <- Anchors.convert &anchor
-      | Dock dock -> ctrl.Dock <- Dock.convert &dock
-      | Size size -> ctrl.Size <- Size.convert &size
-      | AutoSize auto_size -> ctrl.AutoSize <- auto_size
-      | Position location -> ctrl.Location <- Position.convert &location
-      | Location location -> ctrl.Location <- Location.to_point &location; ctrl.Size <- Location.to_size &location
-      | Text text -> ctrl.Text <- text
-      | Name name -> ctrl.Name <- name
+      | Styles styles ->
+        let apply' =function
+          | Anchor anchor -> ctrl.Anchor <- Anchors.convert &anchor
+          | Dock dock -> ctrl.Dock <- Dock.convert &dock
+          | Size size -> ctrl.Size <- Size.convert &size
+          | AutoSize auto_size -> ctrl.AutoSize <- auto_size
+          | Position location -> ctrl.Location <- Position.convert &location
+          | Location location -> ctrl.Location <- Location.to_point &location; ctrl.Size <- Location.to_size &location
+          | Text text -> ctrl.Text <- text
+          | Name name -> ctrl.Name <- name
+          | _ -> ()
+        ctrl.SuspendLayout()
+        styles |> List.iter apply'
+        ctrl.ResumeLayout(false)
       | Form form -> ctrl.Controls.Add form
       | Control c -> ctrl.Controls.Add c
       | Controls cs -> ctrl.Controls.AddRange (cs |> List.toArray)
@@ -37,9 +43,9 @@ module controls =
       #endif
       | _ -> internals.apply btn p
 
-  let button (properties: Property array) =
+  let button (properties: Property list) =
     let btn = new System.Windows.Forms.Button()
-    properties |> Array.iter (Button.apply btn)
+    properties |> List.iter (Button.apply btn)
     Control btn
     
     
@@ -49,14 +55,13 @@ module controls =
     * ---------------------------------------- *)
   module private FlowLayoutPanel =
     let apply (panel: System.Windows.Forms.FlowLayoutPanel) p =
-      match p with
-      | Direction direction -> panel.FlowDirection <- Direction.convert &direction
-      | _ -> internals.apply panel p
+      let apply' = function Direction d -> panel.FlowDirection <- Direction.convert &d | _ -> ()
+      match p with Styles s -> s |> List.iter apply' | _ -> ()
+      internals.apply panel p
     
-  let flow (properties: Property array) =
+  let flow (properties: Property list) =
     let panel = new System.Windows.Forms.FlowLayoutPanel()
-    panel.Dock <- System.Windows.Forms.DockStyle.Fill
-    properties |> Array.iter (FlowLayoutPanel.apply panel)
+    properties |> List.iter (FlowLayoutPanel.apply panel)
     Control panel
 
 
@@ -69,9 +74,9 @@ module controls =
       match p with
       | _ -> internals.apply lbl p
 
-  let label (properties: Property array) =
+  let label (properties: Property list) =
     let lbl = new System.Windows.Forms.Label()
-    properties |> Array.iter (Label.apply lbl)
+    properties |> List.iter (Label.apply lbl)
     Control lbl
 
 
@@ -84,7 +89,7 @@ module controls =
       match p with
       | _ -> internals.apply txt p
 
-  let input (properties: Property array) =
+  let input (properties: Property list) =
     let txt = new System.Windows.Forms.TextBox()
-    properties |> Array.iter (TextBox.apply txt)
+    properties |> List.iter (TextBox.apply txt)
     Control txt

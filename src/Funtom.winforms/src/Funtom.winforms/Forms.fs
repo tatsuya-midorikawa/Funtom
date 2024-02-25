@@ -3,9 +3,9 @@
 open Funtom.winforms.controls
 
 module forms =
-  let form (properties: Property array) =    
+  let form (properties: Property list) =    
     let f = new System.Windows.Forms.Form()
-    properties |> Array.iter (internals.apply f)
+    properties |> List.iter (internals.apply f)
     Form f
 
   let show (property: Property) =

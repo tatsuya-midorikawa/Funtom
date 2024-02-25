@@ -3,6 +3,7 @@
   <PropertyGroup>
 		<OutputType>WinExe</OutputType>
 		<TargetFrameworks>net8.0-windows;</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
 		<UseWindowsForms>true</UseWindowsForms>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 		<Configurations>Debug;Release</Configurations>
