@@ -34,9 +34,11 @@ let form =
   form [
     style [id "Main form"; text "Hello F#!!"; size { width= 300<px>; height= 200<px> } ]
     flow [
-      style [ dock Dock.fill; direction Direction.left_to_right ]
+      style  [ dock Dock.fill; direction Direction.left_to_right ]
       label  [ style [ text "Click ->"; anchor Anchors.none; auto_size true] ]
-      button [ style [ id "btn1"; text "Click me!"; anchor Anchors.none ] ]
+      button [
+        style [ id "btn1"; text "Click me!"; anchor Anchors.none ]
+        cmd (fun _ -> msg.show $"test" |> ignore)]
       input  [ style [ id "input1"; text ""; anchor Anchors.none] ]
     ]
   ]
