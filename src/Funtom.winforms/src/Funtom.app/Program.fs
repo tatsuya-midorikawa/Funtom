@@ -32,7 +32,7 @@ let mutable flag = true
 
 let form =
   form [
-    style [id "Main form"; text "Hello F#!!"; size { width= 300<px>; height= 200<px> } ]
+    style [ id "Main form"; text "Hello F#!!"; size { width= 300<px>; height= 200<px> } ]
     flow [
       style  [ dock Dock.fill; direction Direction.left_to_right ]
       label  [ style [ text "Click ->"; anchor Anchors.none; auto_size true] ]
@@ -55,11 +55,3 @@ let btn1 =
   |> document.add_event_listener (evt.click on_btn1_click)
 
 form |> (show_dialog >> ignore)
-
-
-
-
-
-
-
-
