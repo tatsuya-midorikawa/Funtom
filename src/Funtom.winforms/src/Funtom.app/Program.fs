@@ -40,6 +40,11 @@ let form =
         style [ id "btn1"; text "Click me!"; anchor Anchors.none ]
         cmd (fun _ -> msg.show $"test" |> ignore)]
       input  [ style [ id "input1"; text ""; anchor Anchors.none] ]
+      group [
+        style [ text "radio group"; ]
+        radio [ style [ text "radio1"; anchor Anchors.none; auto_size true] ]
+        radio [ style [ text "radio2"; anchor Anchors.none; auto_size true] ]
+      ]
     ]
   ]
 
