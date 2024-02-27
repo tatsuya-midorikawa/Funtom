@@ -20,6 +20,7 @@ module controls =
           styles |> List.iter apply'
           ctrl.ResumeLayout(false)
         | Form form -> ctrl.Controls.Add form
+        | MenuStrip menu -> ctrl.Controls.Add menu
         | Control c -> ctrl.Controls.Add c
         | Controls cs -> ctrl.Controls.AddRange (cs |> List.toArray)
         #if NET481
@@ -122,3 +123,45 @@ module controls =
     let rb = new System.Windows.Forms.RadioButton()
     properties |> List.iter (RadioButton.apply rb)
     Control rb
+
+
+
+  (* ----------------------------------------
+   * MenuStrip
+   * ---------------------------------------- *)
+  module private MenuStrip =
+    let apply (menu: System.Windows.Forms.MenuStrip) p =
+      match p with
+        | MenuStripItem item -> menu.Items.Add item |> ignore
+        | _ -> internals.apply menu p
+
+  let menu (properties: Property list) =
+    let menu = new System.Windows.Forms.MenuStrip()
+    properties |> List.iter (MenuStrip.apply menu)
+    MenuStrip menu
+
+
+
+  (* ----------------------------------------
+   * MenuStripItem
+   * ---------------------------------------- *)
+  module private MenuStripItem =
+    let apply (item: System.Windows.Forms.ToolStripMenuItem) p =
+      match p with
+        | Styles styles ->
+          let apply' = function
+            | Anchor anchor -> item.Anchor <- Anchors.convert &anchor
+            | Dock dock -> item.Dock <- Dock.convert &dock
+            | Size size -> item.Size <- Size.convert &size
+            | AutoSize auto_size -> item.AutoSize <- auto_size
+            | Text text -> item.Text <- text
+            | Name name -> item.Name <- name
+            | _ -> exn $"This property is not supported: %A{p}" |> raise
+          styles |> List.iter apply'
+        | MenuStripItem item' -> item.DropDownItems.Add item' |> ignore
+        | _ -> exn $"This property is not supported: %A{p}" |> raise
+
+  let menu_item (properties: Property list) =
+    let item = new System.Windows.Forms.ToolStripMenuItem()
+    properties |> List.iter (MenuStripItem.apply item)
+    MenuStripItem item

@@ -30,9 +30,14 @@ partial class Form1 {
     groupBox1 = new GroupBox();
     radioButton1 = new RadioButton();
     panel1 = new Panel();
+    menuStrip1 = new MenuStrip();
+    testToolStripMenuItem = new ToolStripMenuItem();
+    aaaToolStripMenuItem = new ToolStripMenuItem();
+    bbbbToolStripMenuItem = new ToolStripMenuItem();
     flowLayoutPanel1.SuspendLayout();
     groupBox1.SuspendLayout();
     panel1.SuspendLayout();
+    menuStrip1.SuspendLayout();
     SuspendLayout();
     // 
     // flowLayoutPanel1
@@ -42,7 +47,7 @@ partial class Form1 {
     flowLayoutPanel1.Dock = DockStyle.Top;
     flowLayoutPanel1.Location = new Point(0, 0);
     flowLayoutPanel1.Name = "flowLayoutPanel1";
-    flowLayoutPanel1.Size = new Size(486, 46);
+    flowLayoutPanel1.Size = new Size(636, 46);
     flowLayoutPanel1.TabIndex = 0;
     // 
     // button1
@@ -69,9 +74,9 @@ partial class Form1 {
     // 
     groupBox1.Controls.Add(radioButton1);
     groupBox1.Dock = DockStyle.Bottom;
-    groupBox1.Location = new Point(0, 92);
+    groupBox1.Location = new Point(0, 184);
     groupBox1.Name = "groupBox1";
-    groupBox1.Size = new Size(486, 131);
+    groupBox1.Size = new Size(636, 131);
     groupBox1.TabIndex = 1;
     groupBox1.TabStop = false;
     groupBox1.Text = "groupBox1";
@@ -91,10 +96,39 @@ partial class Form1 {
     // 
     panel1.Controls.Add(groupBox1);
     panel1.Controls.Add(flowLayoutPanel1);
-    panel1.Location = new Point(50, 70);
+    panel1.Dock = DockStyle.Fill;
+    panel1.Location = new Point(0, 24);
     panel1.Name = "panel1";
-    panel1.Size = new Size(486, 223);
+    panel1.Size = new Size(636, 315);
     panel1.TabIndex = 2;
+    // 
+    // menuStrip1
+    // 
+    menuStrip1.Items.AddRange(new ToolStripItem[] { testToolStripMenuItem, bbbbToolStripMenuItem });
+    menuStrip1.Location = new Point(0, 0);
+    menuStrip1.Name = "menuStrip1";
+    menuStrip1.Size = new Size(636, 24);
+    menuStrip1.TabIndex = 3;
+    menuStrip1.Text = "menuStrip1";
+    // 
+    // testToolStripMenuItem
+    // 
+    testToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aaaToolStripMenuItem });
+    testToolStripMenuItem.Name = "testToolStripMenuItem";
+    testToolStripMenuItem.Size = new Size(38, 20);
+    testToolStripMenuItem.Text = "test";
+    // 
+    // aaaToolStripMenuItem
+    // 
+    aaaToolStripMenuItem.Name = "aaaToolStripMenuItem";
+    aaaToolStripMenuItem.Size = new Size(180, 22);
+    aaaToolStripMenuItem.Text = "aaa";
+    // 
+    // bbbbToolStripMenuItem
+    // 
+    bbbbToolStripMenuItem.Name = "bbbbToolStripMenuItem";
+    bbbbToolStripMenuItem.Size = new Size(47, 20);
+    bbbbToolStripMenuItem.Text = "bbbb";
     // 
     // Form1
     // 
@@ -102,13 +136,18 @@ partial class Form1 {
     AutoScaleMode = AutoScaleMode.Font;
     ClientSize = new Size(636, 339);
     Controls.Add(panel1);
+    Controls.Add(menuStrip1);
+    MainMenuStrip = menuStrip1;
     Name = "Form1";
     Text = "Form1";
     flowLayoutPanel1.ResumeLayout(false);
     groupBox1.ResumeLayout(false);
     groupBox1.PerformLayout();
     panel1.ResumeLayout(false);
+    menuStrip1.ResumeLayout(false);
+    menuStrip1.PerformLayout();
     ResumeLayout(false);
+    PerformLayout();
   }
 
   #endregion
@@ -119,4 +158,8 @@ partial class Form1 {
   private GroupBox groupBox1;
   private RadioButton radioButton1;
   private Panel panel1;
+  private MenuStrip menuStrip1;
+  private ToolStripMenuItem testToolStripMenuItem;
+  private ToolStripMenuItem aaaToolStripMenuItem;
+  private ToolStripMenuItem bbbbToolStripMenuItem;
 }

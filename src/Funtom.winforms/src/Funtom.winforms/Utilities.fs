@@ -2,6 +2,9 @@
 
 [<Measure>] type px
 
+module Debug =
+  let inline log msg = System.Diagnostics.Debug.WriteLine $"{msg}"
+
 [<RequireQualifiedAccess>]
 type evt =
   | click of (System.EventArgs -> unit)

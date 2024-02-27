@@ -6,6 +6,8 @@
 type Property =
   | Styles of Style list
   | Form of System.Windows.Forms.Form
+  | MenuStripItem of System.Windows.Forms.ToolStripMenuItem
+  | MenuStrip of System.Windows.Forms.MenuStrip
   | Control of System.Windows.Forms.Control
   | Controls of System.Windows.Forms.Control list
   #if NET8_0_OR_GREATER
@@ -53,6 +55,7 @@ module Property =
   let inline suspend_layout (property: Property) =
     match property with
       | Form form -> form.SuspendLayout()
+      | MenuStrip menu -> menu.SuspendLayout()
       | Control ctrl ->
         match ctrl with
           | :? System.Windows.Forms.GroupBox as c -> c.SuspendLayout()
@@ -70,6 +73,7 @@ module Property =
   let inline resume_layout (perform) (property: Property) =
     match property with
       | Form form -> form.ResumeLayout(perform)
+      | MenuStrip menu -> menu.ResumeLayout(perform); menu.PerformLayout()
       | Control ctrl ->
         match ctrl with
           | :? System.Windows.Forms.GroupBox as c -> c.ResumeLayout(perform); c.PerformLayout()

@@ -33,8 +33,20 @@ let mutable flag = true
 let form =
   form [
     style [ id "Main form"; text "Hello F#!!"; size { width= 300<px>; height= 200<px> } ]
+
+    menu [ 
+      style [ text "menuStrip"; position { top= 0<px>; left= 0<px> } ] 
+      menu_item [ 
+        style [ text "AAA" ]
+        menu_item [ style [ text "BBB" ] ]
+      ]
+      menu_item [ 
+        style [ text "CCC" ]
+        menu_item [ style [ text "DDDD" ] ]
+      ] ]
+
     flow [
-      style  [ dock Dock.fill; direction Direction.left_to_right ]
+      style  [ dock Dock.fill; position { top= 48<px>; left= 0<px> } ]
       label  [ style [ text "Click ->"; anchor Anchors.none; auto_size true] ]
       button [
         style [ id "btn1"; text "Click me!"; anchor Anchors.none ]
