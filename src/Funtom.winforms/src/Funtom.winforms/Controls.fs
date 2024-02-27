@@ -22,9 +22,6 @@ module controls =
       | Form form -> ctrl.Controls.Add form
       | Control c -> ctrl.Controls.Add c
       | Controls cs -> ctrl.Controls.AddRange (cs |> List.toArray)
-      //#if NET8_0
-      //| Command cmd -> ctrl.Click.Add cmd.Execute
-      //#endif
       #if NET481
       | Command cmd -> ctrl.Click.Add cmd
       #endif

@@ -27,7 +27,10 @@ partial class Form1 {
     flowLayoutPanel1 = new FlowLayoutPanel();
     button1 = new Button();
     button2 = new Button();
+    groupBox1 = new GroupBox();
+    radioButton1 = new RadioButton();
     flowLayoutPanel1.SuspendLayout();
+    groupBox1.SuspendLayout();
     SuspendLayout();
     // 
     // flowLayoutPanel1
@@ -59,15 +62,39 @@ partial class Form1 {
     button2.Text = "button2";
     button2.UseVisualStyleBackColor = true;
     // 
+    // groupBox1
+    // 
+    groupBox1.Controls.Add(radioButton1);
+    groupBox1.Location = new Point(15, 64);
+    groupBox1.Name = "groupBox1";
+    groupBox1.Size = new Size(277, 131);
+    groupBox1.TabIndex = 1;
+    groupBox1.TabStop = false;
+    groupBox1.Text = "groupBox1";
+    // 
+    // radioButton1
+    // 
+    radioButton1.AutoSize = true;
+    radioButton1.Location = new Point(6, 33);
+    radioButton1.Name = "radioButton1";
+    radioButton1.Size = new Size(94, 19);
+    radioButton1.TabIndex = 0;
+    radioButton1.TabStop = true;
+    radioButton1.Text = "radioButton1";
+    radioButton1.UseVisualStyleBackColor = true;
+    // 
     // Form1
     // 
     AutoScaleDimensions = new SizeF(7F, 15F);
     AutoScaleMode = AutoScaleMode.Font;
     ClientSize = new Size(636, 339);
+    Controls.Add(groupBox1);
     Controls.Add(flowLayoutPanel1);
     Name = "Form1";
     Text = "Form1";
     flowLayoutPanel1.ResumeLayout(false);
+    groupBox1.ResumeLayout(false);
+    groupBox1.PerformLayout();
     ResumeLayout(false);
   }
 
@@ -76,4 +103,6 @@ partial class Form1 {
   private FlowLayoutPanel flowLayoutPanel1;
   private Button button1;
   private Button button2;
+  private GroupBox groupBox1;
+  private RadioButton radioButton1;
 }

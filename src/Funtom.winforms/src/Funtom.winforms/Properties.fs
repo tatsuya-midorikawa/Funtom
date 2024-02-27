@@ -49,3 +49,37 @@ module Property =
   #if NET48_OR_GREATER
   let inline cmd (c: obj -> unit) = Command c
   #endif
+
+  let inline suspend_layout (property: Property) =
+    match property with
+      | Form form -> form.SuspendLayout()
+      | Control ctrl ->
+        match ctrl with
+          | :? System.Windows.Forms.GroupBox as c -> c.SuspendLayout()
+          | :? System.Windows.Forms.FlowLayoutPanel as c -> c.SuspendLayout()
+          | _ -> ()
+      | _ -> ()
+  
+  let rec suspend_layouts (properties: Property list) =
+    match properties with
+      | [] -> ()
+      | head::tail ->
+        suspend_layout head
+        suspend_layouts tail
+ 
+  let inline resume_layout (perform) (property: Property) =
+    match property with
+      | Form form -> form.ResumeLayout(perform)
+      | Control ctrl ->
+        match ctrl with
+          | :? System.Windows.Forms.GroupBox as c -> c.ResumeLayout(perform); c.PerformLayout()
+          | :? System.Windows.Forms.FlowLayoutPanel as c -> c.ResumeLayout(perform)
+          | _ -> ()
+      | _ -> ()
+    
+  let rec resume_layouts (perform) (properties: Property list) =
+    match properties with
+      | [] -> ()
+      | head::tail ->
+        resume_layout perform head
+        resume_layouts perform tail
