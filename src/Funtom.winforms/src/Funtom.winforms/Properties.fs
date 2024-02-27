@@ -8,6 +8,7 @@ type Property =
   | Form of System.Windows.Forms.Form
   | MenuStripItem of System.Windows.Forms.ToolStripMenuItem
   | MenuStrip of System.Windows.Forms.MenuStrip
+  | FlowBreak of bool
   | Control of System.Windows.Forms.Control
   | Controls of System.Windows.Forms.Control list
   #if NET8_0_OR_GREATER
@@ -48,6 +49,7 @@ module Property =
   let inline id (name: string) = Name name   // id 関数をシャドウイングしてしまうので微妙...
   let inline name (name: string) = Name name
   let inline ctrl (c: System.Windows.Forms.Control) = Control c
+  let flow_break = FlowBreak true
   #if NET48_OR_GREATER
   let inline cmd (c: obj -> unit) = Command c
   #endif

@@ -19,6 +19,7 @@ module controls =
           ctrl.SuspendLayout()
           styles |> List.iter apply'
           ctrl.ResumeLayout(false)
+        | FlowBreak _ -> ()
         | Form form -> ctrl.Controls.Add form
         | MenuStrip menu -> ctrl.Controls.Add menu
         | Control c -> ctrl.Controls.Add c
@@ -56,6 +57,7 @@ module controls =
       let apply' = function Direction d -> panel.FlowDirection <- Direction.convert &d | _ -> ()
       match p with
         | Styles s -> s |> List.iter apply'
+        | FlowBreak b -> panel.SetFlowBreak(panel.Controls.[panel.Controls.Count - 1], b)
         | _ -> ()
       internals.apply panel p
     
