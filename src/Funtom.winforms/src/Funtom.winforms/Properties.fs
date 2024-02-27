@@ -36,7 +36,7 @@ with
 
 
 [<AutoOpen>]
-module Property =
+module PropertyTools =
   let inline style (styles: Style list) = Styles styles
   let inline anchor (anchors: Anchors) = Anchor anchors
   let inline direction (direction: Direction) = Direction direction
@@ -89,3 +89,14 @@ module Property =
       | head::tail ->
         resume_layout perform head
         resume_layouts perform tail
+
+module Property =
+  let inline enabled enabled (property: Property) =
+    match property with
+      | Form form -> form.Enabled <- enabled
+      | MenuStripItem m -> m.Enabled <- enabled
+      | MenuStrip m -> m.Enabled <- enabled
+      | Control c -> c.Enabled <- enabled
+      | Controls cs -> cs |> List.iter (fun c -> c.Enabled <- enabled)
+      | _ -> exn $"This property is not supported: {property}" |> raise
+    property
