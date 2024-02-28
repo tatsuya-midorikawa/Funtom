@@ -135,6 +135,7 @@ module controls =
     let apply (menu: System.Windows.Forms.MenuStrip) p =
       match p with
         | MenuStripItem item -> menu.Items.Add item |> ignore
+        | Command cmd -> menu.Click.Add cmd.Execute
         | _ -> internals.apply menu p
 
   let menu (properties: Property list) =
@@ -161,6 +162,7 @@ module controls =
             | _ -> exn $"This property is not supported: %A{p}" |> raise
           styles |> List.iter apply'
         | MenuStripItem item' -> item.DropDownItems.Add item' |> ignore
+        | Command cmd -> item.Click.Add cmd.Execute
         | _ -> exn $"This property is not supported: %A{p}" |> raise
 
   let menu_item (properties: Property list) =

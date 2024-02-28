@@ -35,13 +35,19 @@ let form =
     style [ id "Main form"; text "Hello F#!!"; size { width= 640<px>; height= 480<px> } ]
 
     menu [ 
-      style [ text "menuStrip"; position { top= 0<px>; left= 0<px> } ] 
+      style [ text "menuStrip"; position { top= 0<px>; left= 0<px> } ]
+      cmd (fun _ -> msg.show "menuStrip" |> ignore)
+
       menu_item [ 
         style [ text "AAA" ]
-        menu_item [ style [ text "BBB" ] ] ]
+        menu_item [
+          style [ text "BBB" ]
+          cmd (fun _ -> msg.show "BBB" |> ignore) ] ]
+
       menu_item [ 
         style [ text "CCC" ]
         menu_item [ style [ text "DDD" ] ] ]
+
     ]
 
     flow [
@@ -51,7 +57,7 @@ let form =
         style [ id "btn1"; text "Click me!"; anchor Anchors.none ]
         cmd (fun _ -> msg.show $"test" |> ignore)]
       input  [ style [ id "input1"; text ""; anchor Anchors.none] ]
-      flow_break
+      //flow_break
       group [
         style [ text "radio group";  ]
         flow [
