@@ -4,7 +4,7 @@ open Funtom.winforms.controls
 
 module forms =
 
-  let form (properties: Property list) =    
+  let form (properties: Property list) =
     let f = new System.Windows.Forms.Form()
     f.SuspendLayout()
     f.AutoScaleDimensions <- System.Drawing.SizeF(7f, 15f)
@@ -22,7 +22,7 @@ module forms =
             | _ -> internals.apply form p
         | _ -> internals.apply form p
 
-    properties |> suspend_layouts
+    properties |> Property.suspend_layouts
     properties |> List.iter (apply f)
     
     // Panel -> MenuStrip でないと正しくレイアウトされないため、そこをハンドリングする
@@ -30,7 +30,7 @@ module forms =
     menu |> Option.iter (fun m -> f.Controls.Add m; f.MainMenuStrip <- m)
 
     
-    properties |> resume_layouts false
+    properties |> Property.resume_layouts false
     f.ResumeLayout(false)
     Form f
 

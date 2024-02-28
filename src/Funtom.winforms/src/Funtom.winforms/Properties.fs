@@ -54,6 +54,8 @@ module PropertyTools =
   let inline cmd (c: obj -> unit) = Command c
   #endif
 
+module Property =
+
   let inline suspend_layout (property: Property) =
     match property with
       | Form form -> form.SuspendLayout()
@@ -61,7 +63,7 @@ module PropertyTools =
       | Control ctrl ->
         match ctrl with
           | :? System.Windows.Forms.GroupBox as c -> c.SuspendLayout()
-          | :? System.Windows.Forms.FlowLayoutPanel as c -> c.SuspendLayout()
+          | :? System.Windows.Forms.Panel as c -> c.SuspendLayout()
           | _ -> ()
       | _ -> ()
   
@@ -79,7 +81,7 @@ module PropertyTools =
       | Control ctrl ->
         match ctrl with
           | :? System.Windows.Forms.GroupBox as c -> c.ResumeLayout(perform); c.PerformLayout()
-          | :? System.Windows.Forms.FlowLayoutPanel as c -> c.ResumeLayout(perform)
+          | :? System.Windows.Forms.Panel as c -> c.ResumeLayout(perform)
           | _ -> ()
       | _ -> ()
     
@@ -90,7 +92,6 @@ module PropertyTools =
         resume_layout perform head
         resume_layouts perform tail
 
-module Property =
   let inline enabled enabled (property: Property) =
     match property with
       | Form form -> form.Enabled <- enabled
