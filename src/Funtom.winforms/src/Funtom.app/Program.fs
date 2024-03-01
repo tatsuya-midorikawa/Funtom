@@ -57,7 +57,7 @@ let form =
         style [ id "btn1"; text "Click me!"; anchor Anchors.none ]
         cmd (fun _ -> msg.show $"test" |> ignore)]
       input  [ style [ id "input1"; text ""; anchor Anchors.none] ]
-      //flow_break
+      flow_break
       group [
         style [ text "radio group";  ]
         flow [
