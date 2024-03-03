@@ -7,7 +7,7 @@ module Debug =
 
 [<RequireQualifiedAccess>]
 type evt =
-  | click of (System.EventArgs -> unit)
+  | click of (System.EventArgs -> unit) 
 
 module Utilities =
   let binder (o: 't) = if o = null then None else Some o

@@ -97,3 +97,4 @@ type Style =
   | Location of Location
   | Text of string
   | Name of string
+  | Image of System.Drawing.Image

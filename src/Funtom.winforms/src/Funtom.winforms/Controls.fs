@@ -15,6 +15,7 @@ module controls =
             | Location location -> ctrl.Location <- Location.to_point &location; ctrl.Size <- Location.to_size &location
             | Text text -> ctrl.Text <- text
             | Name name -> ctrl.Name <- name
+            | Image img -> ctrl.BackgroundImage <- img
             | _ -> ()
           ctrl.SuspendLayout()
           styles |> List.iter apply'
@@ -159,6 +160,7 @@ module controls =
             | AutoSize auto_size -> item.AutoSize <- auto_size
             | Text text -> item.Text <- text
             | Name name -> item.Name <- name
+            | Image img -> item.Image <- img
             | _ -> exn $"This property is not supported: %A{p}" |> raise
           styles |> List.iter apply'
         | MenuStripItem item' -> item.DropDownItems.Add item' |> ignore

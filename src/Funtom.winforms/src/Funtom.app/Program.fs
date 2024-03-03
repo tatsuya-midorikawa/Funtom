@@ -39,7 +39,7 @@ let form =
       cmd (fun _ -> msg.show "menuStrip" |> ignore)
 
       menu_item [ 
-        style [ text "AAA" ]
+        style [ text "AAA"; bitmap "./phantom_16x16.png" ]
         menu_item [
           style [ text "BBB" ]
           cmd (fun _ -> msg.show "BBB" |> ignore) ] ]

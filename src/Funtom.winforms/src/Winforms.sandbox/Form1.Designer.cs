@@ -114,8 +114,9 @@ partial class Form1 {
     // testToolStripMenuItem
     // 
     testToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aaaToolStripMenuItem });
+    testToolStripMenuItem.Image = Properties.Resources.phantom_16x16;
     testToolStripMenuItem.Name = "testToolStripMenuItem";
-    testToolStripMenuItem.Size = new Size(38, 20);
+    testToolStripMenuItem.Size = new Size(54, 20);
     testToolStripMenuItem.Text = "test";
     // 
     // aaaToolStripMenuItem

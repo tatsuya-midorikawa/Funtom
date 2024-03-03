@@ -49,6 +49,7 @@ module PropertyTools =
   let inline id (name: string) = Name name   // id 関数をシャドウイングしてしまうので微妙...
   let inline name (name: string) = Name name
   let inline ctrl (c: System.Windows.Forms.Control) = Control c
+  let inline bitmap (path: string) = Image (new System.Drawing.Bitmap(path))
   let flow_break = FlowBreak true
   #if NET48_OR_GREATER
   let inline cmd (c: obj -> unit) = Command c
