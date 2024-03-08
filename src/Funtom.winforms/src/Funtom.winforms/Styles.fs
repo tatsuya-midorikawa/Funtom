@@ -98,3 +98,5 @@ type Style =
   | Text of string
   | Name of string
   | Image of System.Drawing.Image
+  | Icon of System.Drawing.Icon
+  | Checked of bool

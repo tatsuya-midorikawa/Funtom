@@ -32,7 +32,9 @@ let mutable flag = true
 
 let form =
   form [
-    style [ id "Main form"; text "Hello F#!!"; size { width= 640<px>; height= 480<px> } ]
+    style [
+      icon "./phantom.ico"
+      id "Main form"; text "Hello F#!!"; size { width= 640<px>; height= 480<px> } ]
 
     menu [ 
       style [ text "menuStrip"; position { top= 0<px>; left= 0<px> } ]
@@ -51,13 +53,18 @@ let form =
     ]
 
     flow [
-      style  [ dock Dock.fill; ]
-      label  [ style [ text "Click ->"; anchor Anchors.none; auto_size true] ]
+      style [ dock Dock.fill; ]
+
+      label [ style [ text "Click ->"; anchor Anchors.none; auto_size true] ]
+
       button [
         style [ id "btn1"; text "Click me!"; anchor Anchors.none ]
         cmd (fun _ -> msg.show $"test" |> ignore)]
-      input  [ style [ id "input1"; text ""; anchor Anchors.none] ]
+
+      input [ style [ id "input1"; text ""; anchor Anchors.none] ]
+
       flow_break
+
       group [
         style [ text "radio group";  ]
         flow [
@@ -65,6 +72,8 @@ let form =
           radio [ style [ text "radio1"; anchor Anchors.none; auto_size true] ]
           radio [ style [ text "radio2"; anchor Anchors.none; auto_size true] ] ]
       ]
+
+      check [ style [ selected true; text "sample content"; auto_size true ] ]
     ]
   ]
 

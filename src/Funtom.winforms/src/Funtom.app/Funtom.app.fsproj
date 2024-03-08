@@ -10,6 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="phantom.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="phantom_16x16.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

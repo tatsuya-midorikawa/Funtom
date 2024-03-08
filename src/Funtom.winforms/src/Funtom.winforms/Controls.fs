@@ -100,6 +100,26 @@ module controls =
 
 
   (* ----------------------------------------
+   * CheckBox
+   * ---------------------------------------- *)
+  module private CheckBox =
+    let apply (chk: System.Windows.Forms.CheckBox) p =
+      match p with
+        | Styles styles ->
+          let apply' = function
+            | Checked c -> chk.Checked <- c
+            | _ -> internals.apply chk p
+          styles |> List.iter apply'
+        | _ -> internals.apply chk p
+
+  let check (properties: Property list) =
+    let chk = new System.Windows.Forms.CheckBox()
+    properties |> List.iter (CheckBox.apply chk)
+    Control chk
+
+
+
+  (* ----------------------------------------
    * GroupBox
    * ---------------------------------------- *)
   module private GroupBox =

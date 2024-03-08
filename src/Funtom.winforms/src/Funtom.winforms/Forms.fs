@@ -15,6 +15,11 @@ module forms =
     let mutable (panels) = ResizeArray<System.Windows.Forms.Panel>()
     let apply (form: System.Windows.Forms.Form) p =
       match p with
+        | Styles styles ->
+          let apply' = function
+            | Icon ico -> form.Icon <- ico
+            | _ -> internals.apply form p
+          styles |> List.iter apply'
         | MenuStrip m -> menu <- Some m
         | Control ctrl ->
           match ctrl with
