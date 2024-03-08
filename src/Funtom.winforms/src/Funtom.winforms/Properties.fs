@@ -11,6 +11,7 @@ type Property =
   | FlowBreak of bool
   | Control of System.Windows.Forms.Control
   | Controls of System.Windows.Forms.Control list
+  | Items of obj array
   #if NET8_0_OR_GREATER
   | Command of System.Windows.Input.ICommand
   #endif
@@ -52,6 +53,8 @@ module PropertyTools =
   let inline bitmap (path: string) = Image (new System.Drawing.Bitmap(path))
   let inline icon (path: string) = Icon (new System.Drawing.Icon(path))
   let inline selected (c: bool) = Checked c
+  let inline items (list: obj list) = Items (list |> List.toArray)
+  let inline index (i: int) = Index i
   let flow_break = FlowBreak true
   #if NET48_OR_GREATER
   let inline cmd (c: obj -> unit) = Command c

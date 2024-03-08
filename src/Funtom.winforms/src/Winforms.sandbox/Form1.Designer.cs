@@ -29,13 +29,14 @@ partial class Form1 {
     button1 = new Button();
     button2 = new Button();
     groupBox1 = new GroupBox();
+    checkBox1 = new CheckBox();
     radioButton1 = new RadioButton();
     panel1 = new Panel();
     menuStrip1 = new MenuStrip();
     testToolStripMenuItem = new ToolStripMenuItem();
     aaaToolStripMenuItem = new ToolStripMenuItem();
     bbbbToolStripMenuItem = new ToolStripMenuItem();
-    checkBox1 = new CheckBox();
+    comboBox1 = new ComboBox();
     flowLayoutPanel1.SuspendLayout();
     groupBox1.SuspendLayout();
     panel1.SuspendLayout();
@@ -77,6 +78,7 @@ partial class Form1 {
     // 
     // groupBox1
     // 
+    groupBox1.Controls.Add(comboBox1);
     groupBox1.Controls.Add(checkBox1);
     groupBox1.Controls.Add(radioButton1);
     groupBox1.Dock = DockStyle.Bottom;
@@ -88,6 +90,16 @@ partial class Form1 {
     groupBox1.TabIndex = 1;
     groupBox1.TabStop = false;
     groupBox1.Text = "groupBox1";
+    // 
+    // checkBox1
+    // 
+    checkBox1.AutoSize = true;
+    checkBox1.Location = new Point(239, 70);
+    checkBox1.Name = "checkBox1";
+    checkBox1.Size = new Size(159, 36);
+    checkBox1.TabIndex = 1;
+    checkBox1.Text = "checkBox1";
+    checkBox1.UseVisualStyleBackColor = true;
     // 
     // radioButton1
     // 
@@ -143,15 +155,13 @@ partial class Form1 {
     bbbbToolStripMenuItem.Size = new Size(90, 36);
     bbbbToolStripMenuItem.Text = "bbbb";
     // 
-    // checkBox1
+    // comboBox1
     // 
-    checkBox1.AutoSize = true;
-    checkBox1.Location = new Point(239, 70);
-    checkBox1.Name = "checkBox1";
-    checkBox1.Size = new Size(159, 36);
-    checkBox1.TabIndex = 1;
-    checkBox1.Text = "checkBox1";
-    checkBox1.UseVisualStyleBackColor = true;
+    comboBox1.FormattingEnabled = true;
+    comboBox1.Location = new Point(429, 73);
+    comboBox1.Name = "comboBox1";
+    comboBox1.Size = new Size(247, 40);
+    comboBox1.TabIndex = 2;
     // 
     // Form1
     // 
@@ -188,4 +198,5 @@ partial class Form1 {
   private ToolStripMenuItem aaaToolStripMenuItem;
   private ToolStripMenuItem bbbbToolStripMenuItem;
   private CheckBox checkBox1;
+  private ComboBox comboBox1;
 }

@@ -74,6 +74,10 @@ let form =
       ]
 
       check [ style [ selected true; text "sample content"; auto_size true ] ]
+
+      combo [
+        style [ auto_size true; index 1 ]
+        items [ "aaa"; "bbb"; "ccc"; ] ]
     ]
   ]
 

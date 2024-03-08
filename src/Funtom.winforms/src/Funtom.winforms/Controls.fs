@@ -17,9 +17,7 @@ module controls =
             | Name name -> ctrl.Name <- name
             | Image img -> ctrl.BackgroundImage <- img
             | _ -> ()
-          ctrl.SuspendLayout()
           styles |> List.iter apply'
-          ctrl.ResumeLayout(false)
         | FlowBreak _ -> ()
         | Form form -> ctrl.Controls.Add form
         | MenuStrip menu -> ctrl.Controls.Add menu
@@ -45,7 +43,9 @@ module controls =
 
   let button (properties: Property list) =
     let btn = new System.Windows.Forms.Button()
+    btn.SuspendLayout ()
     properties |> List.iter (Button.apply btn)
+    btn.ResumeLayout false
     Control btn
     
     
@@ -64,7 +64,9 @@ module controls =
     
   let flow (properties: Property list) =
     let panel = new System.Windows.Forms.FlowLayoutPanel()
+    panel.SuspendLayout ()
     properties |> List.iter (FlowLayoutPanel.apply panel)
+    panel.ResumeLayout false
     Control panel
 
 
@@ -79,7 +81,9 @@ module controls =
 
   let label (properties: Property list) =
     let lbl = new System.Windows.Forms.Label()
+    lbl.SuspendLayout ()
     properties |> List.iter (Label.apply lbl)
+    lbl.ResumeLayout false
     Control lbl
 
 
@@ -94,7 +98,9 @@ module controls =
 
   let input (properties: Property list) =
     let txt = new System.Windows.Forms.TextBox()
+    txt.SuspendLayout ()
     properties |> List.iter (TextBox.apply txt)
+    txt.ResumeLayout false
     Control txt
 
 
@@ -114,8 +120,42 @@ module controls =
 
   let check (properties: Property list) =
     let chk = new System.Windows.Forms.CheckBox()
+    chk.SuspendLayout ()
     properties |> List.iter (CheckBox.apply chk)
+    chk.ResumeLayout false
     Control chk
+
+
+
+  (* ----------------------------------------
+   * ComboBox
+   * ---------------------------------------- *)
+  module private ComboBox =
+    let apply (cmb: System.Windows.Forms.ComboBox) p =
+      match p with
+        | Items items -> cmb.Items.AddRange items
+        | _ -> internals.apply cmb p
+
+    let rec get_index (xs: Property list) =
+      match xs with
+        | [] -> None
+        | x::ys ->
+          match x with
+            | Styles styles ->
+                styles 
+                |> List.tryFind (function Index i -> true | _ -> false)
+                |> (function 
+                    | Some style -> match style with Index i -> Some i | _ -> None
+                    | None -> None)
+            | _ -> get_index ys
+
+  let combo (properties: Property list) =
+    let cmb = new System.Windows.Forms.ComboBox()
+    cmb.SuspendLayout ()
+    properties |> List.iter (ComboBox.apply cmb)
+    match ComboBox.get_index properties with Some i -> cmb.SelectedIndex <- i | None -> ()
+    cmb.ResumeLayout false
+    Control cmb
 
 
 
@@ -129,7 +169,9 @@ module controls =
 
   let group (properties: Property list) =
     let gb = new System.Windows.Forms.GroupBox()
+    gb.SuspendLayout ()
     properties |> List.iter (GroupBox.apply gb)
+    gb.ResumeLayout false
     Control gb
 
 
@@ -144,7 +186,9 @@ module controls =
 
   let radio (properties: Property list) =
     let rb = new System.Windows.Forms.RadioButton()
+    rb.SuspendLayout ()
     properties |> List.iter (RadioButton.apply rb)
+    rb.ResumeLayout false
     Control rb
 
 
@@ -161,7 +205,9 @@ module controls =
 
   let menu (properties: Property list) =
     let menu = new System.Windows.Forms.MenuStrip()
+    menu.SuspendLayout ()
     properties |> List.iter (MenuStrip.apply menu)
+    menu.ResumeLayout false
     MenuStrip menu
 
 

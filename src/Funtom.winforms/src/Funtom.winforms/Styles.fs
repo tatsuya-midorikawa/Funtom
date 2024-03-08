@@ -100,3 +100,4 @@ type Style =
   | Image of System.Drawing.Image
   | Icon of System.Drawing.Icon
   | Checked of bool
+  | Index of int
