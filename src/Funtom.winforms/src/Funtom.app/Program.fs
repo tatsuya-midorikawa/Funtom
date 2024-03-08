@@ -8,28 +8,6 @@ open System.Threading.Tasks
 
 let debug msg = System.Diagnostics.Debug.WriteLine msg
 
-let mutable flag = true
-//let btn = button [|
-//  text "click"; location { top= 10<px>; left= 120<px>; right= 220<px>; bottom= 40<px> }; anchor Anchors.none
-//  cmd (
-//    exec= 
-//      (fun (self, _) ->
-//        flag <- false
-//        msg.show("test") |> ignore
-//        task {
-//          debug "### start"
-//          do! Task.Delay 5000
-//          flag <- true
-//          debug "### end"
-//          self.notify()
-//        }
-//        |> ignore), 
-//    can_exec=
-//      (fun _ -> flag))
-//  //cmd (fun _ -> msg.show("test1") |> ignore)  // norwarn "3391" がないと警告がでる
-//  //cmd.build (fun _ -> System.Windows.Forms.MessageBox.Show("test2") |> ignore)  // 警告回避版
-//|]
-
 let form =
   form [
     style [
@@ -38,13 +16,13 @@ let form =
 
     menu [ 
       style [ text "menuStrip"; position { top= 0<px>; left= 0<px> } ]
-      cmd (fun _ -> msg.show "menuStrip" |> ignore)
+      cmd (fun _ -> msg.show "menuStrip" |> ignore)  // norwarn "3391" がないと警告がでる
 
       menu_item [ 
         style [ text "AAA"; bitmap "./phantom_16x16.png" ]
         menu_item [
           style [ text "BBB" ]
-          cmd (fun _ -> msg.show "BBB" |> ignore) ] ]
+          cmd.build (fun _ -> msg.show "BBB" |> ignore)  (* 警告回避版 *) ] ]
 
       menu_item [ 
         style [ text "CCC" ]
@@ -58,8 +36,7 @@ let form =
       label [ style [ text "Click ->"; anchor Anchors.none; auto_size true] ]
 
       button [
-        style [ id "btn1"; text "Click me!"; anchor Anchors.none ]
-        cmd (fun _ -> msg.show $"test" |> ignore)]
+        style [ id "btn1"; text "Click me!"; anchor Anchors.none ] ]
 
       input [ style [ id "input1"; text ""; anchor Anchors.none] ]
 
@@ -73,7 +50,8 @@ let form =
           radio [ style [ text "radio2"; anchor Anchors.none; auto_size true] ] ]
       ]
 
-      check [ style [ selected true; text "sample content"; auto_size true ] ]
+      check [ 
+        style [ selected true; text "sample content"; auto_size true ] ]
 
       combo [
         style [ auto_size true; index 1 ]
