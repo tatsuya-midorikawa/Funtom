@@ -34,6 +34,7 @@
 		<Compile Include="Controls.fs" />
 		<Compile Include="Forms.fs" />
 		<Compile Include="Documents.fs" />
+		<Compile Include="Components.fs" />
 		<Compile Include="impl\Command.fs" />
 		<None Include="..\..\assets\phantom.png">
 			<Pack>True</Pack>

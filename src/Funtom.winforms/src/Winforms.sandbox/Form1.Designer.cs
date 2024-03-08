@@ -29,6 +29,7 @@ partial class Form1 {
     button1 = new Button();
     button2 = new Button();
     groupBox1 = new GroupBox();
+    comboBox1 = new ComboBox();
     checkBox1 = new CheckBox();
     radioButton1 = new RadioButton();
     panel1 = new Panel();
@@ -36,7 +37,7 @@ partial class Form1 {
     testToolStripMenuItem = new ToolStripMenuItem();
     aaaToolStripMenuItem = new ToolStripMenuItem();
     bbbbToolStripMenuItem = new ToolStripMenuItem();
-    comboBox1 = new ComboBox();
+    folderBrowserDialog1 = new FolderBrowserDialog();
     flowLayoutPanel1.SuspendLayout();
     groupBox1.SuspendLayout();
     panel1.SuspendLayout();
@@ -90,6 +91,14 @@ partial class Form1 {
     groupBox1.TabIndex = 1;
     groupBox1.TabStop = false;
     groupBox1.Text = "groupBox1";
+    // 
+    // comboBox1
+    // 
+    comboBox1.FormattingEnabled = true;
+    comboBox1.Location = new Point(429, 73);
+    comboBox1.Name = "comboBox1";
+    comboBox1.Size = new Size(247, 40);
+    comboBox1.TabIndex = 2;
     // 
     // checkBox1
     // 
@@ -155,14 +164,6 @@ partial class Form1 {
     bbbbToolStripMenuItem.Size = new Size(90, 36);
     bbbbToolStripMenuItem.Text = "bbbb";
     // 
-    // comboBox1
-    // 
-    comboBox1.FormattingEnabled = true;
-    comboBox1.Location = new Point(429, 73);
-    comboBox1.Name = "comboBox1";
-    comboBox1.Size = new Size(247, 40);
-    comboBox1.TabIndex = 2;
-    // 
     // Form1
     // 
     AutoScaleDimensions = new SizeF(13F, 32F);
@@ -199,4 +200,5 @@ partial class Form1 {
   private ToolStripMenuItem bbbbToolStripMenuItem;
   private CheckBox checkBox1;
   private ComboBox comboBox1;
+  private FolderBrowserDialog folderBrowserDialog1;
 }
