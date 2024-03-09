@@ -32,5 +32,11 @@ This library is used as shown in the following codes:
     $content = Get-Content -Encoding UTF8 $script | ForEach-Object {$_ -replace "8.0.1", $ver} 
     $content | Out-File -Force -Encoding UTF8 -FilePath $script
     ```
+3. Run the following script in PowerShell.
 
-3. Edit script.fsx and have fun!
+		```powershell
+		dotnet fsi ./script.fsx
+		```
+
+4. Edit script.fsx and have fun!
+
