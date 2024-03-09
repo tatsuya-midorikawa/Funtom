@@ -1,14 +1,10 @@
-#I @"C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\8.0.2"
+#I @"C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\8.0.1"
 #r @"System.Windows.Forms"
 #r @"System.Drawing.Common"
-// #load @"C:\git\Funtom\src\Funtom.winforms\src\Funtom.winforms.lit\bin\Debug\net481\Funtom.winforms.lit.fsx"
-#r "nuget: Funtom.winforms.lit, 0.0.1"
+#load @".\Funtom.winforms.lit.fsx"
 
 open Funtom.winforms.lit
 open Funtom.winforms.lit.dialogs
-open Funtom.winforms.lit.forms
-open Funtom.winforms.lit.controls
-open Funtom.winforms.lit.Property
 
 #nowarn "3391"
 
@@ -30,7 +26,7 @@ let form =
         style [ text "AAA"; bitmap "./phantom_16x16.png" ]
         menu_item [
           style [ id "menu"; text "BBB" ]
-          cmd (fun _ -> dir_dlg.show(None) |> ignore)  (* 警告回避版 *) ] ]
+          cmd (fun _ -> dir_dlg.show() |> ignore)  (* 警告回避版 *) ] ]
 
       menu_item [ 
         style [ text "CCC" ]
