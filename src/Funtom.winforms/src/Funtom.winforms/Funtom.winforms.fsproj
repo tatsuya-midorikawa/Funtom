@@ -9,8 +9,8 @@
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 		<!--<PublishSingleFile>true</PublishSingleFile>
 		<SelfContained>true</SelfContained>-->
-		<Version>0.0.3-alpha</Version>
-		<PackageVersion>0.0.3-alpha</PackageVersion>
+		<Version>0.0.4-alpha</Version>
+		<PackageVersion>0.0.4-alpha</PackageVersion>
 		<Authors>midoliy</Authors>
 		<Company>midoliy</Company>
 		<Copyright>©2024 Tatsuya Midorikawa. All rights rserved</Copyright>
@@ -44,6 +44,15 @@
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
+
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="System.Drawing.Common" Version="8.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="FSharp.Core" Version="8.0.200" />
 	</ItemGroup>
 
 </Project>

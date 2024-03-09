@@ -13,7 +13,7 @@ This library is used as shown in the following codes:
 ```fsharp
 #I @"C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\8.0.2"
 #r "System.Windows.Forms"
-#r "nuget: Funtom.winforms, 0.0.3-alpha"
+#r "nuget: Funtom.winforms, 0.0.3-gamma"
 
 open Funtom.winforms
 

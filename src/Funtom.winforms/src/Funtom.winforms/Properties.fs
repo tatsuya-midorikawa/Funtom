@@ -61,11 +61,6 @@ module PropertyTools =
   #endif
 
 module Properties =
-  let (| Forms |) (property: Property) =
-    match property with Form form -> form | _ -> exn $"This property is not matched." |> raise
-
-  let (| MenuStripItem |) (property: Property) =
-    match property with MenuStripItem item -> item | _ -> exn $"This property is not matched." |> raise
 
   let inline suspend_layout (property: Property) =
     match property with
