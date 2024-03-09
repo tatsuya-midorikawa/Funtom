@@ -1,12 +1,13 @@
 ﻿open Funtom.winforms
 open Funtom.winforms.forms
 open Funtom.winforms.controls
-open Funtom.winforms.components
+open Funtom.winforms.dialogs
 
 #nowarn "3391"
 
 let debug msg = System.Diagnostics.Debug.WriteLine msg
 let dir_dlg = new dir_browser()
+let file_dlg = new file_dialog(index= 0, filter= "")
 
 let form =
   form [

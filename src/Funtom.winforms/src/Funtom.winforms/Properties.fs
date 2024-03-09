@@ -70,8 +70,8 @@ module Properties =
   let inline suspend_layout (property: Property) =
     match property with
       | Property.Form form -> form.SuspendLayout()
-      | MenuStrip menu -> menu.SuspendLayout()
-      | Control ctrl ->
+      | Property.MenuStrip menu -> menu.SuspendLayout()
+      | Property.Control ctrl ->
         match ctrl with
           | :? System.Windows.Forms.GroupBox as c -> c.SuspendLayout()
           | :? System.Windows.Forms.Panel as c -> c.SuspendLayout()
@@ -88,8 +88,8 @@ module Properties =
   let inline resume_layout (perform) (property: Property) =
     match property with
       | Property.Form form -> form.ResumeLayout(perform)
-      | MenuStrip menu -> menu.ResumeLayout(perform); menu.PerformLayout()
-      | Control ctrl ->
+      | Property.MenuStrip menu -> menu.ResumeLayout(perform); menu.PerformLayout()
+      | Property.Control ctrl ->
         match ctrl with
           | :? System.Windows.Forms.GroupBox as c -> c.ResumeLayout(perform); c.PerformLayout()
           | :? System.Windows.Forms.Panel as c -> c.ResumeLayout(perform)
@@ -106,9 +106,9 @@ module Properties =
   let inline enabled enabled (property: Property) =
     match property with
       | Property.Form form -> form.Enabled <- enabled
-      | MenuStripItem m -> m.Enabled <- enabled
-      | MenuStrip m -> m.Enabled <- enabled
-      | Control c -> c.Enabled <- enabled
-      | Controls cs -> cs |> List.iter (fun c -> c.Enabled <- enabled)
+      | Property.MenuStripItem m -> m.Enabled <- enabled
+      | Property.MenuStrip m -> m.Enabled <- enabled
+      | Property.Control c -> c.Enabled <- enabled
+      | Property.Controls cs -> cs |> List.iter (fun c -> c.Enabled <- enabled)
       | _ -> exn $"This property is not supported: {property}" |> raise
     property
