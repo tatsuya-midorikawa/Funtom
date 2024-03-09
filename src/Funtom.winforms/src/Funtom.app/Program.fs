@@ -31,7 +31,7 @@ let form =
 
     ]
 
-    flow [
+    flow_layout [
       style [ dock Dock.fill; ]
 
       label [ style [ text "Click ->"; anchor Anchors.none; auto_size true] ]
@@ -45,16 +45,16 @@ let form =
 
       group [
         style [ text "radio group";  ]
-        flow [
+        flow_layout [
           style [ dock Dock.fill ]
-          radio [ style [ text "radio1"; anchor Anchors.none; auto_size true] ]
-          radio [ style [ text "radio2"; anchor Anchors.none; auto_size true] ] ]
+          radio_button [ style [ text "radio1"; anchor Anchors.none; auto_size true] ]
+          radio_button [ style [ text "radio2"; anchor Anchors.none; auto_size true] ] ]
       ]
 
-      check [ 
+      check_box [ 
         style [ selected true; text "sample content"; auto_size true ] ]
 
-      combo [
+      combo_box [
         style [ auto_size true; index 1 ]
         items [ "aaa"; "bbb"; "ccc"; ] ]
     ]

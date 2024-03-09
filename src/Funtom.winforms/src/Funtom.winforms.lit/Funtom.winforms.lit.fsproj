@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net481</TargetFramework>
+
+		<UseWindowsForms>true</UseWindowsForms>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarnOn>3390;$(WarnOn)</WarnOn>
+
+		<Version>0.0.1</Version>
+		<PackageVersion>0.0.1</PackageVersion>
+		<Authors>midoliy</Authors>
+		<Company>midoliy</Company>
+		<Copyright>©2024 Tatsuya Midorikawa. All rights rserved</Copyright>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<PackageTags>midoliy,WinForms,fsharp, Funtom</PackageTags>
+		<PackageProjectUrl>https://github.com/tatsuya-midorikawa/Funtom</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/tatsuya-midorikawa/Funtom</RepositoryUrl>
+		<Description>
+			Funtom.winforms is a library for F# that makes WinForms development convenient.
+		</Description>
+		<PackageIcon>phantom.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+		<Compile Include="Funtom.winforms.lit.fsi" />
+		<Compile Include="Funtom.winforms.lit.fs" />
+		<None Include="..\..\assets\phantom.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+  </ItemGroup>
+  
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy /y $(ProjectDir)Funtom.winforms.lit.fs $(OutDir)Funtom.winforms.lit.fsx" />
+  </Target>
+
+</Project>

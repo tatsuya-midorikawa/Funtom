@@ -23,9 +23,6 @@ module controls =
         | MenuStrip menu -> ctrl.Controls.Add menu
         | Control c -> ctrl.Controls.Add c
         | Controls cs -> ctrl.Controls.AddRange (cs |> List.toArray)
-        #if NET481
-        | Command cmd -> ctrl.Click.Add cmd
-        #endif
         | _ -> exn $"This property is not supported: %A{p}" |> raise
 
 
@@ -36,9 +33,7 @@ module controls =
   module private Button =
     let apply (btn: System.Windows.Forms.Button) p =
       match p with
-        #if NET8_0
         | Command cmd -> btn.Command <- cmd
-        #endif
         | _ -> internals.apply btn p
 
   let button (properties: Property list) =
@@ -62,7 +57,7 @@ module controls =
         | _ -> ()
       internals.apply panel p
     
-  let flow (properties: Property list) =
+  let flow_layout (properties: Property list) =
     let panel = new System.Windows.Forms.FlowLayoutPanel()
     panel.SuspendLayout ()
     properties |> List.iter (FlowLayoutPanel.apply panel)
@@ -118,7 +113,7 @@ module controls =
           styles |> List.iter apply'
         | _ -> internals.apply chk p
 
-  let check (properties: Property list) =
+  let check_box (properties: Property list) =
     let chk = new System.Windows.Forms.CheckBox()
     chk.SuspendLayout ()
     properties |> List.iter (CheckBox.apply chk)
@@ -149,7 +144,7 @@ module controls =
                     | None -> None)
             | _ -> get_index ys
 
-  let combo (properties: Property list) =
+  let combo_box (properties: Property list) =
     let cmb = new System.Windows.Forms.ComboBox()
     cmb.SuspendLayout ()
     properties |> List.iter (ComboBox.apply cmb)
@@ -184,7 +179,7 @@ module controls =
       match p with
         | _ -> internals.apply rb p
 
-  let radio (properties: Property list) =
+  let radio_button (properties: Property list) =
     let rb = new System.Windows.Forms.RadioButton()
     rb.SuspendLayout ()
     properties |> List.iter (RadioButton.apply rb)
@@ -200,12 +195,7 @@ module controls =
     let apply (menu: System.Windows.Forms.MenuStrip) p =
       match p with
         | MenuStripItem item -> menu.Items.Add item |> ignore
-      #if NET8_0_OR_GREATER
         | Command cmd -> menu.Click.Add cmd.Execute
-      #endif
-      #if NET48_OR_GREATER
-        | Command cmd -> menu.Click.Add cmd
-      #endif
         | _ -> internals.apply menu p
 
   let menu (properties: Property list) =
@@ -235,12 +225,7 @@ module controls =
             | _ -> exn $"This property is not supported: %A{p}" |> raise
           styles |> List.iter apply'
         | MenuStripItem item' -> item.DropDownItems.Add item' |> ignore
-      #if NET8_0_OR_GREATER
         | Command cmd -> item.Click.Add cmd.Execute
-      #endif
-      #if NET48_OR_GREATER
-        | Command cmd -> item.Click.Add cmd
-      #endif
         | _ -> exn $"This property is not supported: %A{p}" |> raise
 
   let menu_item (properties: Property list) =

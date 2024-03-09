@@ -56,9 +56,6 @@ module PropertyTools =
   let inline items (list: obj list) = Items (list |> List.toArray)
   let inline index (i: int) = Index i
   let flow_break = FlowBreak true
-  #if NET48_OR_GREATER
-  let inline cmd (c: obj -> unit) = Command c
-  #endif
 
 module Properties =
 
