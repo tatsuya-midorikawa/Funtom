@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0-windows</TargetFramework>
+		<!--<TargetFramework>net8.0-windows</TargetFramework>-->
 		<!--<TargetFramework>net481</TargetFramework>-->
-		<!--<TargetFrameworks>net8.0-windows;net481</TargetFrameworks>-->
+		<TargetFrameworks>net8.0-windows;net481</TargetFrameworks>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<UseWindowsForms>true</UseWindowsForms>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 		<!--<PublishSingleFile>true</PublishSingleFile>
 		<SelfContained>true</SelfContained>-->
-		<Version>0.0.2</Version>
-		<PackageVersion>0.0.2-alpha</PackageVersion>
+		<Version>0.0.3-alpha</Version>
+		<PackageVersion>0.0.3-alpha</PackageVersion>
 		<Authors>midoliy</Authors>
 		<Company>midoliy</Company>
 		<Copyright>©2024 Tatsuya Midorikawa. All rights rserved</Copyright>

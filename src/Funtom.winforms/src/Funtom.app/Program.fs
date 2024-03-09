@@ -1,5 +1,5 @@
 ﻿open Funtom.winforms
-open Funtom.winforms.forms
+//open Funtom.winforms.forms
 open Funtom.winforms.controls
 open Funtom.winforms.dialogs
 

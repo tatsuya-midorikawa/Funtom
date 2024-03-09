@@ -2,6 +2,7 @@
 
 open Funtom.winforms.controls
 
+[<AutoOpen>]
 module forms =
 
   let form (properties: Property list) =

@@ -18,8 +18,10 @@ module dialogs =
     member __.description with get() = raw'.Description and set v = raw'.Description <- v
     member __.show_new_dir with get() = raw'.ShowNewFolderButton and set v = raw'.ShowNewFolderButton <- v
     member __.root_dir with get() = raw'.RootFolder and set v = raw'.RootFolder <- v
+  #if NET8_0_OR_GREATER
     member __.init_dir with get() = raw'.InitialDirectory and set v = raw'.InitialDirectory <- v
     member __.show_hiddens with get() = raw'.ShowHiddenFiles and set v = raw'.ShowHiddenFiles <- v
+  #endif
     
 
 
@@ -52,7 +54,9 @@ module dialogs =
     member __.filename with get () = raw'.FileName and set v = raw'.FileName <- v
     member __.filenames with get () = raw'.FileNames
     member __.readonly with get () = raw'.ReadOnlyChecked and set v = raw'.ReadOnlyChecked <- v
+  #if NET8_0_OR_GREATER
     member __.select_readonly with get () = raw'.SelectReadOnly and set v = raw'.SelectReadOnly <- v
+  #endif
     member __.fileok(e: System.ComponentModel.CancelEventArgs -> unit) = raw'.FileOk.Add e
 
     member __.Item with get (i: int) = raw'.FileNames.[i]
