@@ -3,8 +3,6 @@ open Funtom.winforms.forms
 open Funtom.winforms.controls
 open Funtom.winforms.components
 
-open System.Threading.Tasks
-
 #nowarn "3391"
 
 let debug msg = System.Diagnostics.Debug.WriteLine msg
