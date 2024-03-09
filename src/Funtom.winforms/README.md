@@ -10,16 +10,27 @@ It is primarily intended to be invoked with F# script (.fsx), and the purpose is
 
 This library is used as shown in the following codes:
 
-```fsharp
-#I @"C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\8.0.2"
-#r "System.Windows.Forms"
-#r "nuget: Funtom.winforms.lit, 0.0.1"
+1. Create a folder for your project.
 
-open Funtom.winforms
+    ```powershell
+    mkdir C:\pj\MyWinformApp
+    cd C:\pj\MyWinformApp
+    ```
 
-form [
-  style [ size { width= 640<px>; height= 480<px> }; text "Hello F# GUI App!!" ]
-]
-|> show_dialog
-|> ignore
-```
+2. Download the project template. Run the following script in PowerShell.
+
+    ```powershell
+    $src = "https://github.com/tatsuya-midorikawa/Funtom/releases/download/Funtom.winforms.lit_ver.0.0.1/Funtom.winforms.lit_ver.0.0.1.zip"
+    $zip = "./Funtom.winforms.lit_ver.0.0.1.zip"
+    Invoke-WebRequest -Uri $src -OutFile $zip
+    Expand-Archive -Path $zip -DestinationPath "./"
+    Remove-Item -Path $zip
+
+    $ls = dotnet --list-runtimes | where {$_ -like 'Microsoft.WindowsDesktop.App*'}
+    $ver = $ls[$ls.Count-1].Split()[1]
+    $script = "./script.fsx"
+    $content = Get-Content -Encoding UTF8 $script | ForEach-Object {$_ -replace "8.0.1", $ver} 
+    $content | Out-File -Force -Encoding UTF8 -FilePath $script
+    ```
+
+3. Edit script.fsx and have fun!
