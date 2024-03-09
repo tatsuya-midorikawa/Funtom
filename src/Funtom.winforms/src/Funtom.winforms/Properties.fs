@@ -60,11 +60,16 @@ module PropertyTools =
   let inline cmd (c: obj -> unit) = Command c
   #endif
 
-module Property =
+module Properties =
+  let (| Forms |) (property: Property) =
+    match property with Form form -> form | _ -> exn $"This property is not matched." |> raise
+
+  let (| MenuStripItem |) (property: Property) =
+    match property with MenuStripItem item -> item | _ -> exn $"This property is not matched." |> raise
 
   let inline suspend_layout (property: Property) =
     match property with
-      | Form form -> form.SuspendLayout()
+      | Property.Form form -> form.SuspendLayout()
       | MenuStrip menu -> menu.SuspendLayout()
       | Control ctrl ->
         match ctrl with
@@ -82,7 +87,7 @@ module Property =
  
   let inline resume_layout (perform) (property: Property) =
     match property with
-      | Form form -> form.ResumeLayout(perform)
+      | Property.Form form -> form.ResumeLayout(perform)
       | MenuStrip menu -> menu.ResumeLayout(perform); menu.PerformLayout()
       | Control ctrl ->
         match ctrl with
@@ -100,7 +105,7 @@ module Property =
 
   let inline enabled enabled (property: Property) =
     match property with
-      | Form form -> form.Enabled <- enabled
+      | Property.Form form -> form.Enabled <- enabled
       | MenuStripItem m -> m.Enabled <- enabled
       | MenuStrip m -> m.Enabled <- enabled
       | Control c -> c.Enabled <- enabled

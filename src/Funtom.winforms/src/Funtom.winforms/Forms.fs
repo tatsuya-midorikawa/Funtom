@@ -27,7 +27,7 @@ module forms =
             | _ -> internals.apply form p
         | _ -> internals.apply form p
 
-    properties |> Property.suspend_layouts
+    properties |> Properties.suspend_layouts
     properties |> List.iter (apply f)
     
     // Panel -> MenuStrip でないと正しくレイアウトされないため、そこをハンドリングする
@@ -35,7 +35,7 @@ module forms =
     menu |> Option.iter (fun m -> f.Controls.Add m; f.MainMenuStrip <- m)
 
     
-    properties |> Property.resume_layouts false
+    properties |> Properties.resume_layouts false
     f.ResumeLayout(false)
     Form f
 

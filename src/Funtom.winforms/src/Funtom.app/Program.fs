@@ -1,12 +1,14 @@
 ﻿open Funtom.winforms
 open Funtom.winforms.forms
 open Funtom.winforms.controls
+open Funtom.winforms.components
 
 open System.Threading.Tasks
 
 #nowarn "3391"
 
 let debug msg = System.Diagnostics.Debug.WriteLine msg
+let dir_dlg = new dir_browser()
 
 let form =
   form [
@@ -16,13 +18,13 @@ let form =
 
     menu [ 
       style [ text "menuStrip"; position { top= 0<px>; left= 0<px> } ]
-      cmd (fun _ -> msg.show "menuStrip" |> ignore)  // norwarn "3391" がないと警告がでる
+      //cmd (fun _ -> msg.show "menuStrip" |> ignore)  // norwarn "3391" がないと警告がでる
 
       menu_item [ 
         style [ text "AAA"; bitmap "./phantom_16x16.png" ]
         menu_item [
-          style [ text "BBB" ]
-          cmd.build (fun _ -> msg.show "BBB" |> ignore)  (* 警告回避版 *) ] ]
+          style [ id "menu"; text "BBB" ]
+          cmd.build (fun _ -> dir_dlg.show() |> ignore)  (* 警告回避版 *) ] ]
 
       menu_item [ 
         style [ text "CCC" ]
@@ -70,4 +72,8 @@ let btn1 =
   |> document.get_elem_by_id "btn1"
   |> document.add_event_listener (evt.click on_btn1_click)
 
-form |> (show_dialog >> ignore)
+// Create main() since STAThread is required for dir_dlg.show(), etc. to work.
+[<EntryPoint; System.STAThread>]
+let main _ =
+  form |> (show_dialog >> ignore)
+  0
