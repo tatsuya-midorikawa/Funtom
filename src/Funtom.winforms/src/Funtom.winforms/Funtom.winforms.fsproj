@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<UseWindowsForms>true</UseWindowsForms>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<!--<PublishSingleFile>true</PublishSingleFile>
+		<SelfContained>true</SelfContained>-->
+		<Version>0.0.4-alpha</Version>
+		<PackageVersion>0.0.4-alpha</PackageVersion>
+		<Authors>midoliy</Authors>
+		<Company>midoliy</Company>
+		<Copyright>©2024 Tatsuya Midorikawa. All rights rserved</Copyright>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<PackageTags>midoliy,WinForms,fsharp, Funtom</PackageTags>
+		<PackageProjectUrl>https://github.com/tatsuya-midorikawa/Funtom</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/tatsuya-midorikawa/Funtom</RepositoryUrl>
+		<Description>
+			Funtom.winforms is a library for F# that makes WinForms development convenient.
+		</Description>
+		<PackageIcon>phantom.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Configurations>Debug;Release</Configurations>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="Utilities.fs" />
+		<Compile Include="Messages.fs" />
+		<Compile Include="Styles.fs" />
+		<Compile Include="Properties.fs" />
+		<Compile Include="Controls.fs" />
+		<Compile Include="Forms.fs" />
+		<Compile Include="Documents.fs" />
+		<Compile Include="Dialogs.fs" />
+		<Compile Include="impl\Command.fs" />
+		<None Include="..\..\assets\phantom.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="System.Drawing.Common" Version="8.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="FSharp.Core" Version="8.0.200" />
+	</ItemGroup>
+
+</Project>
