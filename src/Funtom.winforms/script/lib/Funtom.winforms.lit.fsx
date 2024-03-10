@@ -1,5 +1,5 @@
 (* ------------------------------------------------
- *        Funtom.winforms.lit ver. 0.0.1
+ *        Funtom.winforms.lit ver. 0.0.2
  *             Apache-2.0 license
  *   2024 Tatsuya Midorikawa. All rights rserved
  * ------------------------------------------------ *)

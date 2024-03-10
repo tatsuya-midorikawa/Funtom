@@ -25,11 +25,14 @@ let main args =
           style [ text "AAA"; ]
           menu_item [
             style [ id "menu"; text "BBB" ]
-            cmd (fun _ -> dir_dlg.show() |> ignore)  ] ]
+            cmd (fun _ -> dir_dlg.show() |> ignore)
+          ] 
+        ]
 
         menu_item [ 
           style [ text "CCC" ]
-          menu_item [ style [ text "DDD" ] ] ]
+          menu_item [ style [ text "DDD" ] ] 
+        ]
 
       ]
 
@@ -46,30 +49,30 @@ let main args =
         flow_break
 
         group [
-          style [ text "radio group";  ]
+          style [ text "radio group"; ]
           flow_layout [
             style [ dock Dock.fill ]
             radio_button [ style [ text "radio1"; anchor Anchors.none; auto_size true] ]
-            radio_button [ style [ text "radio2"; anchor Anchors.none; auto_size true] ] ]
+            radio_button [ style [ text "radio2"; anchor Anchors.none; auto_size true] ]
+          ]
         ]
 
         check_box [ 
-          style [ selected true; text "sample content"; auto_size true ] ]
+          style [ selected true; text "sample content"; auto_size true ]
+        ]
 
         combo_box [
           style [ auto_size true; index 1 ]
-          items [ "aaa"; "bbb"; "ccc"; ] ]
+          items [ "aaa"; "bbb"; "ccc"; ]
+        ]
           
         flow_break
 
         webview2 [
-          style [ size { width= 320<px>; height= 240<px> } ]
-          url "https://fsdoc.jp"
+          style [ id "webview"; dock Dock.fill; ]
+          url "https://www.google.com"
         ]
         
-        combo_box [
-          style [ auto_size true; index 1 ]
-          items [ "aaa"; "bbb"; "ccc"; ] ]
       ]
       
     ]
