@@ -1,4 +1,3 @@
-#I @"C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\8.0.2"
 #r @"System.Windows.Forms"
 #r @"System.Drawing.Common"
 #load @".\lib\Funtom.winforms.lit.fsx"
@@ -8,22 +7,27 @@ open Funtom.winforms.lit.dialogs
 
 #nowarn "3391"
 
+module resources =
+  [<Literal>]
+  let ico = "./assets/phantom.ico"
+  [<Literal>]
+  let phantom_16x16 = "./assets/phantom_16x16.png"
+
 [<System.STAThread>]
 let main args =
   let dir_dlg = new dir_browser()
-  let file_dlg = new file_dialog(index= 0, filter= "")
 
   let form =
     form [
       style [
-        icon "./assets/phantom.ico"
+        icon resources.ico
         id "Main form"; text "Hello F#!!"; size { width= 640<px>; height= 480<px> } ]
 
       menu [ 
         style [ text "menuStrip"; position { top= 0<px>; left= 0<px> } ]
 
         menu_item [ 
-          style [ text "AAA"; bitmap "./assets/phantom_16x16.png" ]
+          style [ text "AAA"; bitmap resources.phantom_16x16 ]
           menu_item [
             style [ id "menu"; text "BBB" ]
             cmd (fun _ -> dir_dlg.show() |> ignore)  ] ]
@@ -67,7 +71,7 @@ let main args =
     form |> document.get_elem_by_id "input1"
 
   let on_btn1_click _ =
-    msg.show $"test" |> ignore
+    msg.show $"{textbox.text}" |> ignore
 
   let btn1 =
     form

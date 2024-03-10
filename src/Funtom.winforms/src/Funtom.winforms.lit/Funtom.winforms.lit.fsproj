@@ -36,7 +36,8 @@
   </ItemGroup>
   
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy /y $(ProjectDir)Funtom.winforms.lit.fs $(SolutionDir)..\script\Funtom.winforms.lit.fsx" />
+    <Exec Command="copy /y $(ProjectDir)Funtom.winforms.lit.fs $(SolutionDir)..\script\lib\Funtom.winforms.lit.fsx" />
+		<Exec Command="copy /y $(ProjectDir)Funtom.winforms.lit.fs $(SolutionDir)..\template\content\lib\Funtom.winforms.lit.fsx" />
   </Target>
 
 </Project>

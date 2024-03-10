@@ -1,5 +1,5 @@
 (* ----------------------------------------------
- *       Funtom.winforms.lit ver. 0.0.1
+ *       Funtom.winforms.lit ver. 0.0.1.1
  *             Apache-2.0 license
  * ©2024 Tatsuya Midorikawa. All rights rserved
  * ---------------------------------------------- *)
@@ -135,6 +135,8 @@ with
     match __ with
       | Form form -> form.Text
       | Control c -> c.Text
+      | MenuStripItem item -> item.Text
+      | MenuStrip m -> m.Text
       | _ -> exn $"This property is not supported." |> raise
   
   member __.add_event_listener (evt: evt) =
@@ -148,7 +150,7 @@ with
     __
 
 [<AutoOpen>]
-module Property =
+module property =
   let flow_break = FlowBreak true
   let inline cmd (c: obj -> unit) = Command c
   let inline style (styles: Style list) = Styles styles
@@ -423,7 +425,6 @@ module controls =
  * ---------------------------------------- *)
 [<AutoOpen>]
 module forms =
-
   let form (properties: Property list) =
     let f = new System.Windows.Forms.Form()
     f.SuspendLayout()
@@ -468,8 +469,8 @@ module forms =
 (* ----------------------------------------
  * Documnts
  * ---------------------------------------- *)
-open System.Linq
 module document =
+  open System.Linq
   let rec private get_elem_by_id'' (id: string) (items:System.Windows.Forms.ToolStripItemCollection) =
     match items[id] with
     | null -> 

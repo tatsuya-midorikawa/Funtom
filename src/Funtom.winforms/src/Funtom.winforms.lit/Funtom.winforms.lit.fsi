@@ -72,8 +72,8 @@ with
     member text : string
     member add_event_listener : evt -> Property
 
-
-module Property =
+[<AutoOpen>]
+module property =
   val flow_break : Property
   val inline cmd : (obj -> unit) -> Property
   val inline style : Style list -> Property
@@ -99,6 +99,7 @@ module Property =
 (* ----------------------------------------
  * Controls
  * ---------------------------------------- *)
+[<AutoOpen>]
 module controls =
   val button : Property list -> Property
   val flow_layout : Property list -> Property
@@ -116,6 +117,7 @@ module controls =
 (* ----------------------------------------
  * Forms
  * ---------------------------------------- *)
+[<AutoOpen>]
 module forms =
   val form : Property list -> Property
   val show : Property -> Property
