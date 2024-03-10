@@ -64,9 +64,11 @@ type Property =
   | MenuStripItem of System.Windows.Forms.ToolStripMenuItem
   | MenuStrip of System.Windows.Forms.MenuStrip
   | FlowBreak of bool
+  //| WebView of Microsoft.Web.WebView2.WinForms.WebView2
   | Control of System.Windows.Forms.Control
   | Controls of System.Windows.Forms.Control list
   | Items of obj array
+  | Uri of System.Uri
   | Command of (obj -> unit)
 with
     member text : string
@@ -94,7 +96,15 @@ module property =
   val inline index : int -> Style
   val inline bitmap : string -> Style
   val inline icon : string -> Style
+  val inline url : string -> Property
 
+module Properties =
+  val inline suspend_layout : Property -> unit
+  val suspend_layouts : Property list -> unit
+  val inline resume_layout : bool -> Property -> unit
+  val resume_layouts : bool -> Property list -> unit
+  //val inline cast2webview : Property -> Microsoft.Web.WebView2.WinForms.WebView2
+  val inline enabled : bool -> Property -> Property
 
 (* ----------------------------------------
  * Controls
@@ -111,6 +121,7 @@ module controls =
   val radio_button : Property list -> Property
   val menu : Property list -> Property
   val menu_item : Property list -> Property
+  //val webview2 : Property list -> Property
 
 
   
@@ -141,7 +152,8 @@ module dialogs =
   type dir_browser =
     interface System.IDisposable
     new : unit -> dir_browser
-    member show : IWin32Window option -> DialogResult
+    member show : unit -> DialogResult
+    member show : IWin32Window -> DialogResult
     member reset : unit -> unit
 
     member raw : System.Windows.Forms.FolderBrowserDialog with get
