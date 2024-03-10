@@ -442,6 +442,7 @@ module controls =
     wb.AllowExternalDrop <- true
     wb.DefaultBackgroundColor <- System.Drawing.Color.White
     properties |> List.iter (WebView2.apply wb)
+    wb.EnsureCoreWebView2Async() |> ignore
     (wb :> System.ComponentModel.ISupportInitialize).EndInit()
     WebView wb
 
