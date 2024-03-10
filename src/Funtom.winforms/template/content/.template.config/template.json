@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Tatsuya MIDORIKAWA",
+  "classifications": [ "funtom", "gui", "fsharp" ],
+  "identity": "Funtom.winforms.lit",
+  "name": "Funtom.winforms.lit: F# script GUI template.",
+  "shortName": "winforms.lit",
+  "tags": {
+    "language": "F#",
+    "type": "project"
+  },
+  "constraints": {
+    "windows-only": {
+      "type": "os",
+      "args": "Windows"
+    }
+  }
+}

@@ -34,7 +34,7 @@
 		<Compile Include="Documents.fs" />
 		<Compile Include="Dialogs.fs" />
 		<Compile Include="impl\Command.fs" />
-		<None Include="..\..\assets\phantom.png">
+		<None Include="..\..\assets\funtom.winforms.png">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>

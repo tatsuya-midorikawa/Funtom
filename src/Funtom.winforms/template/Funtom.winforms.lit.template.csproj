@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>Funtom.winforms.lit.template</PackageId>
+    <PackageVersion>0.0.1</PackageVersion>
+    <Title>Funtom.winforms.lit.template</Title>
+    <Authors>Tatsuya MIDORIKAWA</Authors>
+    <Description>Funtom.winforms.lit: F# script GUI template.</Description>
+    <PackageTags>fsharp, funtom, gui, winforms</PackageTags>
+    <PackageProjectUrl>https://github.com/tatsuya-midorikawa/Funtom/tree/main/src/Funtom.winforms</PackageProjectUrl>
+		<Copyright>©2024 Tatsuya Midorikawa. All rights rserved</Copyright>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/tatsuya-midorikawa/Funtom</RepositoryUrl>
+		<Description>
+			Funtom.winforms.lit is a library for F# that makes WinForms development convenient.
+		</Description>
+
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+
+    <PackageType>Template</PackageType>
+    <TargetFramework>net481</TargetFramework>
+    <IncludeContentInPack>true</IncludeContentInPack>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <ContentTargetFolders>content</ContentTargetFolders>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+    <NoDefaultExcludes>true</NoDefaultExcludes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <LocalizeTemplates>false</LocalizeTemplates>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.TemplateEngine.Tasks" Version="*" PrivateAssets="all" IsImplicitlyDefined="true"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="content\**\*" Exclude="content\**\bin\**;content\**\obj\**" />
+    <Compile Remove="**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+</Project>
