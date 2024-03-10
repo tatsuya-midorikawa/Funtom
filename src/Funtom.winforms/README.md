@@ -1,6 +1,6 @@
 # Funtom.winforms / Funtom.winforms.lit
 
-![img]("./assets/funtom.winforms.png")
+![img]("assets/funtom.winforms.png")
 
 ## Overview
 
