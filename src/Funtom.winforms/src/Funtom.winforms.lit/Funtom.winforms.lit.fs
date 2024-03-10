@@ -1,5 +1,5 @@
 (* ------------------------------------------------
- *        Funtom.winforms.lit ver. 0.0.1
+ *        Funtom.winforms.lit ver. 0.0.2
  *             Apache-2.0 license
  *   2024 Tatsuya Midorikawa. All rights rserved
  * ------------------------------------------------ *)
@@ -126,7 +126,7 @@ type Property =
   | MenuStripItem of System.Windows.Forms.ToolStripMenuItem
   | MenuStrip of System.Windows.Forms.MenuStrip
   | FlowBreak of bool
-  //| WebView of Microsoft.Web.WebView2.WinForms.WebView2
+  | WebView of Microsoft.Web.WebView2.WinForms.WebView2
   | Control of System.Windows.Forms.Control
   | Controls of System.Windows.Forms.Control list
   | Items of obj array
@@ -213,17 +213,17 @@ module Properties =
         resume_layout perform head
         resume_layouts perform tail
   
-  //let inline cast2webview (property: Property) =
-  //  match property with
-  //    | WebView w -> w
-  //    | _ -> exn $"This property is not supported: {property}" |> raise
+  let inline cast2webview (property: Property) =
+    match property with
+      | WebView w -> w
+      | _ -> exn $"This property is not supported: {property}" |> raise
 
   let inline enabled enabled (property: Property) =
     match property with
       | Property.Form form -> form.Enabled <- enabled
       | Property.MenuStripItem m -> m.Enabled <- enabled
       | Property.MenuStrip m -> m.Enabled <- enabled
-      //| Property.WebView w -> w.Enabled <- enabled
+      | Property.WebView w -> w.Enabled <- enabled
       | Property.Control c -> c.Enabled <- enabled
       | Property.Controls cs -> cs |> List.iter (fun c -> c.Enabled <- enabled)
       | _ -> exn $"This property is not supported: {property}" |> raise
@@ -256,7 +256,7 @@ module controls =
         | FlowBreak _ -> ()
         | Form form -> ctrl.Controls.Add form
         | MenuStrip menu -> ctrl.Controls.Add menu
-        //| WebView wb -> ctrl.Controls.Add wb
+        | WebView wb -> ctrl.Controls.Add wb
         | Control c -> ctrl.Controls.Add c
         | Controls cs -> ctrl.Controls.AddRange (cs |> List.toArray)
         | _ -> exn $"This property is not supported: %A{p}" |> raise
@@ -429,21 +429,21 @@ module controls =
     properties |> List.iter (MenuStripItem.apply item)
     MenuStripItem item
 
-  //// WebView2
-  //module private WebView2 =
-  //  let apply (wb: Microsoft.Web.WebView2.WinForms.WebView2) p =
-  //    match p with
-  //      | Uri uri -> wb.Source <- uri
-  //      | _ -> internals.apply wb p
+  // WebView2
+  module private WebView2 =
+    let apply (wb: Microsoft.Web.WebView2.WinForms.WebView2) p =
+      match p with
+        | Uri uri -> wb.Source <- uri
+        | _ -> internals.apply wb p
 
-  //let webview2 (properties: Property list) =
-  //  let wb = new Microsoft.Web.WebView2.WinForms.WebView2()
-  //  (wb :> System.ComponentModel.ISupportInitialize).BeginInit()
-  //  wb.AllowExternalDrop <- true
-  //  wb.DefaultBackgroundColor <- System.Drawing.Color.White
-  //  properties |> List.iter (WebView2.apply wb)
-  //  (wb :> System.ComponentModel.ISupportInitialize).EndInit()
-  //  WebView wb
+  let webview2 (properties: Property list) =
+    let wb = new Microsoft.Web.WebView2.WinForms.WebView2()
+    (wb :> System.ComponentModel.ISupportInitialize).BeginInit()
+    wb.AllowExternalDrop <- true
+    wb.DefaultBackgroundColor <- System.Drawing.Color.White
+    properties |> List.iter (WebView2.apply wb)
+    (wb :> System.ComponentModel.ISupportInitialize).EndInit()
+    WebView wb
 
 
 

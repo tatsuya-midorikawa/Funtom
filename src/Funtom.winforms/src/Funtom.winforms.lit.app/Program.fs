@@ -1,7 +1,4 @@
 ﻿open Funtom.winforms.lit
-
-
-open Funtom.winforms.lit
 open Funtom.winforms.lit.dialogs
 
 #nowarn "3391"
@@ -65,6 +62,11 @@ let main args =
           
         flow_break
 
+        webview2 [
+          style [ size { width= 320<px>; height= 240<px> } ]
+          url "https://fsdoc.jp"
+        ]
+        
         combo_box [
           style [ auto_size true; index 1 ]
           items [ "aaa"; "bbb"; "ccc"; ] ]

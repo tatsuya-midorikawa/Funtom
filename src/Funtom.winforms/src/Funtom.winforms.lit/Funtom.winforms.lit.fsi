@@ -64,7 +64,7 @@ type Property =
   | MenuStripItem of System.Windows.Forms.ToolStripMenuItem
   | MenuStrip of System.Windows.Forms.MenuStrip
   | FlowBreak of bool
-  //| WebView of Microsoft.Web.WebView2.WinForms.WebView2
+  | WebView of Microsoft.Web.WebView2.WinForms.WebView2
   | Control of System.Windows.Forms.Control
   | Controls of System.Windows.Forms.Control list
   | Items of obj array
@@ -103,7 +103,7 @@ module Properties =
   val suspend_layouts : Property list -> unit
   val inline resume_layout : bool -> Property -> unit
   val resume_layouts : bool -> Property list -> unit
-  //val inline cast2webview : Property -> Microsoft.Web.WebView2.WinForms.WebView2
+  val inline cast2webview : Property -> Microsoft.Web.WebView2.WinForms.WebView2
   val inline enabled : bool -> Property -> Property
 
 (* ----------------------------------------
@@ -121,7 +121,7 @@ module controls =
   val radio_button : Property list -> Property
   val menu : Property list -> Property
   val menu_item : Property list -> Property
-  //val webview2 : Property list -> Property
+  val webview2 : Property list -> Property
 
 
   
