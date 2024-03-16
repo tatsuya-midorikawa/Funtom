@@ -1,7 +1,9 @@
 ﻿open Funtom.winforms.exp
 open Funtom.winforms.exp.forms
 
-new form {
+#nowarn "0760"
+
+form {
   styles= []
   controls= []
 }

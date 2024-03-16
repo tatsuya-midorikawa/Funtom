@@ -5,7 +5,7 @@ open System.Runtime.CompilerServices
 
 module controls =
 
-  let inline apply (style: Style) (ctrl: 'T when 'T :> Control) = 
+  let apply (style: Style) (ctrl: 'T when 'T :> Control) = 
     match style with
       | Size s -> ctrl.Size <- s
       | Location l -> ctrl.Location <- l
@@ -16,6 +16,12 @@ module controls =
       | Image i -> ctrl.BackgroundImage <- i
       | _ -> raise (exn $"Not supported styles: {style} ({ctrl})")
 
+  let inline add (ctrls: Control list) (ctrl: 'T when 'T :> Control) =
+    ctrl.Controls.AddRange(ctrls |> List.toArray)
+    ctrl
+
+  let inline suspend (ctrl: 'T when 'T :> Control) = ctrl.SuspendLayout(); ctrl
+  let inline resume (perform_layout: bool) (ctrl: 'T when 'T :> Control) = ctrl.ResumeLayout(perform_layout); ctrl
 
 module forms =
   // ------------------------------------------
@@ -34,9 +40,13 @@ module forms =
                 | Icon ico -> frm.Icon <- ico
                 | _ -> controls.apply style frm
               apply rest frm
+
       let frm =
         new System.Windows.Forms.Form()
+        |> controls.suspend
         |> apply property.styles
+        |> controls.add property.controls
+        |> controls.resume false
       new form(frm)
 
     new (styles: Style list) = new form { styles= styles; controls= [] }
@@ -53,4 +63,30 @@ module forms =
     member __.resume (perform_layout: bool) = self.ResumeLayout(perform_layout)
     member __.controls with get () = self.Controls
     member __.children () = self.Controls |> Seq.cast<Control> |> List.ofSeq
+    
+
+  // ------------------------------------------
+  // System.Windows.Forms.Button
+  // ------------------------------------------
+  type button (self: System.Windows.Forms.Button) =
+    interface System.IDisposable with member __.Dispose() = self.Dispose()
+    
+    new (property: Property) = 
+      let rec apply (styles: Style list) (btn: System.Windows.Forms.Button) =
+        match styles with
+          | [] -> btn
+          | style::rest -> 
+              match style with
+                | _ -> controls.apply style btn
+              apply rest btn
+      let btn =
+        new System.Windows.Forms.Button()
+        |> controls.suspend
+        |> apply property.styles
+        |> controls.add property.controls
+        |> controls.resume false
+      new button(btn)
+
+    new (styles: Style list) = new button { styles= styles; controls= [] }
+    new (controls: Control list) = new button { styles= []; controls= controls }
 
