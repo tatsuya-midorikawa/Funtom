@@ -9,3 +9,6 @@ new form {
 
 new form (controls= [])
 |> ignore
+
+new form (styles= [])
+|> ignore
