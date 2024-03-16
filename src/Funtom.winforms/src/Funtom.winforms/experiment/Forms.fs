@@ -18,7 +18,9 @@ module controls =
 
 
 module forms =
-
+  // ------------------------------------------
+  // System.Windows.Forms.Form
+  // ------------------------------------------
   [<Struct; IsReadOnly;>]
   type form (self: System.Windows.Forms.Form) =
     interface System.IDisposable with member __.Dispose() = self.Dispose()
