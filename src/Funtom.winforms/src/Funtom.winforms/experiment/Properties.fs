@@ -1,6 +1,9 @@
 ﻿namespace Funtom.winforms.exp
 
 open System.Windows.Forms
+open System.Runtime.CompilerServices
+
+[<Measure>] type px
 
 [<System.Flags>]
 type Anchor = none= 0 | top= (1 <<< 0) | bottom= (1 <<< 1) | left= (1 <<< 2) | right= (1 <<< 3)
@@ -12,25 +15,33 @@ module Direction = let cast (direction: Direction) = direction |> (int >> enum<F
 type Dock = none= 0 | top= 1 | bottom= 2 | left= 3 | right= 4 | fill= 5
 module Dock = let cast (dock: Dock) = dock |> (int >> enum<DockStyle>)
 
+[<Struct; IsReadOnly;>]
+type Size = { width: int<px>; height: int<px> }
+  with member __.convert () = System.Drawing.Size (int __.width, int __.height)
 
+[<Struct; IsReadOnly;>]
+type Location = { x: int<px>; y: int<px> }
+  with member __.convert () = System.Drawing.Point (int __.x, int __.y)
+
+[<Struct; IsReadOnly;>]
 type Style =
-  | Size of System.Drawing.Size
-  | Location of System.Drawing.Point
-  | Anchor of System.Windows.Forms.AnchorStyles
-  | Directon of System.Windows.Forms.FlowDirection
-  | Dock of System.Windows.Forms.DockStyle
-  | AutoSize of bool
-  | Text of string
-  | Name of string
-  | Image of System.Drawing.Image
-  | Icon of System.Drawing.Icon
-  | Checked of bool
-  | Index of int
+  | Size of size: System.Drawing.Size
+  | Location of location: System.Drawing.Point
+  | Anchor of anchor: System.Windows.Forms.AnchorStyles
+  | Directon of direction: System.Windows.Forms.FlowDirection
+  | Dock of dock: System.Windows.Forms.DockStyle
+  | AutoSize of auto: bool
+  | Text of text: string
+  | Name of name: string
+  | Image of image: System.Drawing.Image
+  | Icon of icon: System.Drawing.Icon
+  | Checked of marked: bool
+  | Index of index: int
 
 [<AutoOpen>]
 module Style =
-  let inline size (width, height) = System.Drawing.Size (width, height) |> Style.Size
-  let inline location (x, y) = System.Drawing.Point (x, y) |> Style.Location
+  let inline size (value: Size) = value.convert() |> Style.Size
+  let inline location (value: Location) = value.convert() |> Style.Location
   let inline anchor anchor = anchor |> Anchor.cast |> Style.Anchor
   let inline direction direction = direction |> Direction.cast |> Style.Directon
   let inline dock dock = dock |> Dock.cast |> Style.Dock
