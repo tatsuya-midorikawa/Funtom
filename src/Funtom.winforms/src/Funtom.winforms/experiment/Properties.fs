@@ -26,6 +26,23 @@ type Style =
   | Checked of bool
   | Index of int
 
+[<AutoOpen>]
+module Style =
+  let inline size (width, height) = System.Drawing.Size (width, height) |> Style.Size
+  let inline location (x, y) = System.Drawing.Point (x, y) |> Style.Location
+  let inline anchor anchor = anchor |> Style.Anchor
+  let inline direction direction = direction |> Style.Directon
+  let inline auto_size auto = auto |> Style.AutoSize
+  let inline text text = text |> Style.Text
+  let inline name name = name |> Style.Name
+  let inline identifier id = id |> Style.Name
+  let inline image (img_path: string) = Style.Image (new System.Drawing.Bitmap (img_path))
+  let inline bitmap (img_path: string) = Style.Image (new System.Drawing.Bitmap (img_path))
+  let inline icon (ico_path: string) = Style.Icon (new System.Drawing.Icon (ico_path))
+  let inline marked marked = marked |> Style.Checked
+  let inline index id = id |> Style.Index
+
+
 
 [<Struct>]
 type Property = { 
