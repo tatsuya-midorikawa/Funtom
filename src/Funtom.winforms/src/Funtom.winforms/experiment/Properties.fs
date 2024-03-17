@@ -4,20 +4,21 @@ open System.Windows.Forms
 
 [<System.Flags>]
 type Anchor = none= 0 | top= (1 <<< 0) | bottom= (1 <<< 1) | left= (1 <<< 2) | right= (1 <<< 3)
-module private Anchors = let cast (anchors: Anchor) =  anchors |> (int >> enum<AnchorStyles>)
+module Anchor = let cast (anchors: Anchor) =  anchors |> (int >> enum<AnchorStyles>)
 
 type Direction = left_to_right= 0 | top_down= 1 | ritght_to_left= 2 | bottom_up= 3
-module private Direction = let cast (direction: Direction) = direction |> (int >> enum<FlowDirection>)
+module Direction = let cast (direction: Direction) = direction |> (int >> enum<FlowDirection>)
 
 type Dock = none= 0 | top= 1 | bottom= 2 | left= 3 | right= 4 | fill= 5
-module private Dock = let cast (dock: Dock) = dock |> (int >> enum<DockStyle>)
+module Dock = let cast (dock: Dock) = dock |> (int >> enum<DockStyle>)
 
 
 type Style =
   | Size of System.Drawing.Size
   | Location of System.Drawing.Point
-  | Anchor of Anchor
-  | Directon of Direction
+  | Anchor of System.Windows.Forms.AnchorStyles
+  | Directon of System.Windows.Forms.FlowDirection
+  | Dock of System.Windows.Forms.DockStyle
   | AutoSize of bool
   | Text of string
   | Name of string
@@ -30,8 +31,9 @@ type Style =
 module Style =
   let inline size (width, height) = System.Drawing.Size (width, height) |> Style.Size
   let inline location (x, y) = System.Drawing.Point (x, y) |> Style.Location
-  let inline anchor anchor = anchor |> Style.Anchor
-  let inline direction direction = direction |> Style.Directon
+  let inline anchor anchor = anchor |> Anchor.cast |> Style.Anchor
+  let inline direction direction = direction |> Direction.cast |> Style.Directon
+  let inline dock dock = dock |> Dock.cast |> Style.Dock
   let inline auto_size auto = auto |> Style.AutoSize
   let inline text text = text |> Style.Text
   let inline name name = name |> Style.Name

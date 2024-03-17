@@ -9,7 +9,8 @@ module controls =
     match style with
       | Size s -> ctrl.Size <- s
       | Location l -> ctrl.Location <- l
-      | Anchor a -> ctrl.Anchor <- Anchors.cast a
+      | Anchor a -> ctrl.Anchor <- a
+      | Dock d -> ctrl.Dock <- d
       | AutoSize s -> ctrl.AutoSize <- s
       | Text t -> ctrl.Text <- t
       | Name n -> ctrl.Name <- n
