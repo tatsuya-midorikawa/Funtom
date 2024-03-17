@@ -56,7 +56,6 @@ module Style =
   let inline index id = id |> Style.Index
 
 
-
 [<Struct>]
 type Property = { 
   styles: Style list
