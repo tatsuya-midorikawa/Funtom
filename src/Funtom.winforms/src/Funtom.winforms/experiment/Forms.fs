@@ -70,10 +70,10 @@ module forms =
   // ------------------------------------------
   // System.Windows.Forms.Button
   // ------------------------------------------
-  type button (self: System.Windows.Forms.Button) =
-    interface System.IDisposable with member __.Dispose() = self.Dispose()
-    
-    new (property: Property) = 
+  type button (property: Property) as self =
+    inherit System.Windows.Forms.Button()
+
+    do
       let rec apply (styles: Style list) (btn: System.Windows.Forms.Button) =
         match styles with
           | [] -> btn
@@ -81,14 +81,12 @@ module forms =
               match style with
                 | _ -> controls.apply style btn
               apply rest btn
-      let btn =
-        new System.Windows.Forms.Button()
-        |> controls.suspend
-        |> apply property.styles
-        |> controls.add property.controls
-        |> controls.resume false
-      new button(btn)
+      self
+      |> controls.suspend
+      |> apply property.styles
+      |> controls.add property.controls
+      |> controls.resume false
+      |> ignore
 
     new (styles: Style list) = new button { styles= styles; controls= [] }
     new (controls: Control list) = new button { styles= []; controls= controls }
-
