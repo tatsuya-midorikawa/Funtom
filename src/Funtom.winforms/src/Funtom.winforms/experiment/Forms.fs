@@ -29,11 +29,9 @@ module forms =
   // ------------------------------------------
   // System.Windows.Forms.Form
   // ------------------------------------------
-  [<Struct; IsReadOnly;>]
-  type form (self: System.Windows.Forms.Form) =
-    interface System.IDisposable with member __.Dispose() = self.Dispose()
-
-    new (property: Property) = 
+  type form (property: Property) as self =
+    inherit System.Windows.Forms.Form()
+    do
       let rec apply (styles: Style list) (frm: System.Windows.Forms.Form) =
         match styles with
           | [] -> frm
@@ -43,13 +41,12 @@ module forms =
                 | _ -> controls.apply style frm
               apply rest frm
 
-      let frm =
-        new System.Windows.Forms.Form()
-        |> controls.suspend
-        |> apply property.styles
-        |> controls.add property.controls
-        |> controls.resume false
-      new form(frm)
+      self
+      |> controls.suspend
+      |> apply property.styles
+      |> controls.add property.controls
+      |> controls.resume false
+      |> ignore
 
     new (styles: Style list) = new form { styles= styles; controls= [] }
     new (controls: Control list) = new form { styles= []; controls= controls }
@@ -72,7 +69,6 @@ module forms =
   // ------------------------------------------
   type button (property: Property) as self =
     inherit System.Windows.Forms.Button()
-
     do
       let rec apply (styles: Style list) (btn: System.Windows.Forms.Button) =
         match styles with
