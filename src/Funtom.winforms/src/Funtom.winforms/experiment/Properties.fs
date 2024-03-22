@@ -37,7 +37,7 @@ type Style =
   | Icon of icon: System.Drawing.Icon
   | Checked of marked: bool
   | Index of index: int
-  | Command of cmd: (obj * System.EventArgs -> unit)
+  | Command of cmd: (System.EventArgs -> unit)
 
 [<AutoOpen>]
 module Style =

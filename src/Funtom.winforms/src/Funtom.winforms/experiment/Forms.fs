@@ -15,6 +15,7 @@ module controls =
       | Text t -> ctrl.Text <- t
       | Name n -> ctrl.Name <- n
       | Image i -> ctrl.BackgroundImage <- i
+      | Command cmd -> ctrl.Click.Add(cmd)
       | _ -> raise (exn $"Not supported styles: {style} ({ctrl})")
 
   let inline add (ctrls: Control list) (ctrl: 'T when 'T :> Control) =
