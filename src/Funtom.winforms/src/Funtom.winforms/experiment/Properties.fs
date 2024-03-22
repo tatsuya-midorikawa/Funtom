@@ -37,6 +37,7 @@ type Style =
   | Icon of icon: System.Drawing.Icon
   | Checked of marked: bool
   | Index of index: int
+  | Command of cmd: (obj * System.EventArgs -> unit)
 
 [<AutoOpen>]
 module Style =
@@ -54,11 +55,11 @@ module Style =
   let inline icon (ico_path: string) = Style.Icon (new System.Drawing.Icon (ico_path))
   let inline marked marked = marked |> Style.Checked
   let inline index id = id |> Style.Index
-
+  let inline on_click cmd = cmd |> Style.Command
 
 [<Struct>]
 type Property = { 
   styles: Style list
   controls: Control list
 }
-with member __.empty = { styles = []; controls = []}
+with member __.empty = { styles = []; controls = [] }
