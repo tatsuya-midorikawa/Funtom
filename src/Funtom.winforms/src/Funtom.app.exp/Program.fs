@@ -31,7 +31,8 @@ form (
         )
       ]
     )
-    // Control can also be created using the Property struct.
+    // Control can also be created using the Property record.
+    // Note that the `style` and `ctrls` specifications are mandatory when using the Property record.
     flowlayout {
       style= [ dock Dock.fill ]
       ctrls= [
