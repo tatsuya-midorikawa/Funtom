@@ -1,5 +1,6 @@
 ﻿namespace Funtom.winforms.exp
 
+open System.Linq
 open System.Windows.Forms
 open System.Runtime.CompilerServices
 
@@ -39,7 +40,7 @@ module controls =
 
 
 
-module forms =
+module rec forms =
   // ------------------------------------------
   // System.Windows.Forms.Form
   // ------------------------------------------
@@ -55,15 +56,33 @@ module forms =
                 | _ -> controls.apply style frm
               apply rest frm
 
+      let menus = ResizeArray<System.Windows.Forms.MenuStrip>()
+      let panels = ResizeArray<System.Windows.Forms.Panel>()
+      let rec add_range (controls: Control list) (frm: System.Windows.Forms.Form) =
+        match controls with
+          | [] -> frm
+          | ctrl::rest ->
+              match ctrl with
+                | :? System.Windows.Forms.MenuStrip as menu -> menus.Add(menu);
+                | :? System.Windows.Forms.Panel as panel -> panels.Add(panel)
+                | _ -> frm.Controls.Add(ctrl)
+              add_range rest frm
+
       self
       |> controls.suspend
-      |> apply property.property
-      |> controls.add_range property.controls
+      |> apply property.style
+      |> add_range property.ctrls
+      // Panel -> MenuStrip の順で追加しないと正しくレイアウトされないため、そこをハンドリングする
+      |> (fun f -> 
+          f.Controls.AddRange(panels.Cast<Control>().ToArray())
+          f.Controls.AddRange(menus.Cast<Control>().ToArray())
+          if menus.Any() then f.MainMenuStrip <- menus[0]
+          f )
       |> controls.resume false
       |> ignore
 
-    new (styles: Style list) = new form { property= styles; controls= [] }
-    new (controls: Control list) = new form { property= []; controls= controls }
+    new (styles: Style list) = new form { style= styles; ctrls= [] }
+    new (controls: Control list) = new form { style= []; ctrls= controls }
     
 
   // ------------------------------------------
@@ -82,13 +101,13 @@ module forms =
               apply rest btn
       self
       |> controls.suspend
-      |> apply property.property
-      |> controls.add_range property.controls
+      |> apply property.style
+      |> controls.add_range property.ctrls
       |> controls.resume false
       |> ignore
 
-    new (styles: Style list) = new button { property= styles; controls= [] }
-    new (controls: Control list) = new button { property= []; controls= controls }
+    new (styles: Style list) = new button { style= styles; ctrls= [] }
+    new (controls: Control list) = new button { style= []; ctrls= controls }
 
 
   // ------------------------------------------
@@ -122,13 +141,13 @@ module forms =
 
       self
       |> controls.suspend
-      |> apply property.property
-      |> add_range property.controls
+      |> apply property.style
+      |> add_range property.ctrls
       |> controls.resume false
       |> ignore
 
-    new (styles: Style list) = new flowlayout { property= styles; controls= [] }
-    new (controls: Control list) = new flowlayout { property= []; controls= controls }
+    new (styles: Style list) = new flowlayout { style= styles; ctrls= [] }
+    new (controls: Control list) = new flowlayout { style= []; ctrls= controls }
 
 
   
@@ -147,8 +166,8 @@ module forms =
               apply rest pnl
       self
       |> controls.suspend
-      |> apply property.property
-      |> controls.add_range property.controls
+      |> apply property.style
+      |> controls.add_range property.ctrls
       |> controls.resume false
       |> ignore
 
@@ -169,8 +188,8 @@ module forms =
               apply rest lbl
       self
       |> controls.suspend
-      |> apply property.property
-      |> controls.add_range property.controls
+      |> apply property.style
+      |> controls.add_range property.ctrls
       |> controls.resume false
       |> ignore
 
@@ -191,8 +210,8 @@ module forms =
               apply rest lnk
       self
       |> controls.suspend
-      |> apply property.property
-      |> controls.add_range property.controls
+      |> apply property.style
+      |> controls.add_range property.ctrls
       |> controls.resume false
       |> ignore
 
@@ -214,8 +233,8 @@ module forms =
               apply rest chk
       self
       |> controls.suspend
-      |> apply property.property
-      |> controls.add_range property.controls
+      |> apply property.style
+      |> controls.add_range property.ctrls
       |> controls.resume false
       |> ignore
 
@@ -238,8 +257,8 @@ module forms =
               apply rest cmb
       self
       |> controls.suspend
-      |> apply property.property
-      |> controls.add_range property.controls
+      |> apply property.style
+      |> controls.add_range property.ctrls
       |> controls.resume false
       |> ignore
 
@@ -262,8 +281,8 @@ module forms =
               apply rest gb
       self
       |> controls.suspend
-      |> apply property.property
-      |> controls.add_range property.controls
+      |> apply property.style
+      |> controls.add_range property.ctrls
       |> controls.resume false
       |> ignore
 
@@ -285,8 +304,8 @@ module forms =
               apply rest rb
       self
       |> controls.suspend
-      |> apply property.property
-      |> controls.add_range property.controls
+      |> apply property.style
+      |> controls.add_range property.ctrls
       |> controls.resume false
       |> ignore
 
@@ -328,8 +347,8 @@ module forms =
                 add_range rest menuitem
 
       self
-      |> apply property.property
-      |> add_range property.controls
+      |> apply property.style
+      |> add_range property.ctrls
       |> ignore
 
     member __.raw with get() = self
@@ -361,7 +380,28 @@ module forms =
 
       self
       |> controls.suspend
-      |> apply property.property
-      |> add_range property.controls
+      |> apply property.style
+      |> add_range property.ctrls
+      |> controls.resume false
+      |> ignore
+
+
+  // ------------------------------------------
+  // System.Windows.Forms.TextBox
+  // ------------------------------------------
+  type textbox (property: Property) as self = 
+    inherit System.Windows.Forms.TextBox ()
+    do
+      let rec apply (styles: Style list) (txt: System.Windows.Forms.TextBox) =
+        match styles with
+          | [] -> txt
+          | style::rest -> 
+              match style with
+                | _ -> controls.apply style txt
+              apply rest txt
+      self
+      |> controls.suspend
+      |> apply property.style
+      |> controls.add_range property.ctrls
       |> controls.resume false
       |> ignore

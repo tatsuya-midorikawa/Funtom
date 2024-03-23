@@ -68,7 +68,7 @@ module Style =
 
 [<Struct>]
 type Property = { 
-  property: Style list
-  controls: Control list
+  style: Style list
+  ctrls: Control list
 }
-with member __.empty = { property = []; controls = [] }
+with member __.empty = { style = []; ctrls = [] }
