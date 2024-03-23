@@ -105,6 +105,7 @@ module forms =
           | [] -> panel
           | style::rest -> 
               match style with
+                | Direction d -> panel.FlowDirection <- d
                 | _ -> controls.apply style panel
               apply rest panel
 
@@ -128,6 +129,28 @@ module forms =
 
     new (styles: Style list) = new flowlayout { property= styles; controls= [] }
     new (controls: Control list) = new flowlayout { property= []; controls= controls }
+
+
+  
+  // ------------------------------------------
+  // System.Windows.Forms.Panel
+  // ------------------------------------------
+  type panel (property: Property) as self = 
+    inherit System.Windows.Forms.Panel ()
+    do
+      let rec apply (styles: Style list) (pnl: System.Windows.Forms.Panel) =
+        match styles with
+          | [] -> pnl
+          | style::rest -> 
+              match style with
+                | _ -> controls.apply style pnl
+              apply rest pnl
+      self
+      |> controls.suspend
+      |> apply property.property
+      |> controls.add_range property.controls
+      |> controls.resume false
+      |> ignore
 
 
 
@@ -241,5 +264,104 @@ module forms =
       |> controls.suspend
       |> apply property.property
       |> controls.add_range property.controls
+      |> controls.resume false
+      |> ignore
+
+
+
+  // ------------------------------------------
+  // System.Windows.Forms.RadioButton
+  // ------------------------------------------
+  type radio (property: Property) as self = 
+    inherit System.Windows.Forms.RadioButton ()
+    do
+      let rec apply (styles: Style list) (rb: System.Windows.Forms.RadioButton) =
+        match styles with
+          | [] -> rb
+          | style::rest -> 
+              match style with
+                | Checked c -> rb.Checked <- c
+                | _ -> controls.apply style rb
+              apply rest rb
+      self
+      |> controls.suspend
+      |> apply property.property
+      |> controls.add_range property.controls
+      |> controls.resume false
+      |> ignore
+
+
+
+  // ------------------------------------------
+  // System.Windows.Forms.ToolStripMenuItem
+  // ------------------------------------------
+  type menuitem (property: Property) = 
+    inherit System.Windows.Forms.Control ()
+    let self = new System.Windows.Forms.ToolStripMenuItem()
+    do
+      let rec apply (styles: Style list) (menuitem: System.Windows.Forms.ToolStripMenuItem) =
+        match styles with
+          | [] -> menuitem
+          | style::rest -> 
+              match style with
+                | Size s -> menuitem.Size <- s
+                | Checked c -> menuitem.Checked <- c
+                | Index i -> menuitem.MergeIndex <- i
+                | Anchor a -> menuitem.Anchor <- a
+                | Dock d -> menuitem.Dock <- d
+                | AutoSize s -> menuitem.AutoSize <- s
+                | Text t -> menuitem.Text <- t
+                | Name n -> menuitem.Name <- n
+                | BackgroundImage img -> menuitem.BackgroundImage <- img
+                | Image (img, align) -> menuitem.Image <- img; menuitem.ImageAlign <- align
+                | Command cmd -> menuitem.Click.Add(cmd)
+                | _ -> raise (exn $"Not supported styles: {style} ({menuitem})")
+              apply rest menuitem
+
+      let rec add_range (controls: Control list) (menuitem: System.Windows.Forms.ToolStripMenuItem) =
+        match controls with
+            | [] -> menuitem
+            | ctrl::rest ->
+                match ctrl with
+                  | :? menuitem as item -> menuitem.DropDownItems.Add(item.raw :> ToolStripItem) |> ignore
+                  | _ -> raise (exn $"This control is not supported: {ctrl}")
+                add_range rest menuitem
+
+      self
+      |> apply property.property
+      |> add_range property.controls
+      |> ignore
+
+    member __.raw with get() = self
+
+
+
+  // ------------------------------------------
+  // System.Windows.Forms.MenuStrip
+  // ------------------------------------------
+  type menustrip (property: Property) as self = 
+    inherit System.Windows.Forms.MenuStrip ()
+    do
+      let rec apply (styles: Style list) (ms: System.Windows.Forms.MenuStrip) =
+        match styles with
+          | [] -> ms
+          | style::rest -> 
+              match style with
+                | _ -> controls.apply style ms
+              apply rest ms
+
+      let rec add_range (controls: Control list) (menu: System.Windows.Forms.MenuStrip) =
+        match controls with
+          | [] -> menu
+          | ctrl::rest ->
+              match ctrl with
+                | :? menuitem as item -> menu.Items.Add(item.raw :> ToolStripItem) |> ignore
+                | _ -> menu.Controls.Add ctrl
+              add_range rest menu
+
+      self
+      |> controls.suspend
+      |> apply property.property
+      |> add_range property.controls
       |> controls.resume false
       |> ignore

@@ -33,7 +33,7 @@ type Style =
   | Size of size: System.Drawing.Size
   | Location of location: System.Drawing.Point
   | Anchor of anchor: System.Windows.Forms.AnchorStyles
-  | Directon of direction: System.Windows.Forms.FlowDirection
+  | Direction of direction: System.Windows.Forms.FlowDirection
   | Dock of dock: System.Windows.Forms.DockStyle
   | AutoSize of auto: bool
   | Text of text: string
@@ -50,7 +50,7 @@ module Style =
   let inline size (value: Size) = value.convert() |> Style.Size
   let inline location (value: Location) = value.convert() |> Style.Location
   let inline anchor anchor = anchor |> Anchor.cast |> Style.Anchor
-  let inline direction direction = direction |> Direction.cast |> Style.Directon
+  let inline direction direction = direction |> Direction.cast |> Style.Direction
   let inline dock dock = dock |> Dock.cast |> Style.Dock
   let inline auto_size auto = auto |> Style.AutoSize
   let inline text text = text |> Style.Text
