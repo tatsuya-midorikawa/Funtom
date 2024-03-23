@@ -18,12 +18,24 @@ module controls =
       | Command cmd -> ctrl.Click.Add(cmd)
       | _ -> raise (exn $"Not supported styles: {style} ({ctrl})")
 
-  let inline add (ctrls: Control list) (ctrl: 'T when 'T :> Control) =
-    ctrl.Controls.AddRange(ctrls |> List.toArray)
-    ctrl
-
-  let inline suspend (ctrl: 'T when 'T :> Control) = ctrl.SuspendLayout(); ctrl
-  let inline resume (perform_layout: bool) (ctrl: 'T when 'T :> Control) = ctrl.ResumeLayout(perform_layout); ctrl
+  (*
+  * Common Control Functions
+  *)
+  let inline show (self: 'T when 'T :> Control) = self.Show(); self
+  let inline hide (self: 'T when 'T :> Control) = self.Hide(); self
+  let inline add (ctrl: 'U when 'U :> Control) (self: 'T when 'T :> Control) = self.Controls.Add(ctrl); self
+  let inline add_range (ctrls: Control list) (self: 'T when 'T :> Control) = self.Controls.AddRange(ctrls |> List.toArray); self
+  let inline remove (ctrl: 'U when 'U :> Control) (self: 'T when 'T :> Control) = self.Controls.Remove(ctrl); self
+  let inline suspend (self: 'T when 'T :> Control) = self.SuspendLayout(); self
+  let inline resume (perform_layout: bool) (self: 'T when 'T :> Control) = self.ResumeLayout(perform_layout); self
+  let inline controls (self: 'T when 'T :> Control) = self.Controls
+  let inline children (self: 'T when 'T :> Control) = self.Controls |> Seq.cast<Control> |> List.ofSeq
+  
+  (*
+  * Form Functions
+  *)
+  let inline show_dialog (self: Form) = self.ShowDialog()
+  let inline close (self: Form) = self.Close()
 
 module forms =
   // ------------------------------------------
@@ -44,24 +56,12 @@ module forms =
       self
       |> controls.suspend
       |> apply property.styles
-      |> controls.add property.controls
+      |> controls.add_range property.controls
       |> controls.resume false
       |> ignore
 
     new (styles: Style list) = new form { styles= styles; controls= [] }
     new (controls: Control list) = new form { styles= []; controls= controls }
-
-    member __.show () = self.Show()
-    member __.show_dialog () = self.ShowDialog()
-    member __.hide () = self.Hide()
-    member __.close () = self.Close()
-    member __.add (ctrl: Control) = self.Controls.Add(ctrl)
-    member __.add (ctrls: Control list) = self.Controls.AddRange(ctrls |> List.toArray)
-    member __.remove (ctrl: Control) = self.Controls.Remove(ctrl)
-    member __.suspend () = self.SuspendLayout()
-    member __.resume (perform_layout: bool) = self.ResumeLayout(perform_layout)
-    member __.controls with get () = self.Controls
-    member __.children () = self.Controls |> Seq.cast<Control> |> List.ofSeq
     
 
   // ------------------------------------------
@@ -80,7 +80,7 @@ module forms =
       self
       |> controls.suspend
       |> apply property.styles
-      |> controls.add property.controls
+      |> controls.add_range property.controls
       |> controls.resume false
       |> ignore
 
