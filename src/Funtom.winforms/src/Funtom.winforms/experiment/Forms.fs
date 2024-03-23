@@ -87,7 +87,10 @@ module rec forms =
         | Some styles, None -> new form { style= styles; ctrls= [] }
         | None, Some controls -> new form { style= []; ctrls= controls }
         | None, None -> new form { style= []; ctrls= [] }
-    
+  
+  module forms =
+    let inline show_dialog (self: Form) = self.ShowDialog()
+    let inline close (self: Form) = self.Close()
 
   // ------------------------------------------
   // System.Windows.Forms.Button
