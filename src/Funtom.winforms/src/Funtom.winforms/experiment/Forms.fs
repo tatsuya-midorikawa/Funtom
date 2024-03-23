@@ -14,7 +14,7 @@ module controls =
       | AutoSize s -> ctrl.AutoSize <- s
       | Text t -> ctrl.Text <- t
       | Name n -> ctrl.Name <- n
-      | Image i -> ctrl.BackgroundImage <- i
+      //| Image (i, a) -> ctrl.BackgroundImage <- i
       | Command cmd -> ctrl.Click.Add(cmd)
       | _ -> raise (exn $"Not supported styles: {style} ({ctrl})")
 
@@ -37,6 +37,8 @@ module controls =
   let inline show_dialog (self: Form) = self.ShowDialog()
   let inline close (self: Form) = self.Close()
 
+
+
 module forms =
   // ------------------------------------------
   // System.Windows.Forms.Form
@@ -55,13 +57,13 @@ module forms =
 
       self
       |> controls.suspend
-      |> apply property.styles
+      |> apply property.property
       |> controls.add_range property.controls
       |> controls.resume false
       |> ignore
 
-    new (styles: Style list) = new form { styles= styles; controls= [] }
-    new (controls: Control list) = new form { styles= []; controls= controls }
+    new (styles: Style list) = new form { property= styles; controls= [] }
+    new (controls: Control list) = new form { property= []; controls= controls }
     
 
   // ------------------------------------------
@@ -75,14 +77,15 @@ module forms =
           | [] -> btn
           | style::rest -> 
               match style with
+                | Image (img, align) -> btn.Image <- img; btn.ImageAlign <- align
                 | _ -> controls.apply style btn
               apply rest btn
       self
       |> controls.suspend
-      |> apply property.styles
+      |> apply property.property
       |> controls.add_range property.controls
       |> controls.resume false
       |> ignore
 
-    new (styles: Style list) = new button { styles= styles; controls= [] }
-    new (controls: Control list) = new button { styles= []; controls= controls }
+    new (styles: Style list) = new button { property= styles; controls= [] }
+    new (controls: Control list) = new button { property= []; controls= controls }
