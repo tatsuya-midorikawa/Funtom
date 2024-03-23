@@ -81,8 +81,12 @@ module rec forms =
       |> controls.resume false
       |> ignore
 
-    new (styles: Style list) = new form { style= styles; ctrls= [] }
-    new (controls: Control list) = new form { style= []; ctrls= controls }
+    new (?style: Style list, ?ctrls: Control list) =
+      match style, ctrls with
+        | Some styles, Some controls -> new form { style= styles; ctrls= controls }
+        | Some styles, None -> new form { style= styles; ctrls= [] }
+        | None, Some controls -> new form { style= []; ctrls= controls }
+        | None, None -> new form { style= []; ctrls= [] }
     
 
   // ------------------------------------------
@@ -105,9 +109,13 @@ module rec forms =
       |> controls.add_range property.ctrls
       |> controls.resume false
       |> ignore
-
-    new (styles: Style list) = new button { style= styles; ctrls= [] }
-    new (controls: Control list) = new button { style= []; ctrls= controls }
+      
+    new (?style: Style list, ?ctrls: Control list) =
+      match style, ctrls with
+        | Some styles, Some controls -> new button { style= styles; ctrls= controls }
+        | Some styles, None -> new button { style= styles; ctrls= [] }
+        | None, Some controls -> new button { style= []; ctrls= controls }
+        | None, None -> new button { style= []; ctrls= [] }
 
 
   // ------------------------------------------
@@ -145,9 +153,13 @@ module rec forms =
       |> add_range property.ctrls
       |> controls.resume false
       |> ignore
-
-    new (styles: Style list) = new flowlayout { style= styles; ctrls= [] }
-    new (controls: Control list) = new flowlayout { style= []; ctrls= controls }
+  
+    new (?style: Style list, ?ctrls: Control list) =
+      match style, ctrls with
+        | Some styles, Some controls -> new flowlayout { style= styles; ctrls= controls }
+        | Some styles, None -> new flowlayout { style= styles; ctrls= [] }
+        | None, Some controls -> new flowlayout { style= []; ctrls= controls }
+        | None, None -> new flowlayout { style= []; ctrls= [] }
 
 
   
@@ -171,6 +183,13 @@ module rec forms =
       |> controls.resume false
       |> ignore
 
+    new (?style: Style list, ?ctrls: Control list) =
+      match style, ctrls with
+        | Some styles, Some controls -> new panel { style= styles; ctrls= controls }
+        | Some styles, None -> new panel { style= styles; ctrls= [] }
+        | None, Some controls -> new panel { style= []; ctrls= controls }
+        | None, None -> new panel { style= []; ctrls= [] }
+
 
 
   // ------------------------------------------
@@ -192,7 +211,13 @@ module rec forms =
       |> controls.add_range property.ctrls
       |> controls.resume false
       |> ignore
-
+    
+    new (?style: Style list, ?ctrls: Control list) =
+      match style, ctrls with
+        | Some styles, Some controls -> new label { style= styles; ctrls= controls }
+        | Some styles, None -> new label { style= styles; ctrls= [] }
+        | None, Some controls -> new label { style= []; ctrls= controls }
+        | None, None -> new label { style= []; ctrls= [] }
 
 
   // ------------------------------------------
@@ -215,6 +240,12 @@ module rec forms =
       |> controls.resume false
       |> ignore
 
+    new (?style: Style list, ?ctrls: Control list) =
+      match style, ctrls with
+        | Some styles, Some controls -> new link { style= styles; ctrls= controls }
+        | Some styles, None -> new link { style= styles; ctrls= [] }
+        | None, Some controls -> new link { style= []; ctrls= controls }
+        | None, None -> new link { style= []; ctrls= [] }
 
 
   // ------------------------------------------
@@ -238,7 +269,12 @@ module rec forms =
       |> controls.resume false
       |> ignore
 
-
+    new (?style: Style list, ?ctrls: Control list) =
+      match style, ctrls with
+        | Some styles, Some controls -> new checkbox { style= styles; ctrls= controls }
+        | Some styles, None -> new checkbox { style= styles; ctrls= [] }
+        | None, Some controls -> new checkbox { style= []; ctrls= controls }
+        | None, None -> new checkbox { style= []; ctrls= [] }
 
   // ------------------------------------------
   // System.Windows.Forms.ComboBox
@@ -263,6 +299,13 @@ module rec forms =
       |> ignore
 
       i |> Option.iter (fun i -> self.SelectedIndex <- i)
+    
+    new (?style: Style list, ?ctrls: Control list) =
+      match style, ctrls with
+        | Some styles, Some controls -> new combobox { style= styles; ctrls= controls }
+        | Some styles, None -> new combobox { style= styles; ctrls= [] }
+        | None, Some controls -> new combobox { style= []; ctrls= controls }
+        | None, None -> new combobox { style= []; ctrls= [] }
 
 
 
@@ -285,7 +328,13 @@ module rec forms =
       |> controls.add_range property.ctrls
       |> controls.resume false
       |> ignore
-
+    
+    new (?style: Style list, ?ctrls: Control list) =
+      match style, ctrls with
+        | Some styles, Some controls -> new groupbox { style= styles; ctrls= controls }
+        | Some styles, None -> new groupbox { style= styles; ctrls= [] }
+        | None, Some controls -> new groupbox { style= []; ctrls= controls }
+        | None, None -> new groupbox { style= []; ctrls= [] }
 
 
   // ------------------------------------------
@@ -308,7 +357,13 @@ module rec forms =
       |> controls.add_range property.ctrls
       |> controls.resume false
       |> ignore
-
+    
+    new (?style: Style list, ?ctrls: Control list) =
+      match style, ctrls with
+        | Some styles, Some controls -> new radio { style= styles; ctrls= controls }
+        | Some styles, None -> new radio { style= styles; ctrls= [] }
+        | None, Some controls -> new radio { style= []; ctrls= controls }
+        | None, None -> new radio { style= []; ctrls= [] }
 
 
   // ------------------------------------------
@@ -350,6 +405,13 @@ module rec forms =
       |> apply property.style
       |> add_range property.ctrls
       |> ignore
+    
+    new (?style: Style list, ?ctrls: Control list) =
+      match style, ctrls with
+        | Some styles, Some controls -> new menuitem { style= styles; ctrls= controls }
+        | Some styles, None -> new menuitem { style= styles; ctrls= [] }
+        | None, Some controls -> new menuitem { style= []; ctrls= controls }
+        | None, None -> new menuitem { style= []; ctrls= [] }
 
     member __.raw with get() = self
 
@@ -384,7 +446,13 @@ module rec forms =
       |> add_range property.ctrls
       |> controls.resume false
       |> ignore
-
+      
+    new (?style: Style list, ?ctrls: Control list) =
+      match style, ctrls with
+        | Some styles, Some controls -> new menustrip { style= styles; ctrls= controls }
+        | Some styles, None -> new menustrip { style= styles; ctrls= [] }
+        | None, Some controls -> new menustrip { style= []; ctrls= controls }
+        | None, None -> new menustrip { style= []; ctrls= [] }
 
   // ------------------------------------------
   // System.Windows.Forms.TextBox
@@ -405,3 +473,10 @@ module rec forms =
       |> controls.add_range property.ctrls
       |> controls.resume false
       |> ignore
+    
+    new (?style: Style list, ?ctrls: Control list) =
+      match style, ctrls with
+        | Some styles, Some controls -> new textbox { style= styles; ctrls= controls }
+        | Some styles, None -> new textbox { style= styles; ctrls= [] }
+        | None, Some controls -> new textbox { style= []; ctrls= controls }
+        | None, None -> new textbox { style= []; ctrls= [] }
