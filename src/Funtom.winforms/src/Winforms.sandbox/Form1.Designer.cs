@@ -39,6 +39,7 @@ partial class Form1 {
     aaaToolStripMenuItem = new ToolStripMenuItem();
     bbbbToolStripMenuItem = new ToolStripMenuItem();
     folderBrowserDialog1 = new FolderBrowserDialog();
+    label1 = new Label();
     flowLayoutPanel1.SuspendLayout();
     ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
     groupBox1.SuspendLayout();
@@ -51,6 +52,7 @@ partial class Form1 {
     flowLayoutPanel1.Controls.Add(button1);
     flowLayoutPanel1.Controls.Add(button2);
     flowLayoutPanel1.Controls.Add(webView21);
+    flowLayoutPanel1.Controls.Add(label1);
     flowLayoutPanel1.Dock = DockStyle.Top;
     flowLayoutPanel1.Location = new Point(0, 0);
     flowLayoutPanel1.Margin = new Padding(6);
@@ -176,7 +178,7 @@ partial class Form1 {
     // aaaToolStripMenuItem
     // 
     aaaToolStripMenuItem.Name = "aaaToolStripMenuItem";
-    aaaToolStripMenuItem.Size = new Size(359, 44);
+    aaaToolStripMenuItem.Size = new Size(183, 44);
     aaaToolStripMenuItem.Text = "aaa";
     // 
     // bbbbToolStripMenuItem
@@ -184,6 +186,16 @@ partial class Form1 {
     bbbbToolStripMenuItem.Name = "bbbbToolStripMenuItem";
     bbbbToolStripMenuItem.Size = new Size(90, 36);
     bbbbToolStripMenuItem.Text = "bbbb";
+    // 
+    // label1
+    // 
+    label1.AutoSize = true;
+    label1.Font = new Font("メイリオ", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 128);
+    label1.Location = new Point(573, 0);
+    label1.Name = "label1";
+    label1.Size = new Size(97, 41);
+    label1.TabIndex = 3;
+    label1.Text = "label1";
     // 
     // Form1
     // 
@@ -198,6 +210,7 @@ partial class Form1 {
     Name = "Form1";
     Text = "Form1";
     flowLayoutPanel1.ResumeLayout(false);
+    flowLayoutPanel1.PerformLayout();
     ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
     groupBox1.ResumeLayout(false);
     groupBox1.PerformLayout();
@@ -224,4 +237,5 @@ partial class Form1 {
   private ComboBox comboBox1;
   private FolderBrowserDialog folderBrowserDialog1;
   private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
+  private Label label1;
 }

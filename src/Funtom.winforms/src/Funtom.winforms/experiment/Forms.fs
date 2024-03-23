@@ -128,3 +128,118 @@ module forms =
 
     new (styles: Style list) = new flowlayout { property= styles; controls= [] }
     new (controls: Control list) = new flowlayout { property= []; controls= controls }
+
+
+
+  // ------------------------------------------
+  // System.Windows.Forms.Label
+  // ------------------------------------------
+  type label (property: Property) as self = 
+    inherit System.Windows.Forms.Label ()
+    do
+      let rec apply (styles: Style list) (lbl: System.Windows.Forms.Label) =
+        match styles with
+          | [] -> lbl
+          | style::rest -> 
+              match style with
+                | _ -> controls.apply style lbl
+              apply rest lbl
+      self
+      |> controls.suspend
+      |> apply property.property
+      |> controls.add_range property.controls
+      |> controls.resume false
+      |> ignore
+
+
+
+  // ------------------------------------------
+  // System.Windows.Forms.LinkLabel
+  // ------------------------------------------
+  type link (property: Property) as self = 
+    inherit System.Windows.Forms.LinkLabel ()
+    do
+      let rec apply (styles: Style list) (lnk: System.Windows.Forms.LinkLabel) =
+        match styles with
+          | [] -> lnk
+          | style::rest -> 
+              match style with
+                | _ -> controls.apply style lnk
+              apply rest lnk
+      self
+      |> controls.suspend
+      |> apply property.property
+      |> controls.add_range property.controls
+      |> controls.resume false
+      |> ignore
+
+
+
+  // ------------------------------------------
+  // System.Windows.Forms.CheckBox
+  // ------------------------------------------
+  type checkbox (property: Property) as self = 
+    inherit System.Windows.Forms.CheckBox ()
+    do
+      let rec apply (styles: Style list) (chk: System.Windows.Forms.CheckBox) =
+        match styles with
+          | [] -> chk
+          | style::rest -> 
+              match style with
+                | Checked c -> chk.Checked <- c
+                | _ -> controls.apply style chk
+              apply rest chk
+      self
+      |> controls.suspend
+      |> apply property.property
+      |> controls.add_range property.controls
+      |> controls.resume false
+      |> ignore
+
+
+
+  // ------------------------------------------
+  // System.Windows.Forms.ComboBox
+  // ------------------------------------------
+  type combobox (property: Property) as self = 
+    inherit System.Windows.Forms.ComboBox ()
+    do
+      let mutable i : int option = None
+      let rec apply (styles: Style list) (cmb: System.Windows.Forms.ComboBox) =
+        match styles with
+          | [] -> cmb
+          | style::rest -> 
+              match style with
+                | Index v -> i <- Some v
+                | _ -> controls.apply style cmb
+              apply rest cmb
+      self
+      |> controls.suspend
+      |> apply property.property
+      |> controls.add_range property.controls
+      |> controls.resume false
+      |> ignore
+
+      i |> Option.iter (fun i -> self.SelectedIndex <- i)
+
+
+
+  // ------------------------------------------
+  // System.Windows.Forms.GroupBox
+  // ------------------------------------------
+  type groupbox (property: Property) as self = 
+    inherit System.Windows.Forms.GroupBox ()
+    do
+      let rec apply (styles: Style list) (gb: System.Windows.Forms.GroupBox) =
+        match styles with
+          | [] -> gb
+          | style::rest -> 
+              match style with
+                | _ -> controls.apply style gb
+              apply rest gb
+      self
+      |> controls.suspend
+      |> apply property.property
+      |> controls.add_range property.controls
+      |> controls.resume false
+      |> ignore
