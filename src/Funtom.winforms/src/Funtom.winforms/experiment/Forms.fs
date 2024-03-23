@@ -14,7 +14,7 @@ module controls =
       | AutoSize s -> ctrl.AutoSize <- s
       | Text t -> ctrl.Text <- t
       | Name n -> ctrl.Name <- n
-      //| Image (i, a) -> ctrl.BackgroundImage <- i
+      | BackgroundImage img -> ctrl.BackgroundImage <- img
       | Command cmd -> ctrl.Click.Add(cmd)
       | _ -> raise (exn $"Not supported styles: {style} ({ctrl})")
 

@@ -38,6 +38,7 @@ type Style =
   | AutoSize of auto: bool
   | Text of text: string
   | Name of name: string
+  | BackgroundImage of bgimg: System.Drawing.Image
   | Image of image: (System.Drawing.Image * System.Drawing.ContentAlignment)
   | Icon of icon: System.Drawing.Icon
   | Checked of marked: bool
@@ -55,8 +56,9 @@ module Style =
   let inline text text = text |> Style.Text
   let inline name name = name |> Style.Name
   let inline identifier id = id |> Style.Name
-  let inline image_to (img_path: string, align: Alignment) = Style.Image (new System.Drawing.Bitmap (img_path), Alignment.cast align)
-  let inline image (img_path: string) = image_to (img_path, Alignment.midcenter)
+  let inline bg_img (img_path: string) = Style.BackgroundImage (new System.Drawing.Bitmap (img_path))
+  let inline img_to (img_path: string, align: Alignment) = Style.Image (new System.Drawing.Bitmap (img_path), Alignment.cast align)
+  let inline img (img_path: string) = img_to (img_path, Alignment.midcenter)
   let inline bitmap_to (img_path: string, align: Alignment) = Style.Image (new System.Drawing.Bitmap (img_path), Alignment.cast align)
   let inline bitmap (img_path: string) = bitmap_to (img_path, Alignment.midcenter)
   let inline icon (ico_path: string) = Style.Icon (new System.Drawing.Icon (ico_path))
