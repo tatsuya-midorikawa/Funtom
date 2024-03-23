@@ -46,8 +46,22 @@ form (
         textbox ([
             size { width = 200<px>; height = 50<px> }
             location { x = 10<px>; y = 70<px> }
-            text ""
+            text "foo"
           ])
+        //flowbreak
+        label ([ text "Click2 ->"; anchor Anchor.none; auto_size true ])
+        button ([
+            size { width = 100<px>; height = 50<px> }
+            location { x = 10<px>; y = 10<px> }
+            text "Click2 me!"
+            on_click (fun _ -> log "Hello, World2!")
+          ])
+        textbox ([
+            size { width = 200<px>; height = 50<px> }
+            location { x = 10<px>; y = 70<px> }
+            text "bar"
+          ])
+
       ]
     }
   ]
