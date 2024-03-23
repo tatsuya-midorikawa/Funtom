@@ -48,7 +48,7 @@ form (
             location { x = 10<px>; y = 70<px> }
             text "foo"
           ])
-        //flowbreak
+        flowbreak
         label ([ text "Click2 ->"; anchor Anchor.none; auto_size true ])
         button ([
             size { width = 100<px>; height = 50<px> }
