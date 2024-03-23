@@ -89,3 +89,42 @@ module forms =
 
     new (styles: Style list) = new button { property= styles; controls= [] }
     new (controls: Control list) = new button { property= []; controls= controls }
+
+
+  // ------------------------------------------
+  // System.Windows.Forms.FlowLayoutPanel
+  // ------------------------------------------
+  type FlowBreak() = inherit System.Windows.Forms.Control()
+  let flowbreak = new FlowBreak()
+
+  type flowlayout (property: Property) as self =
+    inherit System.Windows.Forms.FlowLayoutPanel()
+    do
+      let rec apply (styles: Style list) (panel: System.Windows.Forms.FlowLayoutPanel) =
+        match styles with
+          | [] -> panel
+          | style::rest -> 
+              match style with
+                | _ -> controls.apply style panel
+              apply rest panel
+
+      let rec add_range (controls: Control list) (panel: System.Windows.Forms.FlowLayoutPanel) =
+        match controls with
+          | [] -> panel
+          | ctrl::rest ->
+              match ctrl with
+                | :? FlowBreak ->
+                  if panel.Controls.Count > 0 then
+                    panel.SetFlowBreak(panel.Controls.[panel.Controls.Count - 1], true)
+                | _ -> panel.Controls.Add(ctrl)
+              add_range rest panel
+
+      self
+      |> controls.suspend
+      |> apply property.property
+      |> add_range property.controls
+      |> controls.resume false
+      |> ignore
+
+    new (styles: Style list) = new flowlayout { property= styles; controls= [] }
+    new (controls: Control list) = new flowlayout { property= []; controls= controls }
