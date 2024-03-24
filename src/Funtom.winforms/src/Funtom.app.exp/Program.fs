@@ -63,7 +63,6 @@ form (
             location { x = 10<px>; y = 70<px> }
             text "bar"
           ]
-
       ]
     }
   ]
