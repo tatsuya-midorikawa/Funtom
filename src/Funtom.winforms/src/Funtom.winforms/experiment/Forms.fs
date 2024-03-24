@@ -88,7 +88,7 @@ module rec forms =
         | None, Some controls -> new form { style= []; ctrls= controls }
         | None, None -> new form { style= []; ctrls= [] }
   
-  module forms =
+  module form =
     let inline show_dialog (self: Form) = self.ShowDialog()
     let inline close (self: Form) = self.Close()
 

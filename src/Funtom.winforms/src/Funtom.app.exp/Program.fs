@@ -27,7 +27,7 @@ form (
           style= [ text "CCC" ],
           ctrls= [ 
             // The following is an example of omitting ctrls and parameter name.
-            menuitem ([ text "DDD" ]) ]
+            menuitem [ text "DDD" ] ]
         )
       ]
     )
@@ -36,35 +36,37 @@ form (
     flowlayout {
       style= [ dock Dock.fill ]
       ctrls= [
-        label ([ text "Click ->"; anchor Anchor.none; auto_size true ])
-        button ([
+        label [ text "Click ->"; anchor Anchor.none; auto_size true ]
+        button [
             size { width = 100<px>; height = 50<px> }
             location { x = 10<px>; y = 10<px> }
             text "Click me!"
             on_click (fun _ -> log "Hello, World!")
-          ])
-        textbox ([
+          ]
+        textbox [
             size { width = 200<px>; height = 50<px> }
             location { x = 10<px>; y = 70<px> }
             text "foo"
-          ])
+          ]
+
         flowbreak
-        label ([ text "Click2 ->"; anchor Anchor.none; auto_size true ])
-        button ([
+
+        label [ text "Click2 ->"; anchor Anchor.none; auto_size true ]
+        button [
             size { width = 100<px>; height = 50<px> }
             location { x = 10<px>; y = 10<px> }
             text "Click2 me!"
             on_click (fun _ -> log "Hello, World2!")
-          ])
-        textbox ([
+          ]
+        textbox [
             size { width = 200<px>; height = 50<px> }
             location { x = 10<px>; y = 70<px> }
             text "bar"
-          ])
+          ]
 
       ]
     }
   ]
 )
-|> controls.show_dialog
+|> form.show_dialog
 |> ignore
