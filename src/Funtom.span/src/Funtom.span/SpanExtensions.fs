@@ -1,18 +1,15 @@
 ﻿namespace Funtom.span
 
 open System
-open System.Runtime.CompilerServices
 
-[<Extension>]
-type SpanExtensions =
-  [<Extension>]
-  static member inline GetSlice(span: ReadOnlySpan<'T>, start_idx, end_idx) =
-    let s = defaultArg start_idx 0
-    let e = defaultArg end_idx span.Length
-    span.Slice(s, e - s)
-      
-  [<Extension>]
-  static member inline GetSlice(span: Span<'T>, start_idx, end_idx) =
-    let s = defaultArg start_idx 0
-    let e = defaultArg end_idx span.Length
-    span.Slice(s, e - s)
+[<AutoOpen>]
+module Extensions =
+  type ReadOnlySpan<'T> with
+    member inline __.GetSlice(start, finish) =
+      let s = match start with None -> 0 | Some s -> max 0 s
+      match finish with None -> __.Slice s | Some e -> __.Slice (s, min __.Length (e - s))
+
+  type Span<'T> with
+    member inline __.GetSlice(start, finish) =
+      let s = match start with None -> 0 | Some s -> max 0 s
+      match finish with None -> __.Slice s | Some e -> __.Slice (s, min __.Length (e - s))
