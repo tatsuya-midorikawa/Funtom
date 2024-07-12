@@ -1,0 +1,42 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": ".NET Core Launch (Debug)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "debug-build",
+      "program": "${workspaceFolder}/Funtom.span/bin/Debug/net8.0/Funtom.span.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopAtEntry": false,
+      "internalConsoleOptions": "openOnSessionStart",
+      "externalConsole": true
+    },
+    {
+      "name": ".NET Core Launch (Relase)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "release-build",
+      "program": "${workspaceFolder}/Funtom.span/bin/Debug/net8.0/OFuntom.span.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopAtEntry": false,
+      "internalConsoleOptions": "openOnSessionStart"
+    },
+    {
+      "name": ".NET Core Test",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "test-build",
+      "program": "${workspaceFolder}/Funtom.span.test/bin/Debug/net8.0/OFuntom.span.test.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopAtEntry": false,
+      "internalConsoleOptions": "openOnSessionStart"
+    }
+  ]
+}
