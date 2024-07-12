@@ -5,10 +5,10 @@
 		<LangVersion>Latest</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.0.4</Version>
+		<Version>0.0.5</Version>
 		<Authors>midoliy</Authors>
 		<Company>midoliy</Company>
-		<Copyright>© 2023 Tatsuya Midorikawa. All rights rserved</Copyright>
+		<Copyright>© 2023-2024 Tatsuya Midorikawa. All rights rserved</Copyright>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageTags>midoliy,fsharp,Funtom,memory,span,alloc</PackageTags>
 		<PackageProjectUrl>https://github.com/tatsuya-midorikawa/Funtom.span</PackageProjectUrl>
