@@ -3,7 +3,7 @@
 open System
 
 [<AutoOpen>]
-module Extensions =
+module SpanExtensions =
   type ReadOnlySpan<'T> with
     member inline __.GetSlice(start, finish) =
       let s = match start with None -> 0 | Some s -> max 0 s
