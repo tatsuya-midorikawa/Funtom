@@ -10,10 +10,13 @@ open FSharp.NativeInterop
 module Memory =
   let mutable threshold = 128
 
+  // Allocates memory of the specified size.
+  // Note that unlike C/C++ malloc, this allocates a stack area.
   let inline malloc<'a when 'a: unmanaged> (size: int) : nativeptr<'a> =
     let size = if 0 < size then size else 0
     NativePtr.stackalloc<'a> size
 
+  // Allocates memory of the specified size on stack memories.
   let inline stackalloc<'a when 'a: unmanaged> (size: int) : Span<'a> =
     let size = if 0 < size then size else 0
     let p = NativePtr.stackalloc<'a> size |> NativePtr.toVoidPtr
