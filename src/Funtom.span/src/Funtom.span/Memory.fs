@@ -36,3 +36,5 @@ module Memory =
     ArrayPool<'a>.Shared.Return ary
 
   let inline ref (span: Span<'a>) = &(MemoryMarshal.GetReference span)
+
+  let inline asspan (list) = CollectionsMarshal.AsSpan list
