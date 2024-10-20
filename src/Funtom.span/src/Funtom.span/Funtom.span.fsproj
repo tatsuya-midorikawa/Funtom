@@ -18,6 +18,7 @@
 		</Description>
 		<PackageIcon>phantom.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Configurations>Debug;Release;Quick</Configurations>
   </PropertyGroup>
 
 	<ItemGroup>
@@ -32,8 +33,12 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <Compile Include="SpanExtensions.fs" />
     <Compile Include="Memory.fs" />
+    <Compile Include="Span.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="8.0.401" />
   </ItemGroup>
 
 </Project>

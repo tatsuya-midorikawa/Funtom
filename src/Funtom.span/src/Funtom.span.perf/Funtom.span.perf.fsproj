@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Configurations>Debug;Release;Quick</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="QuickCheck.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.14.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Funtom.span\Funtom.span.fsproj" />
+  </ItemGroup>
+
+</Project>
