@@ -3,7 +3,6 @@
 open System
 open System.Windows.Input
 
-#if NET8_0
 type cmd (exec: (cmd * obj option) -> unit, ?can_exec: obj option -> bool) =
   let event = Event<EventHandler, EventArgs>()
   let can_exec = match can_exec with Some e -> e | None -> fun _ -> true
@@ -30,4 +29,3 @@ type cmd (exec: (cmd * obj option) -> unit, ?can_exec: obj option -> bool) =
           member __.CanExecuteChanged = Event<EventHandler, EventArgs>().Publish }
     match can_exec_changed with Some e -> cmd.CanExecuteChanged.Add (Option.ofObj >> e) | None -> ()
     Command cmd
-#endif
