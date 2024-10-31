@@ -25,6 +25,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Compile Include="Values.fs" />
+		<Compile Include="exp\Controls.fs" />
 		<Compile Include="Utilities.fs" />
 		<Compile Include="Messages.fs" />
 		<Compile Include="Styles.fs" />
