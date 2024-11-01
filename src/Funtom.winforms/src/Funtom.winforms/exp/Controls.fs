@@ -1,7 +1,8 @@
 ﻿namespace Funtom.winforms.exp
 
-open Funtom.winforms
+open Funtom.winforms.values
 
+[<RequireQualifiedAccess>]
 module Control =
   let inline suspendLayout<^T when ^T: (member SuspendLayout: unit -> unit)>
     (ctrl: ^T) =
@@ -47,6 +48,29 @@ module Control =
       ctrl.set_AutoSize autoSize
       ctrl
 
+  let inline anchor<^T when ^T: (member set_Anchor: System.Windows.Forms.AnchorStyles -> unit)>
+    (anchors: Anchors)
+    (ctrl: ^T) =
+      ctrl.set_Anchor (Anchors.toNative anchors)
+      ctrl
+  
+  let inline dock<^T when ^T: (member set_Dock: System.Windows.Forms.DockStyle -> unit)>
+    (dock: Dock)
+    (ctrl: ^T) =
+      ctrl.set_Dock (Dock.toNative dock)
+      ctrl
+
+  let inline direction<^T when ^T: (member set_FlowDirection: System.Windows.Forms.FlowDirection -> unit)>
+    (direction: Direction)
+    (ctrl: ^T) =
+      ctrl.set_FlowDirection (Direction.toNative direction)
+      ctrl
+      
+  let inline location<^T when ^T: (member set_Location: System.Drawing.Point -> unit)>
+    (position: Position)
+    (ctrl: ^T) =
+      ctrl.set_Location (Position.toNative position)
+      ctrl
 
 module Form =
   let inline suspendLayout (form: System.Windows.Forms.Form) = Control.suspendLayout form
@@ -57,6 +81,9 @@ module Form =
   let inline autoScaleDimensions (size: SizeF) (form: System.Windows.Forms.Form) = Control.autoScaleDimensions size form
   let inline autoScaleMode (mode: AutoScaleMode) (form: System.Windows.Forms.Form) = Control.autoScaleMode mode form
   let inline autoSize (autoSize: bool) (form: System.Windows.Forms.Form) = Control.autoSize autoSize form
+  let inline anchor (anchors: Anchors) (form: System.Windows.Forms.Form) = Control.anchor anchors form
+  let inline dock (dock: Dock) (form: System.Windows.Forms.Form) = Control.dock dock form
+  let inline location (position: Position) (form: System.Windows.Forms.Form) = form.Location <- (Position.toNative position); form
 
 
 module Button =
@@ -64,6 +91,21 @@ module Button =
   let inline resumeLayout (performLayout: bool) (btn: System.Windows.Forms.Button) = Control.resumeLayout performLayout btn
   let inline add (child: System.Windows.Forms.Control) (btn: System.Windows.Forms.Button) = Control.add child btn
   let inline autoSize (autoSize: bool) (btn: System.Windows.Forms.Button) = Control.autoSize autoSize btn
+  let inline anchor (anchors: Anchors) (btn: System.Windows.Forms.Button) = Control.anchor anchors btn
+  let inline dock (dock: Dock) (btn: System.Windows.Forms.Button) = Control.dock dock btn
+  let inline location (position: Position) (btn: System.Windows.Forms.Button) = Control.location position btn
+
+
+module FlowLayoutPanel =
+  let inline suspendLayout (panel: System.Windows.Forms.FlowLayoutPanel) = Control.suspendLayout panel
+  let inline resumeLayout (performLayout: bool) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.resumeLayout performLayout panel
+  let inline add (child: System.Windows.Forms.Control) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.add child panel
+  let inline autoSize (autoSize: bool) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.autoSize autoSize panel
+  let inline anchor (anchors: Anchors) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.anchor anchors panel
+  let inline dock (dock: Dock) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.dock dock panel
+  let inline direction (direction: Direction) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.direction direction panel
+  let inline location (position: Position) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.location position panel
+
 
 
 

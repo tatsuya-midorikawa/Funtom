@@ -1,4 +1,4 @@
-﻿namespace Funtom.winforms
+﻿namespace Funtom.winforms.values
 
 [<Struct>]
 type SizeF = { width: float32; height: float32 }
@@ -29,12 +29,41 @@ type AutoScaleMode =
   | inheritant = 3
 [<RequireQualifiedAccess>]
 module AutoScaleMode =
-  let inline toNative (mode: AutoScaleMode) = 
-    match mode with
-      | AutoScaleMode.none -> System.Windows.Forms.AutoScaleMode.None
-      | AutoScaleMode.font -> System.Windows.Forms.AutoScaleMode.Font
-      | AutoScaleMode.dpi -> System.Windows.Forms.AutoScaleMode.Dpi
-      | AutoScaleMode.inheritant -> System.Windows.Forms.AutoScaleMode.Inherit
-      | _ -> failwith "This value is not supported"
+  let inline toNative (mode: AutoScaleMode) = int mode |> enum<System.Windows.Forms.AutoScaleMode>
 
+
+[<Struct; System.Flags; RequireQualifiedAccess>]
+type Anchors =
+  | none   = 0
+  | top    = (1 <<< 0)
+  | bottom = (1 <<< 1)
+  | left   = (1 <<< 2)
+  | right  = (1 <<< 3)
+[<RequireQualifiedAccess>]
+module Anchors =
+  let inline toNative (anchors: Anchors) = int anchors |> enum<System.Windows.Forms.AnchorStyles>
+
+  
+[<Struct; RequireQualifiedAccess>]
+type Dock =
+  | none = 0
+  | top = 1
+  | bottom = 2
+  | left = 3
+  | right = 4
+  | fill = 5
+[<RequireQualifiedAccess>]
+module Dock =
+  let inline toNative (dock: Dock) = int dock |> enum<System.Windows.Forms.DockStyle>
+
+
+[<Struct; RequireQualifiedAccess>]
+type Direction =
+  | left2right = 0
+  | topdown = 1
+  | right2left = 2
+  | bottomup = 3
+[<RequireQualifiedAccess>]
+module Direction =
+  let inline toNative (direction: Direction) = int direction |> enum<System.Windows.Forms.FlowDirection>
 
