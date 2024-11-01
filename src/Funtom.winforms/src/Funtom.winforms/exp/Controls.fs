@@ -6,25 +6,21 @@ open Funtom.winforms.values
 module Control =
   let inline suspendLayout<^T when ^T: (member SuspendLayout: unit -> unit)>
     (ctrl: ^T) =
-      ctrl.SuspendLayout()
-      ctrl
+      ctrl.SuspendLayout(); ctrl
 
   let inline resumeLayout<^T when ^T: (member ResumeLayout: bool -> unit)>
     (performLayout: bool)
     (ctrl: ^T) =
-      ctrl.ResumeLayout(performLayout)
-      ctrl
+      ctrl.ResumeLayout(performLayout); ctrl
 
   let inline add<^T when ^T: (member Controls: System.Windows.Forms.Control.ControlCollection)>
     (child: System.Windows.Forms.Control)
     (ctrl: ^T) =
-      ctrl.Controls.Add(child)
-      ctrl
+      ctrl.Controls.Add(child); ctrl
 
   let inline show<^T when ^T: (member Show: unit -> unit)>
     (ctrl: ^T) =
-      ctrl.Show()
-      ctrl
+      ctrl.Show(); ctrl
 
   let inline showDialog<^T when ^T: (member ShowDialog: unit -> System.Windows.Forms.DialogResult)>
     (ctrl: ^T) =
@@ -33,45 +29,51 @@ module Control =
   let inline autoScaleDimensions<^T when ^T: (member set_AutoScaleDimensions: System.Drawing.SizeF -> unit)>
     (size: SizeF)
     (ctrl: ^T) =
-      ctrl.set_AutoScaleDimensions (SizeF.toNative size)
-      ctrl
+      ctrl.set_AutoScaleDimensions (SizeF.toNative size); ctrl
 
   let inline autoScaleMode<^T when ^T: (member set_AutoScaleMode: System.Windows.Forms.AutoScaleMode -> unit)>
     (mode: AutoScaleMode)
     (ctrl: ^T) =
-      ctrl.set_AutoScaleMode (AutoScaleMode.toNative mode)
-      ctrl
+      ctrl.set_AutoScaleMode (AutoScaleMode.toNative mode); ctrl
 
   let inline autoSize<^T when ^T: (member set_AutoSize: bool -> unit)>
     (autoSize: bool)
     (ctrl: ^T) =
-      ctrl.set_AutoSize autoSize
-      ctrl
+      ctrl.set_AutoSize autoSize; ctrl
 
   let inline anchor<^T when ^T: (member set_Anchor: System.Windows.Forms.AnchorStyles -> unit)>
     (anchors: Anchors)
     (ctrl: ^T) =
-      ctrl.set_Anchor (Anchors.toNative anchors)
-      ctrl
+      ctrl.set_Anchor (Anchors.toNative anchors); ctrl
   
   let inline dock<^T when ^T: (member set_Dock: System.Windows.Forms.DockStyle -> unit)>
     (dock: Dock)
     (ctrl: ^T) =
-      ctrl.set_Dock (Dock.toNative dock)
-      ctrl
+      ctrl.set_Dock (Dock.toNative dock); ctrl
 
   let inline direction<^T when ^T: (member set_FlowDirection: System.Windows.Forms.FlowDirection -> unit)>
     (direction: Direction)
     (ctrl: ^T) =
-      ctrl.set_FlowDirection (Direction.toNative direction)
-      ctrl
+      ctrl.set_FlowDirection (Direction.toNative direction); ctrl
       
   let inline location<^T when ^T: (member set_Location: System.Drawing.Point -> unit)>
     (position: Position)
     (ctrl: ^T) =
-      ctrl.set_Location (Position.toNative position)
-      ctrl
+      ctrl.set_Location (Position.toNative position); ctrl
 
+  let inline text<^T when ^T: (member set_Text: string -> unit)>
+    (text: string)
+    (ctrl: ^T) =
+      ctrl.set_Text text; ctrl
+
+  let inline check<^T when ^T: (member set_Checked: bool -> unit)>
+    (checked': bool)
+    (ctrl: ^T) =
+      ctrl.set_Checked checked'; ctrl
+
+
+
+[<RequireQualifiedAccess>]
 module Form =
   let inline suspendLayout (form: System.Windows.Forms.Form) = Control.suspendLayout form
   let inline resumeLayout (performLayout: bool) (form: System.Windows.Forms.Form) = Control.resumeLayout performLayout form
@@ -84,18 +86,10 @@ module Form =
   let inline anchor (anchors: Anchors) (form: System.Windows.Forms.Form) = Control.anchor anchors form
   let inline dock (dock: Dock) (form: System.Windows.Forms.Form) = Control.dock dock form
   let inline location (position: Position) (form: System.Windows.Forms.Form) = form.Location <- (Position.toNative position); form
+  let inline text (text: string) (form: System.Windows.Forms.Form) = Control.text text form
 
 
-module Button =
-  let inline suspendLayout (btn: System.Windows.Forms.Button) = Control.suspendLayout btn
-  let inline resumeLayout (performLayout: bool) (btn: System.Windows.Forms.Button) = Control.resumeLayout performLayout btn
-  let inline add (child: System.Windows.Forms.Control) (btn: System.Windows.Forms.Button) = Control.add child btn
-  let inline autoSize (autoSize: bool) (btn: System.Windows.Forms.Button) = Control.autoSize autoSize btn
-  let inline anchor (anchors: Anchors) (btn: System.Windows.Forms.Button) = Control.anchor anchors btn
-  let inline dock (dock: Dock) (btn: System.Windows.Forms.Button) = Control.dock dock btn
-  let inline location (position: Position) (btn: System.Windows.Forms.Button) = Control.location position btn
-
-
+[<RequireQualifiedAccess>]
 module FlowLayoutPanel =
   let inline suspendLayout (panel: System.Windows.Forms.FlowLayoutPanel) = Control.suspendLayout panel
   let inline resumeLayout (performLayout: bool) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.resumeLayout performLayout panel
@@ -105,6 +99,33 @@ module FlowLayoutPanel =
   let inline dock (dock: Dock) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.dock dock panel
   let inline direction (direction: Direction) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.direction direction panel
   let inline location (position: Position) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.location position panel
+  let inline text (text: string) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.text text panel
+  
+
+[<RequireQualifiedAccess>]
+module Button =
+  let inline suspendLayout (btn: System.Windows.Forms.Button) = Control.suspendLayout btn
+  let inline resumeLayout (performLayout: bool) (btn: System.Windows.Forms.Button) = Control.resumeLayout performLayout btn
+  let inline add (child: System.Windows.Forms.Control) (btn: System.Windows.Forms.Button) = Control.add child btn
+  let inline autoSize (autoSize: bool) (btn: System.Windows.Forms.Button) = Control.autoSize autoSize btn
+  let inline anchor (anchors: Anchors) (btn: System.Windows.Forms.Button) = Control.anchor anchors btn
+  let inline dock (dock: Dock) (btn: System.Windows.Forms.Button) = Control.dock dock btn
+  let inline location (position: Position) (btn: System.Windows.Forms.Button) = Control.location position btn
+  let inline text (text: string) (btn: System.Windows.Forms.Button) = Control.text text btn
+  
+
+[<RequireQualifiedAccess>]
+module CheckBox =
+  let inline suspendLayout (chk: System.Windows.Forms.CheckBox) = Control.suspendLayout chk
+  let inline resumeLayout (performLayout: bool) (chk: System.Windows.Forms.CheckBox) = Control.resumeLayout performLayout chk
+  let inline add (child: System.Windows.Forms.Control) (chk: System.Windows.Forms.CheckBox) = Control.add child chk
+  let inline autoSize (autoSize: bool) (chk: System.Windows.Forms.CheckBox) = Control.autoSize autoSize chk
+  let inline anchor (anchors: Anchors) (chk: System.Windows.Forms.CheckBox) = Control.anchor anchors chk
+  let inline dock (dock: Dock) (chk: System.Windows.Forms.CheckBox) = Control.dock dock chk
+  let inline location (position: Position) (chk: System.Windows.Forms.CheckBox) = Control.location position chk
+  let inline text (text: string) (chk: System.Windows.Forms.CheckBox) = Control.text text chk
+  let inline check (checked': bool) (chk: System.Windows.Forms.CheckBox) = Control.check checked' chk
+
 
 
 
