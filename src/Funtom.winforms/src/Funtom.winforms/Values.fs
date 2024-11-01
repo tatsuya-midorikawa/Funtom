@@ -2,8 +2,24 @@
 
 [<Struct>]
 type SizeF = { width: float32; height: float32 }
+[<RequireQualifiedAccess>]
 module SizeF =
   let inline toNative (size: SizeF) = System.Drawing.SizeF(float32 size.width, float32 size.height)
+
+
+[<Struct>]
+type Size = { width: int; height: int }
+[<RequireQualifiedAccess>]
+module Size =
+  let inline toNative (size: Size) = System.Drawing.Size(size.width, size.height)
+
+
+[<Struct>]
+type Position = { top: int; left: int }
+[<RequireQualifiedAccess>]
+module Position =
+  let inline toNative (position: Position) = System.Drawing.Point(position.left, position.top)
+
 
 [<Struct; RequireQualifiedAccess>]
 type AutoScaleMode =
@@ -11,6 +27,7 @@ type AutoScaleMode =
   | font = 1
   | dpi = 2
   | inheritant = 3
+[<RequireQualifiedAccess>]
 module AutoScaleMode =
   let inline toNative (mode: AutoScaleMode) = 
     match mode with

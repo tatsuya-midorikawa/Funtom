@@ -15,7 +15,7 @@ module Control =
       ctrl
 
   let inline add<^T when ^T: (member Controls: System.Windows.Forms.Control.ControlCollection)>
-    (child: #System.Windows.Forms.Control)
+    (child: System.Windows.Forms.Control)
     (ctrl: ^T) =
       ctrl.Controls.Add(child)
       ctrl
@@ -29,30 +29,41 @@ module Control =
     (ctrl: ^T) =
       ctrl.ShowDialog()
 
-  let inline autoScaleDimensions<^T when ^T :> System.Windows.Forms.ContainerControl>
+  let inline autoScaleDimensions<^T when ^T: (member set_AutoScaleDimensions: System.Drawing.SizeF -> unit)>
     (size: SizeF)
     (ctrl: ^T) =
-      ctrl.AutoScaleDimensions <- (SizeF.toNative size)
+      ctrl.set_AutoScaleDimensions (SizeF.toNative size)
       ctrl
 
-  let inline autoScaleMode<^T when ^T :> System.Windows.Forms.ContainerControl>
+  let inline autoScaleMode<^T when ^T: (member set_AutoScaleMode: System.Windows.Forms.AutoScaleMode -> unit)>
     (mode: AutoScaleMode)
     (ctrl: ^T) =
-      ctrl.AutoScaleMode <- (AutoScaleMode.toNative mode)
+      ctrl.set_AutoScaleMode (AutoScaleMode.toNative mode)
       ctrl
+
+  let inline autoSize<^T when ^T: (member set_AutoSize: bool -> unit)>
+    (autoSize: bool)
+    (ctrl: ^T) =
+      ctrl.set_AutoSize autoSize
+      ctrl
+
 
 module Form =
   let inline suspendLayout (form: System.Windows.Forms.Form) = Control.suspendLayout form
   let inline resumeLayout (performLayout: bool) (form: System.Windows.Forms.Form) = Control.resumeLayout performLayout form
-  let inline add (child: #System.Windows.Forms.Control) (form: System.Windows.Forms.Form) = Control.add child form
+  let inline add (child: System.Windows.Forms.Control) (form: System.Windows.Forms.Form) = Control.add child form
   let inline show (form: System.Windows.Forms.Form) = Control.show form
   let inline showDialog (form: System.Windows.Forms.Form) = Control.showDialog form
   let inline autoScaleDimensions (size: SizeF) (form: System.Windows.Forms.Form) = Control.autoScaleDimensions size form
   let inline autoScaleMode (mode: AutoScaleMode) (form: System.Windows.Forms.Form) = Control.autoScaleMode mode form
+  let inline autoSize (autoSize: bool) (form: System.Windows.Forms.Form) = Control.autoSize autoSize form
+
 
 module Button =
   let inline suspendLayout (btn: System.Windows.Forms.Button) = Control.suspendLayout btn
   let inline resumeLayout (performLayout: bool) (btn: System.Windows.Forms.Button) = Control.resumeLayout performLayout btn
-  let inline add (child: #System.Windows.Forms.Control) (btn: System.Windows.Forms.Button) = Control.add child btn
-  
+  let inline add (child: System.Windows.Forms.Control) (btn: System.Windows.Forms.Button) = Control.add child btn
+  let inline autoSize (autoSize: bool) (btn: System.Windows.Forms.Button) = Control.autoSize autoSize btn
+
+
 
