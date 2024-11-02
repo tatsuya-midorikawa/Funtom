@@ -89,6 +89,21 @@ module Control =
     (ctrl: ^T) =
       ctrl.set_ContextMenuStrip menu; ctrl
 
+  let inline name<^T when ^T: (member set_Name: string -> unit)>
+    (name: string)
+    (ctrl: ^T) =
+      ctrl.set_Name name; ctrl
+
+  let inline bgimage<^T when ^T: (member set_BackgroundImage: System.Drawing.Image -> unit)>
+    (img: System.Drawing.Image)
+    (ctrl: ^T) =
+      ctrl.set_BackgroundImage img; ctrl
+
+  let inline image<^T when ^T: (member set_Image: System.Drawing.Image -> unit)>
+    (img: System.Drawing.Image)
+    (ctrl: ^T) =
+      ctrl.set_Image img; ctrl
+
 
 
 [<RequireQualifiedAccess>]
@@ -108,6 +123,8 @@ module Form =
   let inline controls (form: System.Windows.Forms.Form) = Control.controls form
   let inline mainMenuStrip (menu: System.Windows.Forms.MenuStrip) (form: System.Windows.Forms.Form) = Control.mainMenuStrip menu form
   let inline contextMenuStrip (menu: System.Windows.Forms.ContextMenuStrip) (form: System.Windows.Forms.Form) = Control.contextMenuStrip menu form
+  let inline name (name: string) (form: System.Windows.Forms.Form) = Control.name name form
+  let inline bgimage (img: System.Drawing.Image) (form: System.Windows.Forms.Form) = Control.bgimage img form
 
 
 [<RequireQualifiedAccess>]
@@ -124,6 +141,8 @@ module FlowLayoutPanel =
   let inline flowBreak (break': bool) (panel: System.Windows.Forms.FlowLayoutPanel) = panel.SetFlowBreak(panel.Controls.[panel.Controls.Count - 1], break'); panel
   let inline controls (panel: System.Windows.Forms.FlowLayoutPanel) = Control.controls panel
   let inline contextMenuStrip (menu: System.Windows.Forms.ContextMenuStrip) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.contextMenuStrip menu panel
+  let inline name (name: string) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.name name panel
+  let inline bgimage (img: System.Drawing.Image) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.bgimage img panel
 
 
 [<RequireQualifiedAccess>]
@@ -138,7 +157,10 @@ module Button =
   let inline text (text: string) (btn: System.Windows.Forms.Button) = Control.text text btn
   let inline controls (btn: System.Windows.Forms.Button) = Control.controls btn
   let inline contextMenuStrip (menu: System.Windows.Forms.ContextMenuStrip) (btn: System.Windows.Forms.Button) = Control.contextMenuStrip menu btn
-  
+  let inline name (name: string) (btn: System.Windows.Forms.Button) = Control.name name btn
+  let inline bgimage (img: System.Drawing.Image) (btn: System.Windows.Forms.Button) = Control.bgimage img btn
+  let inline image (img: System.Drawing.Image) (btn: System.Windows.Forms.Button) = Control.image img btn
+
 
 [<RequireQualifiedAccess>]
 module CheckBox =
@@ -151,6 +173,12 @@ module CheckBox =
   let inline location (position: Position) (chk: System.Windows.Forms.CheckBox) = Control.location position chk
   let inline text (text: string) (chk: System.Windows.Forms.CheckBox) = Control.text text chk
   let inline check (checked': bool) (chk: System.Windows.Forms.CheckBox) = Control.check checked' chk
+  let inline controls (chk: System.Windows.Forms.CheckBox) = Control.controls chk
+  let inline contextMenuStrip (menu: System.Windows.Forms.ContextMenuStrip) (chk: System.Windows.Forms.CheckBox) = Control.contextMenuStrip menu chk
+  let inline name (name: string) (chk: System.Windows.Forms.CheckBox) = Control.name name chk
+  let inline bgimage (img: System.Drawing.Image) (chk: System.Windows.Forms.CheckBox) = Control.bgimage img chk
+  let inline image (img: System.Drawing.Image) (chk: System.Windows.Forms.CheckBox) = Control.image img chk
+
 
 [<RequireQualifiedAccess>]
 module ComboBox =
@@ -163,6 +191,11 @@ module ComboBox =
   let inline location (position: Position) (cbo: System.Windows.Forms.ComboBox) = Control.location position cbo
   let inline text (text: string) (cbo: System.Windows.Forms.ComboBox) = Control.text text cbo
   let inline items (cbo: System.Windows.Forms.ComboBox) = Control.items cbo
+  let inline controls (cbo: System.Windows.Forms.ComboBox) = Control.controls cbo
+  let inline contextMenuStrip (menu: System.Windows.Forms.ContextMenuStrip) (cbo: System.Windows.Forms.ComboBox) = Control.contextMenuStrip menu cbo
+  let inline name (name: string) (cbo: System.Windows.Forms.ComboBox) = Control.name name cbo
+  let inline bgimage (img: System.Drawing.Image) (cbo: System.Windows.Forms.ComboBox) = Control.bgimage img cbo
+
 
 [<RequireQualifiedAccess>]
 module MenuStrip =
@@ -174,6 +207,10 @@ module MenuStrip =
   let inline location (position: Position) (menu: System.Windows.Forms.MenuStrip) = Control.location position menu
   let inline text (text: string) (menu: System.Windows.Forms.MenuStrip) = Control.text text menu
   let inline items (menu: System.Windows.Forms.MenuStrip) = Control.items menu
+  let inline name (name: string) (menu: System.Windows.Forms.MenuStrip) = Control.name name menu
+  let inline bgimage (img: System.Drawing.Image) (menu: System.Windows.Forms.MenuStrip) = Control.bgimage img menu
+
+
 
 
 
