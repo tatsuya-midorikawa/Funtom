@@ -13,6 +13,10 @@ module Control =
     (ctrl: ^T) =
       ctrl.ResumeLayout(performLayout); ctrl
 
+  let inline activate<^T when ^T: (member Activate: unit -> unit)>
+    (ctrl: ^T) =
+      ctrl.Activate(); ctrl
+
   let inline add<^T when ^T: (member Controls: System.Windows.Forms.Control.ControlCollection with get)>
     (child: System.Windows.Forms.Control)
     (ctrl: ^T) =
@@ -105,11 +109,11 @@ module Control =
       ctrl.set_Image img; ctrl
 
 
-
 [<RequireQualifiedAccess>]
 module Form =
   let inline suspendLayout (form: System.Windows.Forms.Form) = Control.suspendLayout form
   let inline resumeLayout (performLayout: bool) (form: System.Windows.Forms.Form) = Control.resumeLayout performLayout form
+  let inline activate (form: System.Windows.Forms.Form) = Control.activate form
   let inline add (child: System.Windows.Forms.Control) (form: System.Windows.Forms.Form) = Control.add child form
   let inline show (form: System.Windows.Forms.Form) = Control.show form
   let inline showDialog (form: System.Windows.Forms.Form) = Control.showDialog form

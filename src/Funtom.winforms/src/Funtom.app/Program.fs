@@ -2,10 +2,20 @@
 //open Funtom.winforms.forms
 open Funtom.winforms.controls
 open Funtom.winforms.dialogs
+open System.Threading
 
 #nowarn "3391"
 
 let debug msg = System.Diagnostics.Debug.WriteLine msg
+let syncContext = System.Threading.SynchronizationContext.Current
+let get_thread_id() =
+  let mutable id = -1
+  if System.Threading.SynchronizationContext.Current = null
+    then ()
+    else
+      System.Threading.SynchronizationContext.Current.Send ((fun _ -> id <- System.Threading.Thread.CurrentThread.ManagedThreadId), null)
+  debug $"ManagedThreadId= {System.Threading.Thread.CurrentThread.ManagedThreadId} / id= {id}"
+  id = System.Threading.Thread.CurrentThread.ManagedThreadId
 let dir_dlg = new dir_browser()
 let file_dlg = new file_dialog(index= 0, filter= "")
 
@@ -64,7 +74,11 @@ let textbox =
   form |> document.get_elem_by_id "input1"
 
 let on_btn1_click _ =
-  msg.show $"{textbox.text}" |> ignore
+  System.Threading.Tasks.Task.Run(fun _ ->
+    debug $"btn task: {get_thread_id()}"
+    msg.show $"{textbox.text}" |> ignore
+  )
+  |> ignore
 
 let btn1 =
   form
@@ -74,5 +88,6 @@ let btn1 =
 // Create main() since STAThread is required for dir_dlg.show(), etc. to work.
 [<EntryPoint; System.STAThread>]
 let main _ =
+  debug $"main: {get_thread_id()}"
   form |> (show_dialog >> ignore)
   0
