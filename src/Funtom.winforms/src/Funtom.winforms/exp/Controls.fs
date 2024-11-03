@@ -107,6 +107,17 @@ module Control =
     (img: System.Drawing.Image)
     (ctrl: ^T) =
       ctrl.set_Image img; ctrl
+      
+
+[<RequireQualifiedAccess>]
+module Application =
+  let inline initialize () =
+    System.Windows.Forms.Application.EnableVisualStyles()
+    System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+    System.Windows.Forms.Application.SetHighDpiMode(System.Windows.Forms.HighDpiMode.SystemAware) |> ignore
+    
+  let inline run (form: System.Windows.Forms.Form) =
+    System.Windows.Forms.Application.Run form
 
 
 [<RequireQualifiedAccess>]

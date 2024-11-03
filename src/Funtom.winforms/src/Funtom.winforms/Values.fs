@@ -67,3 +67,4 @@ type Direction =
 module Direction =
   let inline toNative (direction: Direction) = int direction |> enum<System.Windows.Forms.FlowDirection>
 
+type Form = System.Windows.Forms.Form
