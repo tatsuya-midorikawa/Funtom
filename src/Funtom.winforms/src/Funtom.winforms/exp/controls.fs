@@ -22,6 +22,11 @@ module Control =
     (ctrl: ^T) =
       ctrl.get_Controls().Add(child); ctrl
 
+  let inline addrange<^T when ^T: (member Controls: System.Windows.Forms.Control.ControlCollection with get)>
+    (children: System.Windows.Forms.Control[])
+    (ctrl: ^T) =
+      ctrl.get_Controls().AddRange(children); ctrl
+
   let inline show<^T when ^T: (member Show: unit -> unit)>
     (ctrl: ^T) =
       ctrl.Show(); ctrl
@@ -126,6 +131,7 @@ module Form =
   let inline resumeLayout (performLayout: bool) (form: System.Windows.Forms.Form) = Control.resumeLayout performLayout form
   let inline activate (form: System.Windows.Forms.Form) = Control.activate form
   let inline add (child: System.Windows.Forms.Control) (form: System.Windows.Forms.Form) = Control.add child form
+  let inline addrange (children: System.Windows.Forms.Control[]) (form: System.Windows.Forms.Form) = Control.addrange children form
   let inline show (form: System.Windows.Forms.Form) = Control.show form
   let inline showDialog (form: System.Windows.Forms.Form) = Control.showDialog form
   let inline autoScaleDimensions (size: SizeF) (form: System.Windows.Forms.Form) = Control.autoScaleDimensions size form
@@ -147,6 +153,7 @@ module FlowLayoutPanel =
   let inline suspendLayout (panel: System.Windows.Forms.FlowLayoutPanel) = Control.suspendLayout panel
   let inline resumeLayout (performLayout: bool) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.resumeLayout performLayout panel
   let inline add (child: System.Windows.Forms.Control) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.add child panel
+  let inline addrange (children: System.Windows.Forms.Control[]) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.addrange children panel
   let inline autoSize (autoSize: bool) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.autoSize autoSize panel
   let inline anchor (anchors: Anchors) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.anchor anchors panel
   let inline dock (dock: Dock) (panel: System.Windows.Forms.FlowLayoutPanel) = Control.dock dock panel
@@ -165,6 +172,7 @@ module Button =
   let inline suspendLayout (btn: System.Windows.Forms.Button) = Control.suspendLayout btn
   let inline resumeLayout (performLayout: bool) (btn: System.Windows.Forms.Button) = Control.resumeLayout performLayout btn
   let inline add (child: System.Windows.Forms.Control) (btn: System.Windows.Forms.Button) = Control.add child btn
+  let inline addrange (children: System.Windows.Forms.Control[]) (btn: System.Windows.Forms.Button) = Control.addrange children btn
   let inline autoSize (autoSize: bool) (btn: System.Windows.Forms.Button) = Control.autoSize autoSize btn
   let inline anchor (anchors: Anchors) (btn: System.Windows.Forms.Button) = Control.anchor anchors btn
   let inline dock (dock: Dock) (btn: System.Windows.Forms.Button) = Control.dock dock btn
@@ -182,6 +190,7 @@ module CheckBox =
   let inline suspendLayout (chk: System.Windows.Forms.CheckBox) = Control.suspendLayout chk
   let inline resumeLayout (performLayout: bool) (chk: System.Windows.Forms.CheckBox) = Control.resumeLayout performLayout chk
   let inline add (child: System.Windows.Forms.Control) (chk: System.Windows.Forms.CheckBox) = Control.add child chk
+  let inline addrange (children: System.Windows.Forms.Control[]) (chk: System.Windows.Forms.CheckBox) = Control.addrange children chk
   let inline autoSize (autoSize: bool) (chk: System.Windows.Forms.CheckBox) = Control.autoSize autoSize chk
   let inline anchor (anchors: Anchors) (chk: System.Windows.Forms.CheckBox) = Control.anchor anchors chk
   let inline dock (dock: Dock) (chk: System.Windows.Forms.CheckBox) = Control.dock dock chk
@@ -200,6 +209,7 @@ module ComboBox =
   let inline suspendLayout (cbo: System.Windows.Forms.ComboBox) = Control.suspendLayout cbo
   let inline resumeLayout (performLayout: bool) (cbo: System.Windows.Forms.ComboBox) = Control.resumeLayout performLayout cbo
   let inline add (child: System.Windows.Forms.Control) (cbo: System.Windows.Forms.ComboBox) = Control.add child cbo
+  let inline addrange (children: System.Windows.Forms.Control[]) (cbo: System.Windows.Forms.ComboBox) = Control.addrange children cbo
   let inline autoSize (autoSize: bool) (cbo: System.Windows.Forms.ComboBox) = Control.autoSize autoSize cbo
   let inline anchor (anchors: Anchors) (cbo: System.Windows.Forms.ComboBox) = Control.anchor anchors cbo
   let inline dock (dock: Dock) (cbo: System.Windows.Forms.ComboBox) = Control.dock dock cbo

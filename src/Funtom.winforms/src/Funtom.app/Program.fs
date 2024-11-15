@@ -10,13 +10,19 @@ open Funtom.winforms.exp
 
 let debug msg = System.Diagnostics.Debug.WriteLine msg
 
-[<EntryPoint; System.STAThread>]
-let main args =
-  Application.initialize()
-  new Form ()
-    |> Application.run
+Application.initialize()
 
-  0
+let button = button {
+  text "Click me!"
+}
+
+let form = form {
+  add button
+}
+
+[<System.STAThread>]
+do
+  Application.run form
 
 
 //let syncContext = System.Threading.SynchronizationContext.Current

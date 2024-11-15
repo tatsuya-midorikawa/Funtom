@@ -27,7 +27,7 @@
 	<ItemGroup>
 		<Compile Include="values.fs" />
 		<Compile Include="exp\controls.fs" />
-		<Compile Include="exp\cexper.fs" />
+		<Compile Include="exp\cexpr.fs" />
 		<Compile Include="Utilities.fs" />
 		<Compile Include="Messages.fs" />
 		<Compile Include="Styles.fs" />
