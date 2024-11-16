@@ -12,14 +12,19 @@ let debug msg = System.Diagnostics.Debug.WriteLine msg
 
 Application.initialize()
 
-let button = button {
-  text "Click me!"
-}
+//let button = button {
+//  text "Click me!"
+//}
 
 let form = form {
-  add button
+  suspend
+  add [|
+    button { text "Click me 1" } 
+    button { text "Click me 2" }
+    button { text "Click me 3" } 
+  |]
+  resume
 }
-
 [<System.STAThread>]
 do
   Application.run form
