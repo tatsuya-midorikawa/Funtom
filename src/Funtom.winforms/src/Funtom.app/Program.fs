@@ -16,15 +16,30 @@ Application.initialize()
 //  text "Click me!"
 //}
 
-let form = form {
+let form = form () {
   suspend
-  add [|
-    button { text "Click me 1" } 
-    button { text "Click me 2" }
-    button { text "Click me 3" } 
+  size { width= 800; height= 600 }
+  children [|
+    flowlayout (Dock.fill, Direction.topdown) {
+      children [|
+        button () { text "Click me 1"; size { width= 200; height= 100 } }
+        button () { text "Click me 2"; size { width= 300; height= 150 } }
+        button () { text "Click me 3"; size { width= 150; height= 200 } } 
+      |]
+    }
+    //button () { 
+    //  text "Click me 1"
+    //  location { top = 0; left = 0 } } 
+    //button () { 
+    //  text "Click me 2" 
+    //  location { top = 20; left = 0 } }
+    //button () {
+    //  text "Click me 3"
+    //  location { top = 40; left = 0 } } 
   |]
   resume
 }
+
 [<System.STAThread>]
 do
   Application.run form
