@@ -352,3 +352,4 @@ MigrationBackup/
 src/Funtom.collections/.DS_Store
 
 .DS_Store
+.idea

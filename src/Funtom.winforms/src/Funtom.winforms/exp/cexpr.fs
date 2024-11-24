@@ -9,10 +9,7 @@ module Cexpr =
     member __.Yield (x) = x
     member __.For (x, f) = f x
     member __.Zero () = ctrl
-    [<CustomOperation>]
-    member __.suspend (_) = ctrl.SuspendLayout(); ctrl
-    [<CustomOperation>]
-    member __.resume (_, ?perform: bool) = ctrl.ResumeLayout(perform |> Option.defaultWith (fun () -> false)); ctrl
+      
     [<CustomOperation>]
     member __.add (_, child: System.Windows.Forms.Control) = ctrl.Controls.Add child; ctrl
     [<CustomOperation>]
@@ -22,23 +19,41 @@ module Cexpr =
     member __.children<'U when 'U :> System.Windows.Forms.Control> (_, children: 'U[]) =
       children |> Array.iter (fun c -> ctrl.Controls.Add c); ctrl
     [<CustomOperation>]
-    member __.text (_, text: string) = ctrl.Text <- text; ctrl
+    member __.bring2front (_) = ctrl.BringToFront(); ctrl
     [<CustomOperation>]
-    member __.autosize (_, enabled: bool) = ctrl.AutoSize <- enabled; ctrl
+    member __.refresh (_) = ctrl.Refresh(); ctrl
+    [<CustomOperation>]
+    member __.resume (_, ?perform: bool) = ctrl.ResumeLayout(perform |> Option.defaultWith (fun () -> false)); ctrl
+    [<CustomOperation>]
+    member __.suspend (_) = ctrl.SuspendLayout(); ctrl
+      
+    [<CustomOperation>]
+    member __.allowdrop (_, allowed: bool) = ctrl.AllowDrop <- allowed; ctrl
     [<CustomOperation>]
     member __.anchor (_, anchors: Anchors) = ctrl.Anchor <- (Anchors.toNative anchors); ctrl
     [<CustomOperation>]
+    member __.autoscrolloffset (_, point: Point) = ctrl.AutoScrollOffset <- (Point.toNative point); ctrl
+    [<CustomOperation>]
+    member __.autosize (_, enabled: bool) = ctrl.AutoSize <- enabled; ctrl
+    [<CustomOperation>]
+    member __.bgcolor (_, color: System.Drawing.Color) = ctrl.BackColor <- color; ctrl
+    [<CustomOperation>]
+    member __.bgimage (_, img: System.Drawing.Image) = ctrl.BackgroundImage <- img; ctrl
+    [<CustomOperation>]
+    member __.bglayout (_, layout: ImageLayout) = ctrl.BackgroundImageLayout <- (ImageLayout.toNative layout); ctrl
+    
+    [<CustomOperation>]
     member __.dock (_, dock: Dock) = ctrl.Dock <- (Dock.toNative dock); ctrl
-    [<CustomOperation>]
-    member __.size (_, size: Size) = ctrl.Size <- (Size.toNative size); ctrl
-    [<CustomOperation>]
-    member __.location (_, location: Position) = ctrl.Location <- (Position.toNative location); ctrl
     [<CustomOperation>]
     member __.image (_, img: System.Drawing.Image) = ctrl.BackgroundImage <- img; ctrl
     [<CustomOperation>]
+    member __.location (_, location: Position) = ctrl.Location <- (Position.toNative location); ctrl
+    [<CustomOperation>]
     member __.name (_, name: string) = ctrl.Name <- name; ctrl
     [<CustomOperation>]
-    member __.bgimage (_, img: System.Drawing.Image) = ctrl.BackgroundImage <- img; ctrl
+    member __.size (_, size: Size) = ctrl.Size <- (Size.toNative size); ctrl
+    [<CustomOperation>]
+    member __.text (_, text: string) = ctrl.Text <- text; ctrl
 
 
   type FormBuilder (form: System.Windows.Forms.Form) = 
@@ -58,7 +73,9 @@ module Cexpr =
     [<CustomOperation>]
     member __.direction (_, direction: Direction) = panel.FlowDirection <- Direction.toNative direction; panel
 
-  let form ()= FormBuilder (new System.Windows.Forms.Form())
+
+  let ctrl (ctrl: ^T when ^T :> System.Windows.Forms.Control) = ControlBuilder(ctrl)
+  let form () = FormBuilder (new System.Windows.Forms.Form())
   let button () = ButtonBuilder (new System.Windows.Forms.Button())
   let flowlayout (dock: Dock, direction: Direction) = FlowLayoutPanel (
     new System.Windows.Forms.FlowLayoutPanel(FlowDirection = Direction.toNative direction, Dock = Dock.toNative dock))

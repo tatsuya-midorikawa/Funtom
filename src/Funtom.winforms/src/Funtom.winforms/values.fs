@@ -1,5 +1,16 @@
 ﻿namespace Funtom.winforms.values
 
+[<AutoOpen>]
+module Values =
+  [<Literal>]
+  let enable = true
+  [<Literal>]
+  let disable = false
+  [<Literal>]
+  let allow = true
+  [<Literal>]
+  let disallow = false
+
 [<Struct>]
 type SizeF = { width: float32; height: float32 }
 [<RequireQualifiedAccess>]
@@ -12,6 +23,13 @@ type Size = { width: int; height: int }
 [<RequireQualifiedAccess>]
 module Size =
   let inline toNative (size: Size) = System.Drawing.Size(size.width, size.height)
+  
+
+[<Struct>]
+type Point = { x: int; y: int }
+[<RequireQualifiedAccess>]
+module Point =
+  let inline toNative (p: Point) = System.Drawing.Point(p.x, p.y)
 
 
 [<Struct>]
@@ -66,5 +84,37 @@ type Direction =
 [<RequireQualifiedAccess>]
 module Direction =
   let inline toNative (direction: Direction) = int direction |> enum<System.Windows.Forms.FlowDirection>
+  
+[<Struct; RequireQualifiedAccess>]
+type ImageLayout =
+  | none = 0
+  | title = 1
+  | center = 2
+  | stretch = 3
+  | zoom = 4
+[<RequireQualifiedAccess>]
+module ImageLayout =
+  let inline toNative (layout: ImageLayout) = int layout |> enum<System.Windows.Forms.ImageLayout>
+  
+type Color = System.Drawing.Color
+type Icon = System.Drawing.Icon
+type Image = System.Drawing.Image
+type MenuStripItem = System.Windows.Forms.ToolStripMenuItem
 
+(* System.Windows.Forms.Control *)
+type Button = System.Windows.Forms.Button
+type CheckBox = System.Windows.Forms.CheckBox
+type ComboBox = System.Windows.Forms.ComboBox
+type Control = System.Windows.Forms.Control
+type GroupBox = System.Windows.Forms.GroupBox
+type FlowLayoutPanel = System.Windows.Forms.FlowLayoutPanel
 type Form = System.Windows.Forms.Form
+type Label = System.Windows.Forms.Label
+type ListBox = System.Windows.Forms.ListBox
+type ListView = System.Windows.Forms.ListView
+type MenuStrip = System.Windows.Forms.MenuStrip
+type NumericUpDown = System.Windows.Forms.NumericUpDown
+type Panel = System.Windows.Forms.Panel
+type PictureBox = System.Windows.Forms.PictureBox
+type RadioButton = System.Windows.Forms.RadioButton
+type TextBox = System.Windows.Forms.TextBox
