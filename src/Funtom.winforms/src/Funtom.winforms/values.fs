@@ -95,7 +95,19 @@ type ImageLayout =
 [<RequireQualifiedAccess>]
 module ImageLayout =
   let inline toNative (layout: ImageLayout) = int layout |> enum<System.Windows.Forms.ImageLayout>
+
   
+[<Struct; RequireQualifiedAccess>]
+type ScrollBars =
+  | none = 0
+  | horizontal = 1
+  | vertical = 2
+  | both = 3
+[<RequireQualifiedAccess>]
+module ScrollBars =
+  let inline toNative (scrollbars: ScrollBars) = int scrollbars |> enum<System.Windows.Forms.ScrollBars>
+
+
 type Color = System.Drawing.Color
 type Icon = System.Drawing.Icon
 type Image = System.Drawing.Image

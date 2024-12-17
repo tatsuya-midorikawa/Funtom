@@ -78,7 +78,7 @@ module Cexpr =
       button
 
 
-  type FlowLayoutPanel (panel: System.Windows.Forms.FlowLayoutPanel) = 
+  type FlowLayoutPanelBuilder (panel: System.Windows.Forms.FlowLayoutPanel) = 
     inherit ControlBuilder<System.Windows.Forms.FlowLayoutPanel> (panel)
     [<CustomOperation>]
     member __.flow_break (_, break': bool) = panel.SetFlowBreak(panel.Controls.[panel.Controls.Count - 1], break'); panel
@@ -86,8 +86,22 @@ module Cexpr =
     member __.direction (_, direction: Direction) = panel.FlowDirection <- Direction.toNative direction; panel
 
 
+  type TextBoxBuilder (textbox: System.Windows.Forms.TextBox) = 
+    inherit ControlBuilder<System.Windows.Forms.TextBox> (textbox)
+    [<CustomOperation>]
+    member __.multiline (_, multiline: bool) = textbox.Multiline <- multiline; textbox
+    [<CustomOperation>]
+    member __.readonly (_, readonly: bool) = textbox.ReadOnly <- readonly; textbox
+    [<CustomOperation>]
+    member __.scrollbars (_, scrollbars: ScrollBars) = textbox.ScrollBars <- (ScrollBars.toNative scrollbars); textbox
+    [<CustomOperation>]
+    member __.wordwrap (_, wordwrap: bool) = textbox.WordWrap <- wordwrap; textbox
+
+
   let inline ctrl (ctrl: ^T when ^T :> System.Windows.Forms.Control) = ControlBuilder(ctrl)
   let inline form () = FormBuilder (new System.Windows.Forms.Form())
   let inline button () = ButtonBuilder (new System.Windows.Forms.Button())
-  let inline flowlayout (dock: Dock, direction: Direction) = FlowLayoutPanel (
+  let inline flowlayout (dock: Dock, direction: Direction) = FlowLayoutPanelBuilder (
     new System.Windows.Forms.FlowLayoutPanel(FlowDirection = Direction.toNative direction, Dock = Dock.toNative dock))
+
+  let inline textbox () = TextBoxBuilder (new System.Windows.Forms.TextBox())
