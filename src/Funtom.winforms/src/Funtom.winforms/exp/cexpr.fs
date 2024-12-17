@@ -62,8 +62,20 @@ module Cexpr =
     member __.activate (_) = form.Activate(); form
 
     
-  type ButtonBuilder (buton: System.Windows.Forms.Button) = 
-    inherit ControlBuilder<System.Windows.Forms.Button> (buton)
+  type ButtonBuilder (button: System.Windows.Forms.Button) = 
+    inherit ControlBuilder<System.Windows.Forms.Button> (button)
+    [<CustomOperation>]
+    member __.on_click (_, cmd: obj option -> unit, ?can_exec: obj option -> bool, ?can_exec_changed: System.EventArgs option -> unit) =
+      let can_exec = match can_exec with Some e -> e | None -> fun _ -> true
+      let cmd =
+        { new System.Windows.Input.ICommand with
+            member __.Execute(p) = p |> (Option.ofObj >> cmd)
+            member __.CanExecute(p) = p |> (Option.ofObj >> can_exec)
+            [<CLIEvent>]
+            member __.CanExecuteChanged = Event<System.EventHandler, System.EventArgs>().Publish }
+      match can_exec_changed with Some e -> cmd.CanExecuteChanged.Add (Option.ofObj >> e) | None -> ()
+      button.Command <- cmd
+      button
 
 
   type FlowLayoutPanel (panel: System.Windows.Forms.FlowLayoutPanel) = 
@@ -74,8 +86,8 @@ module Cexpr =
     member __.direction (_, direction: Direction) = panel.FlowDirection <- Direction.toNative direction; panel
 
 
-  let ctrl (ctrl: ^T when ^T :> System.Windows.Forms.Control) = ControlBuilder(ctrl)
-  let form () = FormBuilder (new System.Windows.Forms.Form())
-  let button () = ButtonBuilder (new System.Windows.Forms.Button())
-  let flowlayout (dock: Dock, direction: Direction) = FlowLayoutPanel (
+  let inline ctrl (ctrl: ^T when ^T :> System.Windows.Forms.Control) = ControlBuilder(ctrl)
+  let inline form () = FormBuilder (new System.Windows.Forms.Form())
+  let inline button () = ButtonBuilder (new System.Windows.Forms.Button())
+  let inline flowlayout (dock: Dock, direction: Direction) = FlowLayoutPanel (
     new System.Windows.Forms.FlowLayoutPanel(FlowDirection = Direction.toNative direction, Dock = Dock.toNative dock))

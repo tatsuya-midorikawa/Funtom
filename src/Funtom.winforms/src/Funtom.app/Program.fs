@@ -22,7 +22,7 @@ let form = form () {
   children [|
     flowlayout (Dock.fill, Direction.topdown) {
       children [|
-        button () { text "Click me 1"; size { width= 200; height= 100 } }
+        button () { text "Click me 1"; size { width= 200; height= 100 }; on_click (fun _ -> ()) }
         button () { text "Click me 2"; size { width= 300; height= 150 } }
         button () { text "Click me 3"; size { width= 150; height= 200 } } 
       |]
